@@ -1,0 +1,269 @@
+/* ==========================================================================
+   EMILY PET'S HEAVEN - DESIGN TOKENS
+   Extracted from CarePaw Framer Website (pixel-perfect match)
+   ========================================================================== */
+
+:root {
+  /* ==========================================================================
+     COLORS
+     ========================================================================== */
+  
+  /* Primary Colors */
+  --color-primary: #4E0000;           /* Deep maroon - hero bg, footer bg, pricing bg */
+  --color-primary-dark: #3A0000;      /* Darker maroon for hover states */
+  --color-primary-light: #6B0000;     /* Lighter maroon */
+  
+  /* Secondary/Accent Colors */
+  --color-secondary: #FFAE01;         /* Golden yellow - buttons, accents, links */
+  --color-secondary-hover: #E69D00;   /* Darker golden for hover */
+  --color-secondary-light: #FFC233;   /* Lighter golden */
+  
+  /* Background Colors */
+  --color-bg-cream: #FFECBC;          /* Cream background - services section, cards */
+  --color-bg-white: #FFFFFF;          /* White background */
+  --color-bg-light: #FFF8E7;          /* Very light cream */
+  
+    /* Card Colors */
+    --color-card-orange: #FF8C42;       /* Orange cards - feature cards */
+  --color-card-cream: #FFECBC;        /* Cream cards - pricing, blog */
+  --color-card-pink: #FFB6C1;         /* Pink background - testimonial avatar */
+  
+  /* Text Colors */
+  --color-text-primary: #4E0000;      /* Primary text on light backgrounds */
+  --color-text-white: #FFFFFF;        /* White text on dark backgrounds */
+  --color-text-light: #000000;        /* Black text - body on dark bg */
+  --color-text-muted: #666666;        /* Muted text */
+  --color-text-body: #333333;         /* Body text on light backgrounds */
+  
+  /* Border Colors */
+  --color-border-light: rgba(255, 255, 255, 0.2);
+  --color-border-dark: rgba(78, 0, 0, 0.1);
+  --color-border-golden: #FFAE01;
+  
+  /* ==========================================================================
+     TYPOGRAPHY
+     ========================================================================== */
+  
+  /* Font Families */
+  --font-heading: 'Fredoka', sans-serif;
+  --font-body: 'Poppins', sans-serif;
+  
+  /* Font Sizes */
+  --font-size-h1: 72px;               /* Hero heading */
+  --font-size-h2: 56px;               /* Section headings */
+  --font-size-h3: 32px;               /* Sub-section headings */
+  --font-size-h4: 24px;               /* Card titles, button text */
+  --font-size-h5: 20px;               /* Labels, small headings */
+  --font-size-body: 14px;             /* Body text */
+  --font-size-small: 12px;            /* Small text, captions */
+  --font-size-large: 18px;            /* Large body text */
+  
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  /* Line Heights */
+  --line-height-h1: 1.2;              /* 86.4px for 72px */
+  --line-height-h2: 1.1;              /* 61.6px for 56px */
+  --line-height-h3: 1.3;              /* 41.6px for 32px */
+  --line-height-h4: 1.4;              /* 33.6px for 24px */
+  --line-height-h5: 1.4;              /* 28px for 20px */
+  --line-height-body: 1.5;            /* 21px for 14px */
+  
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.02em;
+  
+  /* ==========================================================================
+     SPACING
+     ========================================================================== */
+  
+  /* Section Padding */
+  --section-padding-hero: 300px 30px 285px;  /* Hero section */
+  --section-padding-y: 130px;                /* Standard vertical padding */
+  --section-padding-y-sm: 65px;              /* Smaller vertical padding */
+  --section-padding-x: 30px;                 /* Horizontal padding */
+  
+  /* Container */
+  --container-max-width: 1535px;             /* Max container width at 1440px viewport */
+  --container-padding: 0 30px;
+  
+  /* Component Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 80px;
+  
+  /* Card Spacing */
+  --card-padding: 30px;
+  --card-gap: 30px;
+  
+  /* ==========================================================================
+     BORDER RADIUS
+     ========================================================================== */
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 40px;                  /* Buttons, cards */
+  --radius-2xl: 60px;                 /* Large cards */
+  --radius-pill: 500px;               /* Pill shape, circular badges */
+  --radius-circle: 50%;               /* Perfect circles */
+  
+  /* Specific Component Radii */
+  --radius-button: 40px;              /* Pill-shaped buttons */
+  --radius-card: 40px;                /* Card corners */
+  --radius-input: 40px;               /* Input fields */
+  --radius-badge: 500px;              /* Circular badges */
+  --radius-arch: 200px 200px 0 0;     /* Arch shape for images */
+  
+  /* ==========================================================================
+     SHADOWS
+     ========================================================================== */
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.2);
+  
+  /* Card Shadows */
+  --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.12);
+  
+  /* Button Shadows */
+  --shadow-button: 0 4px 12px rgba(255, 174, 1, 0.3);
+  --shadow-button-hover: 0 6px 20px rgba(255, 174, 1, 0.4);
+  
+  /* ==========================================================================
+     TRANSITIONS
+     ========================================================================== */
+  
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+  --transition-slow: 500ms ease;
+  --transition-bounce: 300ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* ==========================================================================
+     BREAKPOINTS (for reference)
+     ========================================================================== */
+  
+  /* 
+   * Desktop: 1440px and above
+   * Laptop: 1024px - 1439px
+   * Tablet: 768px - 1023px
+   * Mobile: 390px - 767px
+   * Small Mobile: below 390px
+   */
+  
+  /* ==========================================================================
+     Z-INDEX SCALE
+     ========================================================================== */
+  
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-tooltip: 600;
+  
+  /* ==========================================================================
+     COMPONENT-SPECIFIC TOKENS
+     ========================================================================== */
+  
+  /* Buttons */
+  --button-height: 65.5938px;
+  --button-padding: 20px 32px;
+  --button-font-size: var(--font-size-h4);
+  --button-font-weight: var(--font-weight-semibold);
+  
+  /* Inputs */
+  --input-height: 60px;
+  --input-padding: 18px 20px;
+  --input-font-size: var(--font-size-body);
+  --input-bg: transparent;
+  --input-border: 1px solid var(--color-border-golden);
+  
+  /* Top Bar */
+  --topbar-height: 50px;
+  --topbar-bg: var(--color-primary);
+  
+  /* Navbar */
+  --navbar-height: 80px;
+  --navbar-bg: transparent;
+  
+  /* Footer */
+  --footer-bg: var(--color-primary);
+  --footer-padding: 80px 30px 30px;
+  
+  /* Service Cards */
+  --service-card-bg: var(--color-primary);
+  --service-card-radius: var(--radius-xl);
+  --service-card-image-radius: var(--radius-arch);
+  
+  /* Pricing Cards */
+  --pricing-card-bg: var(--color-card-cream);
+  --pricing-card-radius: var(--radius-xl);
+  --pricing-card-border: 2px solid var(--color-primary);
+  
+  /* Blog Cards */
+  --blog-card-bg: var(--color-card-cream);
+  --blog-card-radius: var(--radius-xl);
+  
+  /* Testimonial */
+  --testimonial-avatar-size: 300px;
+  --testimonial-avatar-bg: var(--color-card-pink);
+  
+  /* Feature Cards */
+  --feature-card-maroon-bg: var(--color-primary);
+  --feature-card-orange-bg: var(--color-card-orange);
+  --feature-card-radius: var(--radius-xl);
+}
+
+/* ==========================================================================
+   RESPONSIVE TOKENS
+   ========================================================================== */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  :root {
+    --font-size-h1: 56px;
+    --font-size-h2: 42px;
+    --font-size-h3: 28px;
+    --font-size-h4: 20px;
+    --section-padding-y: 80px;
+    --section-padding-y-sm: 40px;
+    --container-max-width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  :root {
+    --font-size-h1: 40px;
+    --font-size-h2: 32px;
+    --font-size-h3: 24px;
+    --font-size-h4: 18px;
+    --font-size-h5: 16px;
+    --section-padding-y: 60px;
+    --section-padding-y-sm: 30px;
+    --card-padding: 20px;
+    --card-gap: 20px;
+    --button-padding: 16px 24px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 390px) {
+  :root {
+    --font-size-h1: 32px;
+    --font-size-h2: 28px;
+    --font-size-h3: 22px;
+    --section-padding-y: 40px;
+  }
+}

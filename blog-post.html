@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <meta name="author" content="Emily's Pet Heaven">
+  <meta name="robots" content="index, follow">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="">
+  <meta property="og:description" content="">
+  
+  <title>Blog Post - Emily's Pet Heaven</title>
+  <link rel="icon" type="image/png" href="assets/brand/logo-icon-transparent.png">
+  <link rel="apple-touch-icon" href="assets/brand/logo-icon-transparent.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <style>
+    .blog-post-content { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
+    .blog-post-header { margin-bottom: 40px; }
+    .blog-post-category { display: inline-block; background: var(--color-primary); color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 500; margin-bottom: 16px; }
+    .blog-post-title { font-size: 2.5rem; font-weight: 700; color: var(--color-text-dark); margin-bottom: 20px; line-height: 1.2; }
+    .blog-post-meta { display: flex; align-items: center; gap: 24px; color: var(--color-text-muted); font-size: 0.9rem; flex-wrap: wrap; }
+    .blog-post-meta-item { display: flex; align-items: center; gap: 8px; }
+    .blog-post-meta svg { width: 18px; height: 18px; }
+    .blog-post-author { display: flex; align-items: center; gap: 12px; }
+    .blog-post-author-image { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
+    .blog-post-featured-image { width: 100%; max-height: 500px; object-fit: cover; border-radius: 16px; margin-bottom: 40px; }
+    .blog-post-body { font-size: 1.1rem; line-height: 1.8; color: var(--color-text-dark); }
+    .blog-post-body h2 { font-size: 1.75rem; font-weight: 600; margin: 40px 0 20px; color: var(--color-primary); }
+    .blog-post-body h3 { font-size: 1.4rem; font-weight: 600; margin: 32px 0 16px; }
+    .blog-post-body p { margin-bottom: 20px; }
+    .blog-post-body blockquote { border-left: 4px solid var(--color-primary); padding-left: 24px; margin: 32px 0; font-style: italic; color: var(--color-text-muted); }
+    .blog-post-body figure { margin: 32px 0; }
+    .blog-post-body figure img { width: 100%; border-radius: 12px; }
+    .blog-post-body figcaption { text-align: center; font-size: 0.9rem; color: var(--color-text-muted); margin-top: 12px; }
+    .blog-post-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 40px; border-top: 1px solid #eee; }
+    .blog-post-tag { background: #f5f5f5; color: var(--color-text-dark); padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; }
+    .blog-post-share { display: flex; align-items: center; gap: 16px; margin-top: 32px; }
+    .blog-post-share-title { font-weight: 600; }
+    .blog-post-share a { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); color: white; display: flex; align-items: center; justify-content: center; transition: transform 0.3s; }
+    .blog-post-share a:hover { transform: scale(1.1); }
+    .blog-post-share svg { width: 20px; height: 20px; }
+    .related-posts { background: #f9f9f9; padding: 60px 0; }
+    .related-posts-title { text-align: center; font-size: 2rem; margin-bottom: 40px; }
+    .related-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .loading-spinner { display: flex; justify-content: center; align-items: center; min-height: 400px; }
+    .loading-spinner::after { content: ''; width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .error-message { text-align: center; padding: 60px 20px; color: var(--color-text-muted); }
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-left">
+        <div class="top-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:contact@emilyspetheaven.com">contact@emilyspetheaven.com</a>
+        </div>
+        <div class="top-bar-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          <a href="tel:+916363590332">+91 6363590332</a>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <span class="top-bar-hours">Open 24/7 - We're Always Here For Your Pets</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="header header-light">
+    <div class="container">
+      <a href="index.html" class="footer-logo">
+        <img src="assets/brand/logo-full-header.png?v=4" alt="Emily's Pet Heaven" class="footer-logo-img">
+      </a>
+      <nav class="nav">
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="blog.html" class="active">Blog</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary">Book Appointment</a>
+        <button class="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-header">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span>/</span>
+          <a href="blog.html">Blog</a>
+          <span>/</span>
+          <span id="breadcrumb-title">Loading...</span>
+        </div>
+      </div>
+    </section>
+
+    <article class="blog-post-content" id="blog-post">
+      <div class="loading-spinner"></div>
+    </article>
+
+    <section class="related-posts" id="related-posts" style="display: none;">
+      <h2 class="related-posts-title">Related Articles</h2>
+      <div class="related-posts-grid" id="related-posts-grid"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a href="index.html" class="footer-logo">
+            <img src="assets/brand/logo-full-footer.png?v=3" alt="Emily's Pet Heaven" class="footer-logo-img">
+          </a>
+          <p>Providing loving care for your furry family members since 2020. Your pet's happiness is our priority.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact Us</h4>
+          <p>1 No. Dipak Nagar, Old Calcutta Road, Boro Pole, Kolkata - 700123</p>
+          <p>Phone: <a href="tel:+916363590332">+91 6363590332</a></p>
+          <p>Email: <a href="mailto:contact@emilyspetheaven.com">contact@emilyspetheaven.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Emily's Pet Heaven. All rights reserved.</p>
+        <a href="terms.html">Terms & Conditions</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="floating-contact">
+    <a href="https://wa.me/919830802898?text=Hi%20Emily's%20Pet%20Heaven!%20I'd%20like%20to%20inquire%20about%20your%20services." class="floating-btn whatsapp" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="tel:+916363590332" class="floating-btn emergency" aria-label="Emergency Call">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+    </a>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/sanity-client.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('slug');
+    
+    async function loadBlogPost() {
+      const container = document.getElementById('blog-post');
+      const breadcrumbTitle = document.getElementById('breadcrumb-title');
+      
+      if (!slug) {
+        container.innerHTML = '<div class="error-message"><h2>Post Not Found</h2><p>Please select a blog post from our <a href="blog.html">blog page</a>.</p></div>';
+        return;
+      }
+      
+      try {
+        const post = await SanityClient.fetchBlogPostBySlug(slug);
+        
+        if (!post) {
+          container.innerHTML = '<div class="error-message"><h2>Post Not Found</h2><p>The requested blog post could not be found. <a href="blog.html">Browse all posts</a>.</p></div>';
+          return;
+        }
+        
+        document.title = (post.metaTitle || post.title) + " - Emily's Pet Heaven";
+        document.querySelector('meta[name="description"]').content = post.metaDescription || post.excerpt || '';
+        document.querySelector('meta[name="keywords"]').content = (post.keywords || []).join(', ');
+        breadcrumbTitle.textContent = post.title;
+        
+        const featuredImageUrl = SanityClient.buildImageUrl(post.featuredImage, { width: 1200, quality: 85 });
+        const authorImageUrl = post.author?.image ? SanityClient.buildImageUrl(post.author.image, { width: 96, height: 96 }) : '/images/default-author.jpg';
+        const bodyHtml = SanityClient.portableTextToHtml(post.body);
+        const publishedDate = SanityClient.formatDate(post.publishedAt);
+        
+        container.innerHTML = `
+          <header class="blog-post-header">
+            ${post.category ? `<span class="blog-post-category">${post.category.title}</span>` : ''}
+            <h1 class="blog-post-title">${post.title}</h1>
+            <div class="blog-post-meta">
+              ${post.author ? `
+                <div class="blog-post-author">
+                  <img src="${authorImageUrl}" alt="${post.author.name}" class="blog-post-author-image">
+                  <div><strong>${post.author.name}</strong>${post.author.role ? `<br><small>${post.author.role}</small>` : ''}</div>
+                </div>
+              ` : ''}
+              <div class="blog-post-meta-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                ${publishedDate}
+              </div>
+            </div>
+          </header>
+          ${post.featuredImage ? `<img src="${featuredImageUrl}" alt="${post.featuredImage.alt || post.title}" class="blog-post-featured-image">` : ''}
+          <div class="blog-post-body">${bodyHtml}</div>
+          ${post.keywords && post.keywords.length > 0 ? `<div class="blog-post-tags">${post.keywords.map(tag => `<span class="blog-post-tag">${tag}</span>`).join('')}</div>` : ''}
+          <div class="blog-post-share">
+            <span class="blog-post-share-title">Share:</span>
+            <a href="https://wa.me/?text=${encodeURIComponent(post.title + ' - ' + window.location.href)}" target="_blank" aria-label="Share on WhatsApp">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" aria-label="Share on Facebook">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            </a>
+          </div>
+        `;
+        
+        if (post.category) loadRelatedPosts(post.category.slug.current, post._id);
+      } catch (error) {
+        console.error('Error loading blog post:', error);
+        container.innerHTML = '<div class="error-message"><h2>Error Loading Post</h2><p>There was an error loading this blog post. Please try again later.</p></div>';
+      }
+    }
+    
+    async function loadRelatedPosts(categorySlug, currentPostId) {
+      try {
+        const posts = await SanityClient.fetchBlogPostsByCategory(categorySlug, 4);
+        const relatedPosts = posts.filter(p => p._id !== currentPostId).slice(0, 3);
+        
+        if (relatedPosts.length > 0) {
+          const container = document.getElementById('related-posts-grid');
+          const section = document.getElementById('related-posts');
+          
+          container.innerHTML = relatedPosts.map(post => {
+            const imageUrl = SanityClient.buildImageUrl(post.featuredImage, { width: 400, height: 250 });
+            const date = SanityClient.formatDate(post.publishedAt);
+            return `
+              <article class="blog-card">
+                <div class="blog-card-image">
+                  <img src="${imageUrl}" alt="${post.title}">
+                  <span class="blog-card-category">${post.category || ''}</span>
+                </div>
+                <div class="blog-card-content">
+                  <div class="blog-card-meta"><span>${date}</span></div>
+                  <h3>${post.title}</h3>
+                  <p>${post.excerpt || ''}</p>
+                  <a href="blog-post.html?slug=${post.slug.current}" class="blog-card-link">Read More</a>
+                </div>
+              </article>
+            `;
+          }).join('');
+          
+          section.style.display = 'block';
+        }
+      } catch (error) {
+        console.error('Error loading related posts:', error);
+      }
+    }
+    
+    loadBlogPost();
+  </script>
+  
+  <script>window.gtranslateSettings = {"default_language":"en","detect_browser_language":true,"languages":["en","hi","bn"],"wrapper_selector":".gtranslate_wrapper","flag_style":"3d","flag_size":24}</script>
+  <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+</body>
+</html>
