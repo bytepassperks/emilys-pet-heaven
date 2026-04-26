@@ -3313,3 +3313,23 @@ ul, ol { list-style: none; }
   height: 18px;
   fill: #DC2626;
 }
+
+/* GTranslate Widget Positioning */
+.gtranslate_wrapper {
+  position: fixed !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  z-index: 999 !important;
+}
+
+@media (max-width: 767px) {
+  .gtranslate_wrapper {
+    bottom: 100px !important;
+    left: 10px !important;
+  }
+}
+
+/* Testimonial Pink Circle — hide decorative element that looks like broken image */
+.testimonial-pink-circle-large {
+  display: none;
+}

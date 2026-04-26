@@ -15,14 +15,26 @@ function initRevealOnScroll() {
   
   if (revealElements.length === 0) return;
   
-  const observerOptions = {
+  // Immediately reveal elements already in viewport (above fold)
+  const viewportHeight = window.innerHeight;
+  revealElements.forEach(function(el) {
+    var rect = el.getBoundingClientRect();
+    if (rect.top < viewportHeight + 50) {
+      el.classList.add('revealed');
+    }
+  });
+  
+  // Enable scroll-based reveal animations for below-fold elements
+  document.documentElement.classList.add('js-reveal-ready');
+  
+  var observerOptions = {
     root: null,
-    rootMargin: '0px 0px -80px 0px',
-    threshold: 0.15
+    rootMargin: '0px 0px -50px 0px',
+    threshold: 0.1
   };
   
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('revealed');
         observer.unobserve(entry.target);
@@ -30,8 +42,10 @@ function initRevealOnScroll() {
     });
   }, observerOptions);
   
-  revealElements.forEach(element => {
-    observer.observe(element);
+  revealElements.forEach(function(element) {
+    if (!element.classList.contains('revealed')) {
+      observer.observe(element);
+    }
   });
 }
 

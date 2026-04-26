@@ -882,40 +882,40 @@
   fill: var(--color-secondary);
 }
 
-/* Scroll Reveal Animations */
+/* Scroll Reveal Animations — Progressive Enhancement */
+/* Content visible by default for SEO crawlers, screen readers, and no-JS */
 .reveal-on-scroll {
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Only hide elements when JS has initialized (class added by animations.js) */
+.js-reveal-ready .reveal-on-scroll:not(.revealed) {
   opacity: 0;
   transform: translateY(40px);
-  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .reveal-on-scroll.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) !important;
 }
 
-.reveal-on-scroll.reveal-left {
+.js-reveal-ready .reveal-on-scroll.reveal-left:not(.revealed) {
   transform: translateX(-40px);
 }
 
-.reveal-on-scroll.reveal-left.revealed {
-  transform: translateX(0);
-}
-
-.reveal-on-scroll.reveal-right {
+.js-reveal-ready .reveal-on-scroll.reveal-right:not(.revealed) {
   transform: translateX(40px);
 }
 
-.reveal-on-scroll.reveal-right.revealed {
-  transform: translateX(0);
-}
-
-.reveal-on-scroll.reveal-scale {
+.js-reveal-ready .reveal-on-scroll.reveal-scale:not(.revealed) {
   transform: scale(0.9);
 }
 
-.reveal-on-scroll.reveal-scale.revealed {
-  transform: scale(1);
+/* No-JS fallback: everything visible */
+noscript .reveal-on-scroll,
+.reveal-on-scroll.revealed {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* Staggered reveal for grid items */

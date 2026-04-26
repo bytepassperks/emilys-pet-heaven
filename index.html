@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//cdn.gtranslate.net">
+  <link rel="dns-prefetch" href="//images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <meta charset="UTF-8">
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QFY41F8GYJ"></script>
@@ -25,7 +32,7 @@
   <meta name="twitter:title" content="Emily's Pet Heaven — Best Pet Boarding in Barrackpore | Dog & Cat Boarding, Grooming, Daycare">
   <meta name="twitter:description" content="Trusted pet boarding in Barrackpore with 24/7 care, grooming, daycare & transport. Serving Kolkata, Barasat, Madhyamgram & North 24 Parganas.">
   
-    <title>Emily's Pet Heaven — Best Pet Boarding in Barrackpore | Dog & Cat Boarding, Grooming & 24/7 Vet</title>
+    <title>Emily's Pet Heaven — Pet Boarding & Grooming in Barrackpore</title>
   
     <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/logo-icon-transparent.webp">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/brand/logo-icon-transparent.webp">
@@ -221,6 +228,27 @@ img{max-width:100%;height:auto}
   </script>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4E0000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.gtranslate.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; frame-src https://www.google.com https://maps.google.com">
+  <link rel="alternate" hreflang="en" href="https://emilyspetheaven.com/">
+  <link rel="alternate" hreflang="x-default" href="https://emilyspetheaven.com/">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "speakable": {
+    "@type": "SpeakableSpecification",
+    "cssSelector": [
+      ".hero h1",
+      ".hero p",
+      ".section-heading h2",
+      ".about-content p"
+    ]
+  }
+}
+</script>
+
+  <noscript><style>.reveal-on-scroll{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
   <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
@@ -279,7 +307,7 @@ img{max-width:100%;height:auto}
                           <span class="logo-text">Emily's <span class="logo-highlight">Pet Heaven</span></span>
                         </a>
       
-      <nav class="nav">
+      <nav class="nav" aria-label="Main navigation">
         <ul class="nav-menu">
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="about.html">About Us</a></li>
@@ -306,7 +334,7 @@ img{max-width:100%;height:auto}
 
   <main>
     <!-- Hero Section -->
-    <section class="hero" id="main-content">
+    <section class="hero" id="main-content" role="main">
       <!-- Sparkle Decorations -->
       <div class="sparkle-container">
         <div class="sparkle">
@@ -405,11 +433,11 @@ img{max-width:100%;height:auto}
       
       <!-- Pets Peeking Strip - overflow:hidden crops the images -->
       <div class="peeking-strip">
-        <img src="assets/images/pets/golden-retriever-peeking.webp" alt="Golden retriever peeking" class="peek peek-1" loading="lazy" width="500" height="500" decoding="async">
-        <img src="assets/images/pets/beagle-puppy-peeking.webp" alt="Beagle puppy peeking" class="peek peek-2" loading="lazy" width="500" height="333" decoding="async">
-        <img src="assets/images/pets/white-cat-peeking.webp" alt="White cat peeking" class="peek peek-3" loading="lazy" width="500" height="333" decoding="async">
-        <img src="assets/images/pets/orange-cat-peeking.webp" alt="Orange cat peeking" class="peek peek-4" loading="lazy" width="500" height="333" decoding="async">
-        <img src="assets/images/pets/border-collie-peeking.webp" alt="Border collie peeking" class="peek peek-5" loading="lazy" width="500" height="333" decoding="async">
+        <img src="assets/images/pets/golden-retriever-peeking.webp" srcset="assets/images/pets/golden-retriever-peeking.webp 500w" sizes="(max-width: 768px) 120px, 200px" alt="Golden retriever peeking" class="peek peek-1" loading="lazy" width="500" height="500" decoding="async">
+        <img src="assets/images/pets/beagle-puppy-peeking.webp" srcset="assets/images/pets/beagle-puppy-peeking.webp 500w" sizes="(max-width: 768px) 100px, 180px" alt="Beagle puppy peeking" class="peek peek-2" loading="lazy" width="500" height="333" decoding="async">
+        <img src="assets/images/pets/white-cat-peeking.webp" srcset="assets/images/pets/white-cat-peeking.webp 500w" sizes="(max-width: 768px) 100px, 180px" alt="White cat peeking" class="peek peek-3" loading="lazy" width="500" height="333" decoding="async">
+        <img src="assets/images/pets/orange-cat-peeking.webp" srcset="assets/images/pets/orange-cat-peeking.webp 500w" sizes="(max-width: 768px) 100px, 180px" alt="Orange cat peeking" class="peek peek-4" loading="lazy" width="500" height="333" decoding="async">
+        <img src="assets/images/pets/border-collie-peeking.webp" srcset="assets/images/pets/border-collie-peeking.webp 500w" sizes="(max-width: 768px) 100px, 180px" alt="Border collie peeking" class="peek peek-5" loading="lazy" width="500" height="333" decoding="async">
       </div>
     </section>
 
@@ -942,7 +970,7 @@ img{max-width:100%;height:auto}
               Book Appointment
             </div>
             <h2>Schedule Your Pet's Visit Today</h2>
-                        <form class="appointment-form" id="appointmentForm">
+                        <form class="appointment-form" aria-label="Book appointment" id="appointmentForm">
                           <input type="text" name="name" class="form-input" placeholder="Your Name" required>
                           <input type="email" name="email" class="form-input" placeholder="Email Address" required>
                           <input type="tel" name="phone" class="form-input" placeholder="Phone Number" required>
@@ -1125,7 +1153,7 @@ img{max-width:100%;height:auto}
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer" aria-label="Footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -1133,7 +1161,7 @@ img{max-width:100%;height:auto}
             <img src="assets/brand/logo-full-cropped-white.webp?v=4" alt="Emily's Pet Heaven - Pet Boarding Barrackpore" class="footer-logo-img" loading="lazy" decoding="async">
           </a>
           <p>Premium pet care services with love and expertise. Your pet's comfort and happiness is our top priority. We treat every pet like family.</p>
-          <div class="footer-social">
+          <div class="footer-social" aria-label="Social media links">
             <a href="#" aria-label="Facebook">
               <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
@@ -1273,5 +1301,20 @@ img{max-width:100%;height:auto}
   <div class="gtranslate_wrapper"></div>
   <script>window.gtranslateSettings = {"default_language":"en","languages":["en","hi","bn"],"wrapper_selector":".gtranslate_wrapper","native_language_names":true}</script>
   <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-consent" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
+    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:#FFAE01;text-decoration:underline">Privacy Policy</a>.</span>
+    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:#FFAE01;color:#4E0000;border:none;padding:6px 16px;border-radius:20px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
+  </div>
+  <script>if(!localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='flex'</script>
+
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:#4E0000;color:#FFAE01;border:2px solid #FFAE01;cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:all 0.3s" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.display=window.scrollY>300?'flex':'none'})</script>
+
+
+  <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js')</script>
 </body>
 </html>

@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//fonts.gstatic.com">
+  <link rel="dns-prefetch" href="//www.googletagmanager.com">
+  <link rel="dns-prefetch" href="//cdn.gtranslate.net">
+  <link rel="dns-prefetch" href="//images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <meta charset="UTF-8">
   <!-- Google Analytics 4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QFY41F8GYJ"></script>
@@ -41,6 +48,32 @@
   <link rel="canonical" href="https://emilyspetheaven.com/about.html">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4E0000">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.gtranslate.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; frame-src https://www.google.com https://maps.google.com">
+  <link rel="alternate" hreflang="en" href="https://emilyspetheaven.com/about.html">
+  <link rel="alternate" hreflang="x-default" href="https://emilyspetheaven.com/about.html">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://emilyspetheaven.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "About Us",
+      "item": "https://emilyspetheaven.com/about.html"
+    }
+  ]
+}
+</script>
+
+  <noscript><style>.reveal-on-scroll{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
   <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
@@ -94,7 +127,7 @@
                 <img src="assets/brand/logo-full-header.webp?v=4" alt="Emily's Pet Heaven - Pet Boarding Barrackpore" class="footer-logo-img" loading="lazy" decoding="async">
               </a>
       
-      <nav class="nav">
+      <nav class="nav" aria-label="Main navigation">
         <ul class="nav-menu">
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html" class="active">About Us</a></li>
@@ -407,7 +440,7 @@
   </main>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer" aria-label="Footer">
     <div class="container">
       <div class="footer-grid">
         <div class="footer-brand">
@@ -552,5 +585,20 @@
   <div class="gtranslate_wrapper"></div>
   <script>window.gtranslateSettings = {"default_language":"en","languages":["en","hi","bn"],"wrapper_selector":".gtranslate_wrapper","native_language_names":true}</script>
   <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-consent" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
+    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:#FFAE01;text-decoration:underline">Privacy Policy</a>.</span>
+    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:#FFAE01;color:#4E0000;border:none;padding:6px 16px;border-radius:20px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
+  </div>
+  <script>if(!localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='flex'</script>
+
+
+  <!-- Back to Top Button -->
+  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:#4E0000;color:#FFAE01;border:2px solid #FFAE01;cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:all 0.3s" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.display=window.scrollY>300?'flex':'none'})</script>
+
+
+  <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js')</script>
 </body>
 </html>

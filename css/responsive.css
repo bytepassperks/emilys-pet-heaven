@@ -360,6 +360,11 @@
     padding: var(--space-sm) 0;
   }
   
+  /* Page Header — ensure it clears the absolute header on mobile/tablet */
+  .page-header {
+    padding-top: 80px;
+  }
+  
   .logo {
     font-size: 1.25rem;
   }
@@ -767,9 +772,9 @@
     font-size: 0.9375rem;
   }
   
-  /* Page Header */
+  /* Page Header — increased top padding to clear absolute-positioned header */
   .page-header {
-    padding: var(--space-2xl) var(--space-sm);
+    padding: 80px var(--space-sm) var(--space-md);
   }
   
   .breadcrumb {
