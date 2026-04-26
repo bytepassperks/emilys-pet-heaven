@@ -1,45 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://emilypetsheaven.com/</loc>
-    <lastmod>2024-01-24</lastmod>
+    <loc>https://emilyspetheaven.com/</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://emilypetsheaven.com/about.html</loc>
-    <lastmod>2024-01-24</lastmod>
+    <loc>https://emilyspetheaven.com/about.html</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://emilypetsheaven.com/services.html</loc>
-    <lastmod>2024-01-24</lastmod>
+    <loc>https://emilyspetheaven.com/services.html</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://emilypetsheaven.com/pricing.html</loc>
-    <lastmod>2024-01-24</lastmod>
+    <loc>https://emilyspetheaven.com/pricing.html</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://emilypetsheaven.com/contact.html</loc>
-    <lastmod>2024-01-24</lastmod>
+    <loc>https://emilyspetheaven.com/contact.html</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://emilypetsheaven.com/blog.html</loc>
-    <lastmod>2024-01-24</lastmod>
+    <loc>https://emilyspetheaven.com/blog.html</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://emilypetsheaven.com/terms.html</loc>
-    <lastmod>2024-01-24</lastmod>
+    <loc>https://emilyspetheaven.com/terms.html</loc>
+    <lastmod>2026-04-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <!-- Location Landing Pages -->
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-barrackpore.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-barasat.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-madhyamgram.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-titagarh.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-sodepur.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-kanchrapara.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-belgharia.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/pet-boarding-dum-dum.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Resources & Blog Pages -->
+  <url>
+    <loc>https://emilyspetheaven.com/pet-resources-barrackpore.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/blog-labrador-boarding-barrackpore.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/blog-german-shepherd-boarding-barrackpore.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/blog-shih-tzu-boarding-barrackpore.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/blog-persian-cat-boarding-barrackpore.html</loc>
+    <lastmod>2026-04-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

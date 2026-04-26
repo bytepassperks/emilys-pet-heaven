@@ -1,11 +1,11 @@
-# Robots.txt for Emily Pet's Heaven
-# https://emilypetsheaven.com
+# Robots.txt for Emily's Pet Heaven
+# https://emilyspetheaven.com
 
 User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://emilypetsheaven.com/sitemap.xml
+Sitemap: https://emilyspetheaven.com/sitemap.xml
 
 # Crawl-delay for polite crawling
 Crawl-delay: 10
