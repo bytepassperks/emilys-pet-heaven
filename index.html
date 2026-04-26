@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Emily's Pet Heaven — Trusted pet boarding, grooming, daycare & 24/7 vet services in Barrackpore, Kolkata. Serving Barasat, Madhyamgram, Sodepur & North 24 Parganas. Book now!">
   <meta name="keywords" content="pet boarding barrackpore, dog boarding barrackpore, cat boarding barrackpore, pet hostel kolkata, pet daycare barrackpore, pet grooming barrackpore, emergency vet barrackpore, dog hostel north 24 parganas">
@@ -19,23 +27,31 @@
   
     <title>Emily's Pet Heaven — Best Pet Boarding in Barrackpore | Dog & Cat Boarding, Grooming & 24/7 Vet</title>
   
-    <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/logo-icon-transparent.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="assets/brand/logo-icon-transparent.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/logo-icon-transparent.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/logo-icon-transparent.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/logo-icon-transparent.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="assets/brand/logo-icon-transparent.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="assets/brand/logo-icon-transparent.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="assets/brand/logo-icon-transparent.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/logo-icon-transparent.webp">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/brand/logo-icon-transparent.webp">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/logo-icon-transparent.webp">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/brand/logo-icon-transparent.webp">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/logo-icon-transparent.webp">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/brand/logo-icon-transparent.webp">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/brand/logo-icon-transparent.webp">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/brand/logo-icon-transparent.webp">
   
       <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-    <link rel="stylesheet" href="css/tokens.css">
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+:root{--color-primary:#4E0000;--color-secondary:#FFAE01;--color-cream:#FFECBC;--color-light:#FDF8F3;--color-text:#666;--color-bg:#FFF;--font-family-heading:'Fredoka',sans-serif;--font-family-body:'Poppins',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-family-body);color:var(--color-text);background:var(--color-bg);line-height:1.5;overflow-x:hidden}
+.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:all .3s ease}
+.container{width:100%;max-width:1400px;margin:0 auto;padding:0 30px}
+h1,h2,h3{font-family:var(--font-family-heading);color:var(--color-primary)}
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+img{max-width:100%;height:auto}
+</style>
+    <link rel="stylesheet" href="css/bundle.min.css">
   
   <script type="application/ld+json">
   {
@@ -47,8 +63,8 @@
     "url": "https://emilyspetheaven.com",
     "telephone": "+91-6363590332",
     "email": "contact@emilyspetheaven.com",
-    "image": "https://emilyspetheaven.com/assets/brand/logo-full.png",
-    "logo": "https://emilyspetheaven.com/assets/brand/logo-icon-transparent.png",
+    "image": "https://emilyspetheaven.com/assets/brand/logo-full.webp",
+    "logo": "https://emilyspetheaven.com/assets/brand/logo-icon-transparent.webp",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "18/1 Banerjee Para Road, Nona Chandanpukur",
@@ -81,6 +97,13 @@
       "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
       "opens": "00:00",
       "closes": "23:59"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "47",
+      "bestRating": "5",
+      "worstRating": "1"
     },
     "priceRange": "$$",
     "currenciesAccepted": "INR",
@@ -117,7 +140,12 @@
     "@type": "Organization",
     "name": "Emily's Pet Heaven",
     "url": "https://emilyspetheaven.com",
-    "logo": "https://emilyspetheaven.com/assets/brand/logo-icon-transparent.png",
+    "logo": "https://emilyspetheaven.com/assets/brand/logo-icon-transparent.webp",
+    "sameAs": [
+      "https://www.instagram.com/emilyspetheaven/",
+      "https://www.facebook.com/emilyspetheaven/",
+      "https://wa.me/916363590332"
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+91-6363590332",
@@ -127,8 +155,75 @@
     }
   }
   </script>
+  <link rel="canonical" href="https://emilyspetheaven.com/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How much does pet boarding cost in Barrackpore?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Pet boarding at Emily's Pet Heaven in Barrackpore starts from affordable daily rates. Small breeds, medium breeds, and large breeds have different pricing. Contact us at +91 6363590332 for current rates and packages."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Emily's Pet Heaven open 24/7?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Emily's Pet Heaven is open 24 hours a day, 7 days a week, 365 days a year. We provide round-the-clock supervision and emergency veterinary coordination."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you provide pet pickup and drop service?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, we offer pet transport service with safe pickup and drop across Barrackpore, Barasat, Madhyamgram, Titagarh, Sodepur, Belgharia, and greater Kolkata area."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What vaccinations are required for boarding?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "All pets must have current Rabies and core vaccinations. Proof of vaccination is required at check-in. We can coordinate with local veterinarians for any pending vaccinations."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do you board cats separately from dogs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, we have dedicated quiet cat boarding spaces completely separate from dogs, ensuring your feline friend stays stress-free and comfortable."
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://emilyspetheaven.com/"
+      }
+    ]
+  }
+  </script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4E0000">
 </head>
 <body>
+  <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="container">
@@ -180,7 +275,7 @@
   <header class="header">
     <div class="container">
 <a href="index.html" class="logo">
-                          <img src="assets/brand/logo-icon-transparent.png" alt="Emily's Pet Heaven Logo" class="logo-paw">
+                          <img src="assets/brand/logo-icon-transparent.webp" alt="Emily's Pet Heaven Logo" class="logo-paw" loading="lazy" width="400" height="400" decoding="async">
                           <span class="logo-text">Emily's <span class="logo-highlight">Pet Heaven</span></span>
                         </a>
       
@@ -211,7 +306,7 @@
 
   <main>
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" id="main-content">
       <!-- Sparkle Decorations -->
       <div class="sparkle-container">
         <div class="sparkle">
@@ -273,7 +368,7 @@
             </svg>
             We Enjoy Providing
           </div>
-          <h1>Trusted Pet Care & Veterinary Center Point</h1>
+          <h1>Best Pet Boarding & Grooming in Barrackpore, Kolkata</h1>
           <p>Where every pet is treated like family. Premium boarding, professional grooming, and 24/7 emergency veterinary care - all under one roof with love and expertise.</p>
           <div class="hero-buttons">
             <a href="contact.html" class="btn btn-primary btn-lg">
@@ -310,11 +405,11 @@
       
       <!-- Pets Peeking Strip - overflow:hidden crops the images -->
       <div class="peeking-strip">
-        <img src="assets/images/pets/golden-retriever-peeking.png" alt="Golden retriever peeking" class="peek peek-1">
-        <img src="assets/images/pets/beagle-puppy-peeking.png" alt="Beagle puppy peeking" class="peek peek-2">
-        <img src="assets/images/pets/white-cat-peeking.png" alt="White cat peeking" class="peek peek-3">
-        <img src="assets/images/pets/orange-cat-peeking.png" alt="Orange cat peeking" class="peek peek-4">
-        <img src="assets/images/pets/border-collie-peeking.png" alt="Border collie peeking" class="peek peek-5">
+        <img src="assets/images/pets/golden-retriever-peeking.webp" alt="Golden retriever peeking" class="peek peek-1" loading="lazy" width="500" height="500" decoding="async">
+        <img src="assets/images/pets/beagle-puppy-peeking.webp" alt="Beagle puppy peeking" class="peek peek-2" loading="lazy" width="500" height="333" decoding="async">
+        <img src="assets/images/pets/white-cat-peeking.webp" alt="White cat peeking" class="peek peek-3" loading="lazy" width="500" height="333" decoding="async">
+        <img src="assets/images/pets/orange-cat-peeking.webp" alt="Orange cat peeking" class="peek peek-4" loading="lazy" width="500" height="333" decoding="async">
+        <img src="assets/images/pets/border-collie-peeking.webp" alt="Border collie peeking" class="peek peek-5" loading="lazy" width="500" height="333" decoding="async">
       </div>
     </section>
 
@@ -322,7 +417,7 @@
     <section class="features-bar-new">
       <div class="container">
         <div class="features-bar-card features-bar-card-dark">
-          <h3>Don't Hesitate to Contact Us</h3>
+          <h2>Don't Hesitate to Contact Us</h2>
           <a href="contact.html" class="btn btn-primary">
             More Details
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -341,7 +436,7 @@
             </svg>
           </div>
           <div>
-            <h4>Pet Experts</h4>
+            <h3>Pet Experts</h3>
             <p>Provide a diet suitable for their life stage. Ensure fresh water is always available.</p>
           </div>
         </div>
@@ -353,7 +448,7 @@
             </svg>
           </div>
           <div>
-            <h4>24 Hour Services</h4>
+            <h3>24 Hour Services</h3>
             <p>Clean the litter box regularly to keep your cat healthy and happy.</p>
           </div>
           <!-- Sound Wave Animation -->
@@ -376,7 +471,7 @@
             <!-- Pink Circular Background -->
             <div class="about-pink-circle"></div>
             <div class="about-dogs-container">
-              <img src="assets/carepaw-images/xOy3mEtdKxKo21Zj96kkE3ZqkuIa55a.png" alt="Two golden retrievers" class="about-dogs-image">
+              <img src="assets/carepaw-images/xOy3mEtdKxKo21Zj96kkE3ZqkuIa55a.webp" alt="Two golden retrievers" class="about-dogs-image" loading="lazy" width="800" height="805" decoding="async">
             </div>
             <!-- Decorative Sparkles -->
             <div class="sparkle about-sparkle-1">
@@ -413,7 +508,7 @@
             
             <!-- Video Thumbnail like CarePaw -->
             <div class="about-video-thumbnail">
-              <img src="assets/carepaw-images/77dsUrrnfQsJ8887F2WClmhh3nAa914.jpg" alt="Woman with dog on couch">
+              <img src="assets/carepaw-images/77dsUrrnfQsJ8887F2WClmhh3nAa914.webp" alt="Woman with dog on couch" loading="lazy" width="800" height="268" decoding="async">
               <div class="video-play-button">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M8 5v14l11-7z"/>
@@ -492,7 +587,7 @@
                 <div class="services-grid">
                   <div class="service-card reveal-on-scroll">
                     <div class="service-card-image">
-                      <img src="assets/images/service-grooming-bengali.png" alt="Professional pet grooming service in Barrackpore">
+                      <img src="assets/images/service-grooming-bengali.webp" alt="Professional pet grooming service in Barrackpore" loading="lazy" width="600" height="900" decoding="async">
             </div>
             <div class="service-card-content">
               <h3>Pet Grooming</h3>
@@ -509,7 +604,7 @@
           
                     <div class="service-card reveal-on-scroll">
                       <div class="service-card-image">
-                        <img src="assets/images/service-veterinary-bengali.png" alt="Veterinary Care">
+                        <img src="assets/images/service-veterinary-bengali.webp" alt="Veterinary Care" loading="lazy" width="600" height="900" decoding="async">
             </div>
             <div class="service-card-content">
               <h3>Veterinary Care</h3>
@@ -526,7 +621,7 @@
           
                     <div class="service-card reveal-on-scroll">
                       <div class="service-card-image">
-                        <img src="assets/images/service-boarding-bengali.png" alt="Pet Boarding & Daycare">
+                        <img src="assets/images/service-boarding-bengali.webp" alt="Pet Boarding & Daycare" loading="lazy" width="600" height="900" decoding="async">
             </div>
             <div class="service-card-content">
               <h3>Pet Boarding & Daycare</h3>
@@ -563,44 +658,44 @@
             <div class="why-features-carepaw">
               <div class="why-feature-item-carepaw">
                 <div class="why-feature-icon-carepaw">
-                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo.png" alt="Personalized care icon">
+                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo.webp" alt="Personalized care icon" loading="lazy" width="800" height="285" decoding="async">
                 </div>
                 <div>
-                  <h4>Personalized care</h4>
+                  <h3>Personalized care</h3>
                   <p>Be vigilant for signs of respiratory issues or changes in behavior.</p>
                 </div>
               </div>
               <div class="why-feature-item-carepaw">
                 <div class="why-feature-icon-carepaw">
-                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo72e3.png" alt="Affordable pricing icon">
+                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo72e3.webp" alt="Affordable pricing icon" loading="lazy" width="800" height="285" decoding="async">
                 </div>
                 <div>
-                  <h4>Affordable Pricing</h4>
+                  <h3>Affordable Pricing</h3>
                   <p>Be vigilant for signs of respiratory issues or changes in behavior.</p>
                 </div>
               </div>
               <div class="why-feature-item-carepaw">
                 <div class="why-feature-icon-carepaw">
-                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo.png" alt="Modern pet training icon">
+                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo.webp" alt="Modern pet training icon" loading="lazy" width="800" height="285" decoding="async">
                 </div>
                 <div>
-                  <h4>Modern Pet Training</h4>
+                  <h3>Modern Pet Training</h3>
                   <p>Be vigilant for signs of respiratory issues or changes in behavior.</p>
                 </div>
               </div>
               <div class="why-feature-item-carepaw">
                 <div class="why-feature-icon-carepaw">
-                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo72e3.png" alt="Certified groomer icon">
+                  <img src="assets/carepaw-images/5xCAa58zZqhzChbZDpAJFMyxAGo72e3.webp" alt="Certified groomer icon" loading="lazy" width="800" height="285" decoding="async">
                 </div>
                 <div>
-                  <h4>Certified Groomer</h4>
+                  <h3>Certified Groomer</h3>
                   <p>Be vigilant for signs of respiratory issues or changes in behavior.</p>
                 </div>
               </div>
             </div>
           </div>
           <div class="why-image">
-            <img src="assets/images/veterinarian-with-dog.png" alt="Vet with golden retriever">
+            <img src="assets/images/veterinarian-with-dog.webp" alt="Vet with golden retriever" loading="lazy" width="800" height="800" decoding="async">
           </div>
         </div>
       </div>
@@ -625,7 +720,7 @@
         <div class="pricing-grid-carepaw">
           <a href="contact.html" class="pricing-card-carepaw">
             <div class="pricing-card-header-carepaw">
-              <h4>Small Breeds</h4>
+              <h3>Small Breeds</h3>
               <div class="pricing-card-price-carepaw">
                 <span class="amount">₹400</span>
                 <span class="period">onwards</span>
@@ -633,7 +728,7 @@
             </div>
             <div class="pricing-card-body-carepaw">
               <div class="pricing-card-image-carepaw">
-                <img src="assets/carepaw-images/O3Ks8brS633v8Zur2Pzr9ubI94.jpg" alt="Mini Groom">
+                <img src="assets/carepaw-images/O3Ks8brS633v8Zur2Pzr9ubI94.webp" alt="Mini Groom" loading="lazy" width="800" height="453" decoding="async">
               </div>
               <div class="pricing-card-features-carepaw">
                 <div class="pricing-feature-item">
@@ -669,7 +764,7 @@
           
           <a href="contact.html" class="pricing-card-carepaw">
             <div class="pricing-card-header-carepaw">
-              <h4>Medium Breeds</h4>
+              <h3>Medium Breeds</h3>
               <div class="pricing-card-price-carepaw">
                 <span class="amount">₹600</span>
                 <span class="period">onwards</span>
@@ -677,7 +772,7 @@
             </div>
             <div class="pricing-card-body-carepaw">
               <div class="pricing-card-image-carepaw">
-                <img src="assets/carepaw-images/CG2h35djsh41sAQ4WmYRAS6UBd4.jpg" alt="Complete Groom">
+                <img src="assets/carepaw-images/CG2h35djsh41sAQ4WmYRAS6UBd4.webp" alt="Complete Groom" loading="lazy" width="800" height="388" decoding="async">
               </div>
               <div class="pricing-card-features-carepaw">
                 <div class="pricing-feature-item">
@@ -713,7 +808,7 @@
           
           <a href="contact.html" class="pricing-card-carepaw">
             <div class="pricing-card-header-carepaw">
-              <h4>Large Breeds</h4>
+              <h3>Large Breeds</h3>
               <div class="pricing-card-price-carepaw">
                 <span class="amount">₹800</span>
                 <span class="period">onwards</span>
@@ -721,7 +816,7 @@
             </div>
             <div class="pricing-card-body-carepaw">
               <div class="pricing-card-image-carepaw">
-                <img src="assets/carepaw-images/Tqzidu2TslyLrFccMHkkgKosyRs.jpg" alt="Hand Scissor Groom">
+                <img src="assets/carepaw-images/Tqzidu2TslyLrFccMHkkgKosyRs.webp" alt="Hand Scissor Groom" loading="lazy" width="800" height="388" decoding="async">
               </div>
               <div class="pricing-card-features-carepaw">
                 <div class="pricing-feature-item">
@@ -764,7 +859,7 @@
         <div class="testimonials-grid-carepaw">
           <div class="testimonials-image-carepaw">
             <div class="testimonial-pink-circle-large"></div>
-            <img src="assets/images/rajesh-kumar-testimonial.png" alt="Happy customer with pet">
+            <img src="assets/images/rajesh-kumar-testimonial.webp" alt="Happy customer with pet" loading="lazy" width="300" height="300" decoding="async">
             <!-- Sparkle decoration -->
             <div class="sparkle testimonial-sparkle-1">
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -792,7 +887,7 @@
               <p>"Pet grooming is a vital aspect of pet care that involves maintaining the cleanliness and appearance of animals. It includes services such as bathing, brushing, nail trimming, ear cleaning, and haircuts."</p>
             </div>
             <div class="testimonial-author-carepaw">
-              <img src="assets/images/rajesh-kumar-testimonial.png" alt="Rajesh Kumar">
+              <img src="assets/images/rajesh-kumar-testimonial.webp" alt="Rajesh Kumar" loading="lazy" width="300" height="300" decoding="async">
               <div>
                 <h4>Rajesh Kumar</h4>
                 <p>Pet Parent</p>
@@ -820,7 +915,7 @@
       <div class="container">
         <div class="appointment-grid">
           <div class="appointment-image">
-            <img src="assets/images/veterinarian-with-dog.png" alt="Happy pet with owner">
+            <img src="assets/images/veterinarian-with-dog.webp" alt="Happy pet with owner" loading="lazy" width="800" height="800" decoding="async">
             <!-- Sound Wave Animation -->
             <div class="sound-wave appointment-sound-wave">
               <div class="sound-wave-bar"></div>
@@ -893,7 +988,7 @@
         <div class="blog-grid">
           <div class="blog-card-featured">
             <div class="blog-card-featured-image">
-              <img src="assets/carepaw-images/7TwAkgAwokXOewasOaAsES86T4.jpg" alt="Dog nutrition and feeding guide for pet owners in Barrackpore">
+              <img src="assets/carepaw-images/7TwAkgAwokXOewasOaAsES86T4.webp" alt="Dog nutrition and feeding guide for pet owners in Barrackpore" loading="lazy" width="800" height="532" decoding="async">
             </div>
             <div class="blog-card-featured-content">
               <div class="blog-card-meta">
@@ -923,7 +1018,7 @@
           <div class="blog-list">
             <div class="blog-card-small">
               <div class="blog-card-small-image">
-                <img src="assets/carepaw-images/awFQ1Z3zuiFWBizx30qcgSDdD0.jpg" alt="Cat grooming tips from pet experts in Barrackpore">
+                <img src="assets/carepaw-images/awFQ1Z3zuiFWBizx30qcgSDdD0.webp" alt="Cat grooming tips from pet experts in Barrackpore" loading="lazy" width="800" height="453" decoding="async">
               </div>
               <div class="blog-card-small-content">
                 <div class="blog-card-meta">
@@ -935,7 +1030,7 @@
             
             <div class="blog-card-small">
               <div class="blog-card-small-image">
-                <img src="assets/carepaw-images/47tqlwxddAeRHYVEiUA0PMNdvo.jpg" alt="Puppy training">
+                <img src="assets/carepaw-images/47tqlwxddAeRHYVEiUA0PMNdvo.webp" alt="Puppy training" loading="lazy" width="800" height="684" decoding="async">
               </div>
               <div class="blog-card-small-content">
                 <div class="blog-card-meta">
@@ -947,7 +1042,7 @@
             
             <div class="blog-card-small">
               <div class="blog-card-small-image">
-                <img src="assets/carepaw-images/U7uQfTFXegLWHlveox2Q24h5Ph4.jpg" alt="Pet exercise and walking tips for dog owners in Barrackpore">
+                <img src="assets/carepaw-images/U7uQfTFXegLWHlveox2Q24h5Ph4.webp" alt="Pet exercise and walking tips for dog owners in Barrackpore" loading="lazy" width="800" height="453" decoding="async">
               </div>
               <div class="blog-card-small-content">
                 <div class="blog-card-meta">
@@ -1035,7 +1130,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="footer-logo">
-            <img src="assets/brand/logo-full-cropped-white.png?v=4" alt="Emily's Pet Heaven - Pet Boarding Barrackpore" class="footer-logo-img">
+            <img src="assets/brand/logo-full-cropped-white.webp?v=4" alt="Emily's Pet Heaven - Pet Boarding Barrackpore" class="footer-logo-img" loading="lazy" decoding="async">
           </a>
           <p>Premium pet care services with love and expertise. Your pet's comfort and happiness is our top priority. We treat every pet like family.</p>
           <div class="footer-social">
@@ -1171,8 +1266,8 @@
     </a>
   </div>
 
-  <script src="js/main.js"></script>
-  <script src="js/animations.js"></script>
+  <script src="js/bundle.min.js" defer></script>
+  
   
   <!-- GTRANSLATE WIDGET CODE -->
   <div class="gtranslate_wrapper"></div>
