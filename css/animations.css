@@ -86,10 +86,12 @@
 /* Pulse/breathing effect */
 @keyframes pulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(245, 166, 35, 0.7);
+    transform: scale(1);
+    opacity: 1;
   }
   50% {
-    box-shadow: 0 0 0 15px rgba(245, 166, 35, 0);
+    transform: scale(1.05);
+    opacity: 0.85;
   }
 }
 
@@ -342,6 +344,7 @@
   position: absolute;
   opacity: 0;
   animation: float 8s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .paw-print:nth-child(1) {
@@ -406,6 +409,7 @@
   left: 0;
   z-index: 1;
   animation: runRight 15s linear infinite;
+  will-change: transform, opacity;
 }
 
 .running-dog svg {
@@ -435,13 +439,14 @@
 
 .scroll-indicator svg {
   animation: scrollBounce 2s ease-in-out infinite;
+  will-change: transform;
 }
 
 /* ===== HOVER ANIMATIONS ===== */
 
 /* Card hover effects */
 .card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .card:hover {
@@ -511,6 +516,7 @@
 
 .testimonial-stars svg {
   animation: twinkle 1.5s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .testimonial-stars svg:nth-child(1) { animation-delay: 0s; }
@@ -631,6 +637,7 @@
   width: 24px;
   height: 24px;
   animation: sparkleAnimation 2s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .sparkle svg {
@@ -688,6 +695,7 @@
   background: var(--color-secondary);
   border-radius: 2px;
   animation: soundWave 1s ease-in-out infinite;
+  will-change: transform;
 }
 
 .sound-wave-bar:nth-child(1) { animation-delay: 0s; height: 40%; }
@@ -763,6 +771,7 @@
   position: absolute;
   opacity: 0.15;
   animation: floatPaw 6s ease-in-out infinite;
+  will-change: transform;
 }
 
 .floating-paw svg {
@@ -803,7 +812,7 @@
 .pricing-card,
 .blog-card-small,
 .blog-card-featured {
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .service-card:hover,

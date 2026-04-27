@@ -1437,7 +1437,8 @@ ul, ol { list-style: none; }
   line-height: 1.8;
 }
 
-.testimonial-author h4 {
+.testimonial-author h4,
+.testimonial-author h3 {
   color: var(--color-primary);
   margin-bottom: var(--space-xs);
   font-family: var(--font-family-body);
@@ -1826,7 +1827,8 @@ ul, ol { list-style: none; }
   height: 18px;
 }
 
-.footer-column h4 {
+.footer-column h4,
+.footer-column h3.footer-heading {
   color: var(--color-secondary);
   font-size: 1rem;
   margin-bottom: var(--space-lg);
@@ -3016,7 +3018,8 @@ ul, ol { list-style: none; }
   object-fit: cover;
 }
 
-.testimonial-author-carepaw h4 {
+.testimonial-author-carepaw h4,
+.testimonial-author-carepaw h3.testimonial-name {
   font-size: var(--font-size-h5);
   margin-bottom: 0;
   color: var(--color-dark);

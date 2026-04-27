@@ -58,8 +58,7 @@ h1,h2,h3{font-family:var(--font-family-heading);color:var(--color-primary)}
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
 img{max-width:100%;height:auto}
 </style>
-    <link rel="stylesheet" href="css/bundle.min.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="css/bundle.min.css"></noscript>
+    <link rel="stylesheet" href="css/bundle.min.css">
   
   <script type="application/ld+json">
   {
@@ -919,7 +918,7 @@ img{max-width:100%;height:auto}
             <div class="testimonial-author-carepaw">
               <img src="assets/images/rajesh-kumar-testimonial.webp" alt="Rajesh Kumar" loading="lazy" width="300" height="300" decoding="async">
               <div>
-                <h4>Rajesh Kumar</h4>
+                <h3 class="testimonial-name">Rajesh Kumar</h3>
                 <p>Pet Parent</p>
               </div>
             </div>
@@ -984,7 +983,7 @@ img{max-width:100%;height:auto}
                             <option value="veterinary">Veterinary Care</option>
                             <option value="daycare">Pet Daycare</option>
                           </select>
-                          <input type="date" name="date" class="form-input" required>
+                          <input aria-label="Date" type="date" name="date" class="form-input" required>
                           <button type="submit" class="btn btn-primary btn-lg">
                             Book Appointment
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1191,7 +1190,7 @@ img{max-width:100%;height:auto}
         </div>
         
         <div class="footer-column">
-          <h4>Quick Links</h4>
+          <h3 class="footer-heading">Quick Links</h3>
           <ul>
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About Us</a></li>
@@ -1203,7 +1202,7 @@ img{max-width:100%;height:auto}
         </div>
         
         <div class="footer-column">
-          <h4>Services</h4>
+          <h3 class="footer-heading">Services</h3>
           <ul>
             <li><a href="services.html#boarding">Pet Boarding</a></li>
             <li><a href="services.html#grooming">Pet Grooming</a></li>
@@ -1215,7 +1214,7 @@ img{max-width:100%;height:auto}
         </div>
         
         <div class="footer-column">
-          <h4>Contact Us</h4>
+          <h3 class="footer-heading">Contact Us</h3>
           <div class="footer-contact-item">
             <div class="footer-contact-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
