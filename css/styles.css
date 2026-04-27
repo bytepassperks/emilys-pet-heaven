@@ -4,6 +4,7 @@
   --color-primary: #4E0000;           /* rgb(78, 0, 0) - Dark maroon */
   --color-primary-light: #6B1A1A;
   --color-secondary: #FFAE01;         /* rgb(255, 174, 1) - Golden yellow */
+  --color-secondary-dark: #8B5E00;    /* WCAG AA contrast on white/cream */
   --color-secondary-hover: #E09A00;
   --color-accent: #FF8C42;            /* Orange accent */
   --color-cream: #FFECBC;             /* rgb(255, 236, 188) - Newsletter bg */
@@ -129,7 +130,7 @@ a {
   transition: color var(--transition);
 }
 
-a:hover { color: var(--color-secondary); }
+a:hover { color: var(--color-secondary-dark); }
 
 img {
   max-width: 100%;
@@ -157,7 +158,7 @@ ul, ol { list-style: none; }
   gap: var(--space-xs);
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: var(--space-md);
@@ -274,7 +275,7 @@ ul, ol { list-style: none; }
   align-items: center;
   justify-content: center;
   color: white;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .top-bar-social a:hover {
@@ -405,7 +406,7 @@ ul, ol { list-style: none; }
 
 .header-light .nav-menu a:hover,
 .header-light .nav-menu a.active {
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
 }
 
 .header-light .logo span {
@@ -428,7 +429,7 @@ ul, ol { list-style: none; }
   height: 3px;
   background: var(--color-dark);
   border-radius: 2px;
-  transition: var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition);
 }
 
 .menu-toggle.active span:nth-child(1) {
@@ -456,7 +457,7 @@ ul, ol { list-style: none; }
   font-size: var(--font-size-body);
   border: 2px solid transparent;
   cursor: pointer;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
   text-decoration: none;
 }
 
@@ -604,8 +605,8 @@ ul, ol { list-style: none; }
 }
 
 @keyframes pawPatternMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 80px 80px; }
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(80px, 80px); }
 }
 
 .hero .container {
@@ -1116,7 +1117,7 @@ ul, ol { list-style: none; }
   background: var(--color-primary);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .service-card:hover {
@@ -1282,7 +1283,7 @@ ul, ol { list-style: none; }
   background: #FFF5E6;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
   border: 2px solid rgba(245, 166, 35, 0.2);
 }
 
@@ -1469,7 +1470,7 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .testimonial-nav button:hover {
@@ -1570,7 +1571,7 @@ ul, ol { list-style: none; }
   background: var(--color-cream);
   border-radius: var(--radius-xl);
   padding: var(--space-md);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .blog-card-small:hover {
@@ -1813,7 +1814,7 @@ ul, ol { list-style: none; }
   align-items: center;
   justify-content: center;
   color: white;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .footer-social a:hover {
@@ -1976,7 +1977,7 @@ ul, ol { list-style: none; }
   border-radius: var(--radius-lg);
   font-family: inherit;
   font-size: var(--font-size-body);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
   background: white;
 }
 
@@ -2059,7 +2060,7 @@ ul, ol { list-style: none; }
   background: white;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .team-card:hover {
@@ -2113,7 +2114,7 @@ ul, ol { list-style: none; }
   padding: var(--space-xl);
   background: var(--color-cream);
   border-radius: var(--radius-xl);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .value-card:hover {
@@ -2140,7 +2141,7 @@ ul, ol { list-style: none; }
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-lg);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .value-icon svg {
@@ -2291,7 +2292,7 @@ ul, ol { list-style: none; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .faq-question:hover {
@@ -2418,7 +2419,7 @@ ul, ol { list-style: none; }
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .blog-card:hover {
@@ -2472,7 +2473,7 @@ ul, ol { list-style: none; }
   color: var(--color-primary);
   font-weight: var(--font-weight-semibold);
   font-size: var(--font-size-small);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .blog-card-link:hover {
@@ -2498,7 +2499,7 @@ ul, ol { list-style: none; }
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .contact-card:hover {
@@ -2625,7 +2626,7 @@ ul, ol { list-style: none; }
   background: white;
   border-radius: var(--radius-xl);
   border: 1px solid var(--color-border);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .feature-card:hover {
@@ -2698,7 +2699,7 @@ ul, ol { list-style: none; }
   border-radius: var(--radius-xl);
   padding: var(--space-xl);
   box-shadow: var(--shadow-md);
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .card:hover {
@@ -2736,7 +2737,7 @@ ul, ol { list-style: none; }
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .video-play-button svg {
@@ -2835,7 +2836,7 @@ ul, ol { list-style: none; }
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .pricing-card-carepaw:hover {
@@ -3046,7 +3047,7 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition);
+  transition: transform var(--transition), opacity var(--transition), color var(--transition), background-color var(--transition), box-shadow var(--transition), border-color var(--transition);
 }
 
 .testimonial-nav-carepaw button:hover {
@@ -3122,7 +3123,7 @@ ul, ol { list-style: none; }
   justify-content: center;
   color: white;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
   text-decoration: none;
   border: none;
@@ -3171,10 +3172,12 @@ ul, ol { list-style: none; }
 
 @keyframes emergencyPulse {
   0%, 100% {
-    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
+    transform: scale(1);
+    opacity: 1;
   }
   50% {
-    box-shadow: 0 4px 30px rgba(220, 38, 38, 0.8);
+    transform: scale(1.05);
+    opacity: 0.85;
   }
 }
 
@@ -3202,7 +3205,7 @@ ul, ol { list-style: none; }
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   pointer-events: none;
 }
 
@@ -3303,7 +3306,7 @@ ul, ol { list-style: none; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.3s ease, color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .emergency-banner a:hover {
