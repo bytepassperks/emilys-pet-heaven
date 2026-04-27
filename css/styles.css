@@ -871,7 +871,7 @@ ul, ol { list-style: none; }
 }
 
 .feature-bar-item p {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
   font-size: var(--font-size-small);
 }
@@ -1792,7 +1792,7 @@ ul, ol { list-style: none; }
 }
 
 .footer-brand p {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: var(--space-lg);
   font-size: var(--font-size-small);
   line-height: 1.8;
@@ -1841,7 +1841,7 @@ ul, ol { list-style: none; }
 }
 
 .footer-column a {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.85);
   font-size: var(--font-size-small);
   transition: color var(--transition);
 }
@@ -1876,7 +1876,7 @@ ul, ol { list-style: none; }
 
 .footer-contact-item .label {
   font-size: var(--font-size-small);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
   margin-bottom: var(--space-xs);
 }
 
@@ -1897,7 +1897,7 @@ ul, ol { list-style: none; }
 }
 
 .footer-bottom p {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
   margin: 0;
   font-size: var(--font-size-small);
 }
@@ -1908,7 +1908,7 @@ ul, ol { list-style: none; }
 }
 
 .footer-bottom-links a {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
   font-size: var(--font-size-small);
 }
 

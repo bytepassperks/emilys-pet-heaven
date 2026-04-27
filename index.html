@@ -58,7 +58,8 @@ h1,h2,h3{font-family:var(--font-family-heading);color:var(--color-primary)}
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
 img{max-width:100%;height:auto}
 </style>
-    <link rel="stylesheet" href="css/bundle.min.css">
+    <link rel="stylesheet" href="css/bundle.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="css/bundle.min.css"></noscript>
   
   <script type="application/ld+json">
   {
@@ -249,6 +250,7 @@ img{max-width:100%;height:auto}
 </script>
 
   <noscript><style>.reveal-on-scroll{opacity:1!important;transform:none!important}</style></noscript>
+  <link rel="preload" as="image" href="assets/brand/logo-icon-transparent.webp" fetchpriority="high">
 </head>
 <body>
   <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
@@ -271,7 +273,7 @@ img{max-width:100%;height:auto}
               <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
             </svg>
           </div>
-          <a href="tel:+916363590332">+91 6363590332</a>
+          <a aria-label="Call us" href="tel:+916363590332">+91 6363590332</a>
         </div>
       </div>
       <div class="top-bar-right">
@@ -303,7 +305,7 @@ img{max-width:100%;height:auto}
   <header class="header">
     <div class="container">
 <a href="index.html" class="logo">
-                          <img src="assets/brand/logo-icon-transparent.webp" alt="Emily's Pet Heaven Logo" class="logo-paw" loading="lazy" width="400" height="400" decoding="async">
+                          <img src="assets/brand/logo-icon-transparent.webp" alt="Emily's Pet Heaven Logo" class="logo-paw" fetchpriority="high" width="400" height="400" decoding="async">
                           <span class="logo-text">Emily's <span class="logo-highlight">Pet Heaven</span></span>
                         </a>
       
@@ -971,11 +973,11 @@ img{max-width:100%;height:auto}
             </div>
             <h2>Schedule Your Pet's Visit Today</h2>
                         <form class="appointment-form" aria-label="Book appointment" id="appointmentForm">
-                          <input type="text" name="name" class="form-input" placeholder="Your Name" required>
-                          <input type="email" name="email" class="form-input" placeholder="Email Address" required>
-                          <input type="tel" name="phone" class="form-input" placeholder="Phone Number" required>
-                          <input type="text" name="pet-name" class="form-input" placeholder="Pet's Name" required>
-                          <select name="service" class="form-input">
+                          <input aria-label="Your Name" type="text" name="name" class="form-input" placeholder="Your Name" required>
+                          <input aria-label="Email Address" type="email" name="email" class="form-input" placeholder="Email Address" required>
+                          <input aria-label="Phone Number" type="tel" name="phone" class="form-input" placeholder="Phone Number" required>
+                          <input aria-label="Pet's Name" type="text" name="pet-name" class="form-input" placeholder="Pet's Name" required>
+                          <select aria-label="Select service" name="service" class="form-input">
                             <option value="">Select Service</option>
                             <option value="boarding">Pet Boarding</option>
                             <option value="grooming">Pet Grooming</option>
@@ -1033,7 +1035,7 @@ img{max-width:100%;height:auto}
               </div>
               <h3><a href="blog.html">Complete Guide to Dog Nutrition: What Your Pet Really Needs</a></h3>
               <p>Learn about the essential nutrients your dog needs for a healthy, happy life. From proteins to vitamins, we cover everything.</p>
-              <a href="blog.html" class="read-more">
+              <a href="blog.html" class="read-more" aria-label="Read more about dog nutrition guide">
                 Read More
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="5" y1="12" x2="19" y2="12"/>
@@ -1100,7 +1102,7 @@ img{max-width:100%;height:auto}
           <h2>Subscribe For Pet Care Tips</h2>
           <p>Get the latest pet care tips, exclusive offers, and updates delivered straight to your inbox.</p>
           <form class="newsletter-form">
-            <input type="email" class="form-input" placeholder="Enter your email address" required>
+            <input aria-label="Enter your email address" type="email" class="form-input" placeholder="Enter your email address" required>
             <button type="submit" class="btn btn-primary">
               Subscribe
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1126,7 +1128,7 @@ img{max-width:100%;height:auto}
               <polyline points="12 5 19 12 12 19"/>
             </svg>
           </a>
-          <a href="https://wa.me/919830802898?text=Hi!%20I%20want%20to%20book%20a%20service%20for%20my%20pet." class="btn btn-whatsapp btn-lg">
+          <a aria-label="Chat on WhatsApp" href="https://wa.me/919830802898?text=Hi!%20I%20want%20to%20book%20a%20service%20for%20my%20pet." class="btn btn-whatsapp btn-lg">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
@@ -1158,7 +1160,7 @@ img{max-width:100%;height:auto}
       <div class="footer-grid">
         <div class="footer-brand">
           <a href="index.html" class="footer-logo">
-            <img src="assets/brand/logo-full-cropped-white.webp?v=4" alt="Emily's Pet Heaven - Pet Boarding Barrackpore" class="footer-logo-img" loading="lazy" decoding="async">
+            <img src="assets/brand/logo-full-cropped-white.webp?v=4" alt="Emily's Pet Heaven - Pet Boarding Barrackpore" class="footer-logo-img" loading="lazy" decoding="async" width="400" height="135">
           </a>
           <p>Premium pet care services with love and expertise. Your pet's comfort and happiness is our top priority. We treat every pet like family.</p>
           <div class="footer-social" aria-label="Social media links">
@@ -1234,7 +1236,7 @@ img{max-width:100%;height:auto}
             </div>
             <div>
               <div class="label">Phone</div>
-              <a href="tel:+916363590332">+91 6363590332</a>
+              <a aria-label="Call us" href="tel:+916363590332">+91 6363590332</a>
             </div>
           </div>
           <div class="footer-contact-item">
@@ -1266,14 +1268,14 @@ img{max-width:100%;height:auto}
   <!-- Floating Contact Buttons -->
   <div class="floating-contact">
     <!-- WhatsApp Button - Priority #1 -->
-    <a href="https://wa.me/919830802898?text=Hi%20Emily's%20Pet%20Heaven!%20I'd%20like%20to%20inquire%20about%20your%20services." class="floating-btn floating-btn-whatsapp" data-tooltip="Chat on WhatsApp" target="_blank" rel="noopener">
+    <a aria-label="Chat on WhatsApp" href="https://wa.me/919830802898?text=Hi%20Emily's%20Pet%20Heaven!%20I'd%20like%20to%20inquire%20about%20your%20services." class="floating-btn floating-btn-whatsapp" data-tooltip="Chat on WhatsApp" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
       </svg>
     </a>
     
     <!-- Phone Button - Priority #2 -->
-    <a href="tel:+916363590332" class="floating-btn floating-btn-phone" data-tooltip="Call Us">
+    <a aria-label="Call us" href="tel:+916363590332" class="floating-btn floating-btn-phone" data-tooltip="Call Us">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 00-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
       </svg>
@@ -1287,7 +1289,7 @@ img{max-width:100%;height:auto}
     </a>
     
     <!-- Emergency Button - Priority #5 (24/7) -->
-    <a href="tel:+916363590332" class="floating-btn floating-btn-emergency" data-tooltip="Emergency Call 24/7">
+    <a aria-label="Call us" href="tel:+916363590332" class="floating-btn floating-btn-emergency" data-tooltip="Emergency Call 24/7">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
       </svg>

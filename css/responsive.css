@@ -385,6 +385,21 @@
     padding-top: 80px;
   }
   
+  /* ===== Logo — scale down for mobile ===== */
+  .logo .logo-paw {
+    height: 45px;
+    width: 45px;
+  }
+
+  .logo .logo-text {
+    font-size: 1.25rem;
+    line-height: 1.2;
+  }
+
+  .logo {
+    gap: 8px;
+  }
+
   /* ===== Features Bar New (CarePaw) — stack vertically on mobile ===== */
   .features-bar-new .container {
     grid-template-columns: 1fr;
@@ -708,6 +723,21 @@
     padding: 0 var(--space-sm);
   }
   
+  /* ===== Logo — even smaller on small phones ===== */
+  .logo .logo-paw {
+    height: 38px;
+    width: 38px;
+  }
+
+  .logo .logo-text {
+    font-size: 1.1rem;
+    line-height: 1.15;
+  }
+
+  .logo {
+    gap: 6px;
+  }
+
   /* ===== Features Bar New — compact on small phones ===== */
   .features-bar-new {
     padding: var(--space-md) 0;

@@ -42,9 +42,8 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/animations.css">
-  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/bundle.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="css/bundle.min.css"></noscript>
   <style>
     .blog-post-content { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
     .blog-post-header { margin-bottom: 40px; }
@@ -108,7 +107,7 @@
         </div>
         <div class="top-bar-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
-          <a href="tel:+916363590332">+91 6363590332</a>
+          <a aria-label="Call us" href="tel:+916363590332">+91 6363590332</a>
         </div>
       </div>
       <div class="top-bar-right">
@@ -120,7 +119,7 @@
   <header class="header header-light">
     <div class="container">
       <a href="index.html" class="footer-logo">
-        <img src="assets/brand/logo-full-header.webp?v=4" alt="Emily's Pet Heaven" class="footer-logo-img" loading="lazy" decoding="async">
+        <img src="assets/brand/logo-full-header.webp?v=4" alt="Emily's Pet Heaven" class="footer-logo-img" loading="lazy" decoding="async" width="400" height="135">
       </a>
       <nav class="nav" aria-label="Main navigation">
         <ul class="nav-menu">
@@ -183,7 +182,7 @@
         <div class="footer-contact">
           <h4>Contact Us</h4>
           <p>18/1 Banerjee Para Road, Nona Chandanpukur, Barrackpore, Kolkata - 700122</p>
-          <p>Phone: <a href="tel:+916363590332">+91 6363590332</a></p>
+          <p>Phone: <a aria-label="Call us" href="tel:+916363590332">+91 6363590332</a></p>
           <p>Email: <a href="mailto:contact@emilyspetheaven.com">contact@emilyspetheaven.com</a></p>
         </div>
       </div>
