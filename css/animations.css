@@ -220,65 +220,26 @@
 /* ===== ANIMATION CLASSES ===== */
 
 /* Float animation */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
 
 /* Slide animations */
-.animate-slide-left {
-  animation: slideInLeft 0.6s ease-out forwards;
-}
 
-.animate-slide-right {
-  animation: slideInRight 0.6s ease-out forwards;
-}
 
-.animate-slide-up {
-  animation: slideInUp 0.6s ease-out forwards;
-}
 
 /* Fade animations */
-.animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
-}
 
-.animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
 
-.animate-fade-in-down {
-  animation: fadeInDown 0.8s ease-out forwards;
-}
 
 /* Pulse animation */
-.animate-pulse {
-  animation: pulse 2s infinite;
-}
 
 /* Rotate animation */
-.animate-rotate {
-  animation: rotate 1s linear infinite;
-}
 
 /* Bounce animation */
-.animate-bounce {
-  animation: bounce 1s ease-in-out infinite;
-}
 
 /* Scale animation */
-.animate-scale-in {
-  animation: scaleIn 0.6s ease-out forwards;
-}
 
 /* Wiggle animation */
-.animate-wiggle {
-  animation: wiggle 0.5s ease-in-out;
-}
 
 /* Scroll indicator */
-.animate-scroll {
-  animation: scrollBounce 2s ease-in-out infinite;
-}
 
 /* ===== SCROLL-TRIGGERED ANIMATIONS ===== */
 
@@ -310,12 +271,6 @@
 /* ===== STAGGERED ANIMATIONS ===== */
 
 /* Stagger delays for multiple elements */
-.stagger-1 { animation-delay: 0s; }
-.stagger-2 { animation-delay: 0.1s; }
-.stagger-3 { animation-delay: 0.2s; }
-.stagger-4 { animation-delay: 0.3s; }
-.stagger-5 { animation-delay: 0.4s; }
-.stagger-6 { animation-delay: 0.5s; }
 
 /* Cards with staggered animation */
 .card.scroll-animate:nth-child(1) { transition-delay: 0s; }
@@ -328,96 +283,20 @@
 /* ===== HERO ANIMATIONS ===== */
 
 /* Floating paw prints container */
-.paw-prints {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 1;
-}
 
 /* Individual paw print */
-.paw-print {
-  position: absolute;
-  opacity: 0;
-  animation: float 8s ease-in-out infinite;
-  will-change: transform, opacity;
-}
 
-.paw-print:nth-child(1) {
-  left: 10%;
-  top: 20%;
-  animation-delay: 0s;
-}
 
-.paw-print:nth-child(2) {
-  left: 25%;
-  top: 60%;
-  animation-delay: 1.5s;
-}
 
-.paw-print:nth-child(3) {
-  left: 45%;
-  top: 30%;
-  animation-delay: 3s;
-}
 
-.paw-print:nth-child(4) {
-  left: 65%;
-  top: 70%;
-  animation-delay: 4.5s;
-}
 
-.paw-print:nth-child(5) {
-  left: 80%;
-  top: 25%;
-  animation-delay: 6s;
-}
 
-.paw-print:nth-child(6) {
-  left: 90%;
-  top: 55%;
-  animation-delay: 2s;
-}
 
-.paw-print:nth-child(7) {
-  left: 5%;
-  top: 75%;
-  animation-delay: 4s;
-}
 
-.paw-print:nth-child(8) {
-  left: 55%;
-  top: 85%;
-  animation-delay: 5s;
-}
 
-.paw-print svg {
-  width: 40px;
-  height: 40px;
-  fill: var(--color-accent);
-  opacity: 0.3;
-}
 
 /* Running dog */
-.running-dog {
-  position: absolute;
-  bottom: 15%;
-  left: 0;
-  z-index: 1;
-  animation: runRight 15s linear infinite;
-  will-change: transform, opacity;
-}
 
-.running-dog svg {
-  width: 80px;
-  height: 80px;
-  fill: var(--color-accent);
-  opacity: 0.4;
-}
 
 /* Hero text animation */
 .hero-content h1 {
@@ -433,30 +312,14 @@
 }
 
 /* Scroll indicator animation */
-.scroll-indicator {
-  animation: fadeIn 1s ease-out 1s backwards;
-}
 
-.scroll-indicator svg {
-  animation: scrollBounce 2s ease-in-out infinite;
-  will-change: transform;
-}
 
 /* ===== HOVER ANIMATIONS ===== */
 
 /* Card hover effects */
-.card {
-  transition: transform 0.3s ease;
-}
 
-.card:hover {
-  transform: translateY(-8px);
-}
 
 /* Icon rotation on hover */
-.card:hover .card-icon svg {
-  animation: wiggle 0.5s ease-in-out;
-}
 
 /* Button hover effects */
 .btn {
@@ -514,16 +377,7 @@
   opacity: 1;
 }
 
-.testimonial-stars svg {
-  animation: twinkle 1.5s ease-in-out infinite;
-  will-change: transform, opacity;
-}
 
-.testimonial-stars svg:nth-child(1) { animation-delay: 0s; }
-.testimonial-stars svg:nth-child(2) { animation-delay: 0.1s; }
-.testimonial-stars svg:nth-child(3) { animation-delay: 0.2s; }
-.testimonial-stars svg:nth-child(4) { animation-delay: 0.3s; }
-.testimonial-stars svg:nth-child(5) { animation-delay: 0.4s; }
 
 /* ===== MOBILE MENU ANIMATIONS ===== */
 
@@ -604,9 +458,6 @@
 }
 
 /* Success message animation */
-.success-message {
-  animation: fadeInDown 0.5s ease-out;
-}
 
 /* ===== LOADING ANIMATIONS ===== */
 
@@ -822,36 +673,10 @@
 }
 
 /* Testimonial Pink Circle Background */
-.testimonial-avatar-wrapper {
-  position: relative;
-  display: inline-block;
-}
 
-.testimonial-avatar-wrapper::before {
-  content: '';
-  position: absolute;
-  top: -30px;
-  left: -30px;
-  right: -30px;
-  bottom: -30px;
-  background: #FFD6E0;
-  border-radius: 50%;
-  z-index: -1;
-}
 
-.testimonial-sparkle {
-  animation: sparkleAnimation 2s ease-in-out infinite;
-}
 
 /* Quote marks styling */
-.testimonial-quote-mark {
-  font-size: 6rem;
-  color: var(--color-secondary);
-  font-family: Georgia, serif;
-  line-height: 0.5;
-  opacity: 0.9;
-  margin-bottom: var(--space-md);
-}
 
 /* Appointment Section Sound Wave */
 .appointment-image {
@@ -873,23 +698,7 @@
 }
 
 /* Section Label with Paw Icon */
-.section-label-paw {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 1rem;
-}
 
-.section-label-paw .paw-icon {
-  width: 20px;
-  height: 20px;
-  fill: var(--color-secondary);
-}
 
 /* Scroll Reveal Animations — Progressive Enhancement */
 /* Content visible by default for SEO crawlers, screen readers, and no-JS */
@@ -952,7 +761,4 @@ noscript .reveal-on-scroll,
   }
   
   .paw-print,
-  .running-dog {
-    display: none;
-  }
 }
