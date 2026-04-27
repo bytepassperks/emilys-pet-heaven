@@ -248,7 +248,7 @@ ul, ol { list-style: none; }
 }
 
 .top-bar-item a:hover {
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
 }
 
 .top-bar-right {
@@ -937,7 +937,7 @@ ul, ol { list-style: none; }
 .about-feature-item svg {
   width: 24px;
   height: 24px;
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
 }
 
 .about-feature-item span {
@@ -1084,7 +1084,7 @@ ul, ol { list-style: none; }
 .why-feature-icon svg {
   width: 20px;
   height: 20px;
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
 }
 
 .why-feature-item h4 {
@@ -1207,7 +1207,7 @@ ul, ol { list-style: none; }
 .pricing-card-features li svg {
   width: 20px;
   height: 20px;
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
   flex-shrink: 0;
 }
 
@@ -1814,7 +1814,7 @@ ul, ol { list-style: none; }
 }
 
 .team-card .role {
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
   font-weight: var(--font-weight-medium);
   margin-bottom: var(--space-md);
 }
@@ -1939,7 +1939,7 @@ ul, ol { list-style: none; }
 .service-features li svg {
   width: 20px;
   height: 20px;
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
   flex-shrink: 0;
 }
 
@@ -2333,7 +2333,7 @@ ul, ol { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-secondary);
+  color: var(--color-secondary-dark);
 }
 
 .feature-icon svg {
