@@ -106,6 +106,26 @@
     display: none;
   }
   
+  /* Features Bar New (CarePaw) — stack on tablet */
+  .features-bar-new .container {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .features-bar-card-dark {
+    grid-column: span 2;
+  }
+  
+  /* Peeking strip — smaller on tablet */
+  .peek {
+    height: 160px;
+  }
+  .peek-1 { height: 180px; transform: translateY(50px); }
+  .peek-2 { height: 150px; transform: translateY(40px); }
+  .peek-3 { height: 150px; transform: translateY(40px); }
+  .peek-4 { height: 150px; transform: translateY(40px); }
+  .peek-5 { height: 160px; transform: translateY(45px); }
+
   /* Navigation */
   .menu-toggle {
     display: flex;
@@ -365,6 +385,129 @@
     padding-top: 80px;
   }
   
+  /* ===== Features Bar New (CarePaw) — stack vertically on mobile ===== */
+  .features-bar-new .container {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .features-bar-card-dark {
+    grid-column: span 1;
+    padding: var(--space-lg);
+  }
+
+  .features-bar-card-dark h2 {
+    font-size: 1.25rem;
+  }
+
+  .features-bar-card-light {
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .features-bar-card-light h3 {
+    font-size: 1.125rem;
+  }
+
+  .features-bar-card-light p {
+    font-size: 0.875rem;
+  }
+
+  .feature-bar-icon-new {
+    width: 50px;
+    height: 50px;
+  }
+
+  .feature-bar-icon-new svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  /* ===== Peeking Strip — smaller pets on mobile ===== */
+  .peeking-strip {
+    gap: 0;
+    justify-content: center;
+  }
+
+  .peek {
+    height: 100px;
+  }
+  .peek-1 { height: 120px; transform: translateY(40px); }
+  .peek-2 { height: 90px; transform: translateY(35px); }
+  .peek-3 { height: 90px; transform: translateY(35px); }
+  .peek-4 { height: 90px; transform: translateY(35px); }
+  .peek-5 { height: 100px; transform: translateY(38px); }
+  
+  /* ===== Hero — reduce bottom padding for peeking ===== */
+  .hero {
+    padding-bottom: 140px;
+  }
+  
+  /* ===== About Section CarePaw — fix image sizing ===== */
+  .about-pink-circle {
+    width: 250px;
+    height: 250px;
+  }
+
+  .about-dogs-container img {
+    max-width: 280px;
+  }
+
+  .about-video-thumbnail {
+    border-radius: var(--radius-md);
+  }
+
+  .about-video-thumbnail img {
+    height: auto;
+  }
+
+  .about-features-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-sm);
+  }
+  
+  /* ===== Why Section CarePaw ===== */
+  .why-features-carepaw {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .why-feature-item-carepaw {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .why-feature-icon-carepaw {
+    width: 60px;
+    min-width: 60px;
+  }
+
+  .why-feature-icon-carepaw img {
+    width: 100%;
+    height: auto;
+  }
+  
+  /* ===== Testimonials CarePaw ===== */
+  .testimonials-grid-carepaw {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonial-quote-carepaw p {
+    font-size: 1rem;
+  }
+  
+  /* ===== Blog Section on homepage ===== */
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-card-featured-image {
+    height: 200px;
+  }
+
+  .blog-list {
+    grid-template-columns: 1fr;
+  }
+  
   .logo {
     font-size: 1.25rem;
   }
@@ -563,6 +706,74 @@
   
   .container {
     padding: 0 var(--space-sm);
+  }
+  
+  /* ===== Features Bar New — compact on small phones ===== */
+  .features-bar-new {
+    padding: var(--space-md) 0;
+  }
+
+  .features-bar-card {
+    padding: var(--space-md);
+    border-radius: var(--radius-lg);
+  }
+
+  .features-bar-card-dark h2 {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .features-bar-card-light h3 {
+    font-size: 1rem;
+  }
+
+  .features-bar-card-light p {
+    font-size: 0.8125rem;
+  }
+
+  .feature-bar-icon-new {
+    width: 44px;
+    height: 44px;
+  }
+  
+  /* ===== Peeking strip — even smaller on small phones ===== */
+  .peek {
+    height: 80px;
+  }
+  .peek-1 { height: 100px; transform: translateY(30px); }
+  .peek-2 { height: 75px; transform: translateY(28px); }
+  .peek-3 { height: 75px; transform: translateY(28px); }
+  .peek-4 { height: 75px; transform: translateY(28px); }
+  .peek-5 { height: 80px; transform: translateY(30px); }
+  
+  /* ===== Hero — tighter padding ===== */
+  .hero {
+    padding: var(--space-2xl) 0 120px;
+  }
+  
+  /* ===== About Section — smaller images ===== */
+  .about-pink-circle {
+    width: 200px;
+    height: 200px;
+  }
+
+  .about-dogs-container img {
+    max-width: 240px;
+  }
+  
+  /* ===== Why Section CarePaw ===== */
+  .why-feature-item-carepaw {
+    gap: var(--space-sm);
+  }
+
+  .why-feature-icon-carepaw {
+    width: 50px;
+    min-width: 50px;
+  }
+  
+  /* ===== Service cards — full width images ===== */
+  .service-card {
+    border-radius: var(--radius-lg);
   }
   
   /* Header */
