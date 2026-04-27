@@ -1,12 +1,21 @@
 // ===== EMILY PET'S HEAVEN - ANIMATIONS JAVASCRIPT =====
 
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize all animation components
-  initScrollAnimations();
-  initParallaxEffects();
-  initCounterAnimations();
+  // Critical: reveal above-fold content immediately
   initRevealOnScroll();
-  initTiltEffect('.service-card, .pricing-card, .blog-card-small');
+
+  // Defer non-critical animations to avoid blocking main thread
+  var isMobile = window.innerWidth < 768 || 'ontouchstart' in window;
+  var defer = window.requestIdleCallback || function(cb) { setTimeout(cb, 1); };
+
+  defer(function() { initScrollAnimations(); });
+  defer(function() { initCounterAnimations(); });
+
+  // Skip mouse-dependent effects on mobile (no hover/mousemove)
+  if (!isMobile) {
+    defer(function() { initParallaxEffects(); });
+    defer(function() { initTiltEffect('.service-card, .pricing-card, .blog-card-small'); });
+  }
 });
 
 // ===== REVEAL ON SCROLL INITIALIZATION =====
