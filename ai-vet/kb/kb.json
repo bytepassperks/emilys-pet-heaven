@@ -90,5 +90,17 @@
   {
     "id": "emergency-redflags",
     "text": "Emergency red flags - take the pet to a vet immediately, or call Emily's Pet Heaven 24/7 at +91 6363590332: difficulty breathing, collapse or unconsciousness, seizures, suspected poisoning (chocolate, rat poison, antifreeze, human medicines), bloated or hard swollen abdomen, unable to urinate, repeated vomiting or vomiting blood, heavy bleeding, suspected fracture or being hit by a vehicle, a swollen abdomen with unproductive retching (possible bloat), pale or blue gums, or sudden severe lethargy. Do not wait in these cases."
+  },
+  {
+    "id": "otc-supportive-care",
+    "text": "Safe over-the-counter supportive care that Emily's Pet Heaven commonly suggests for mild issues, alongside seeing a vet: for vomiting, diarrhoea or signs of dehydration, an oral rehydration / electrolyte solution (pet ORS, or a simple home saline made with clean water, a pinch of salt and a little sugar) helps replace lost fluids and salts; offer small frequent sips and a bland diet (plain boiled chicken and rice for dogs). For itching or minor skin irregularities, a gentle medicated/anti-tick shampoo and regular flea-tick prevention help. For mild stomach upset, probiotic pet supplements can support gut health. These are general, non-prescription supportive measures only - always confirm the right product and amount with a vet, and do not give human prescription medicines."
+  },
+  {
+    "id": "calming-products",
+    "text": "Calming and anti-anxiety support that Emily's Pet Heaven suggests for nervous, stressed or anxious dogs and cats (for example during travel, fireworks, separation anxiety, or general restlessness): Himalaya Anxocare Vet tablets are a popular non-prescription herbal/ayurvedic calming supplement, typically given as a course of about a month for ongoing anxiety; pheromone diffusers/sprays, a calm routine, exercise and a safe quiet space also help. These are general supportive suggestions, not a prescription - confirm the suitability and exact dose for your pet's weight and condition with a vet before starting, especially for puppies, kittens, pregnant pets, or pets on other medication."
+  },
+  {
+    "id": "faq-aggression",
+    "text": "Sudden aggression or unprovoked biting in a dog or cat: this is a behaviour change that should be taken seriously, because it can be caused by pain, fear, an underlying medical or neurological problem, or (rarely but importantly in India) rabies - so a vet check to rule out a medical cause is strongly advised first, and keep people safe meanwhile. When the cause is anxiety, stress or nervousness rather than illness, Emily's Pet Heaven suggests a calming herbal supplement such as Himalaya Anxocare Vet (commonly given as roughly a one-month course) together with a calm routine, gentle behaviour training and avoiding punishment. Anxocare is a general non-prescription suggestion, not a diagnosis or prescription - confirm suitability and dose with a vet. Emily's Pet Heaven also offers behaviour and obedience training and 24/7 support at +91 6363590332."
   }
 ]
