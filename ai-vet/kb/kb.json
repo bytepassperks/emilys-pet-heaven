@@ -1,0 +1,94 @@
+[
+  {
+    "id": "about",
+    "text": "Emily's Pet Heaven is a professional pet care facility in Barrackpore, Kolkata, West Bengal, India. We provide pet boarding, grooming, daycare, dog walking, pet transport, pet sitting, training, vaccination, and 24/7 emergency veterinary support for dogs and cats. Address: 18/1 Banerjee Para Road, Nona Chandanpukur, Barrackpore, Kolkata - 700122."
+  },
+  {
+    "id": "hours",
+    "text": "Operating hours: Emily's Pet Heaven is open 24 hours a day, 7 days a week, 365 days a year. Boarding and emergency support are available round the clock."
+  },
+  {
+    "id": "contact",
+    "text": "Contact Emily's Pet Heaven. Phone / WhatsApp: +91 6363590332. Email: contact@emilyspetheaven.com. Website: https://emilyspetheaven.com. Online booking: https://cal.com/team/emily-s-pet-heaven. For emergencies, call +91 6363590332 any time (24/7)."
+  },
+  {
+    "id": "service-areas",
+    "text": "Service areas covered: Barrackpore, Barasat, Madhyamgram, Titagarh, Sodepur, Belgharia, Kanchrapara, Dum Dum, Panihati, Kolkata and across North 24 Parganas, West Bengal. Pickup and drop service is available across these areas."
+  },
+  {
+    "id": "boarding-rates",
+    "text": "Pet boarding rates (per day, 24/7 supervision): Dog Boarding Rs 449/day (includes 3 meals, fresh air-break, potty break, 1 walking). Cat Boarding Rs 349/day (separate cat area, 2 meals, litter maintenance). Dog Boarding + Training Rs 799/day (boarding plus daily training session). If the owner provides dry food, Rs 50 less per day. Boarding of 7 days or more gets a 10% discount."
+  },
+  {
+    "id": "daycare-rates",
+    "text": "Pet daycare rates: Dog Daycare Rs 249/day (morning, 12 hours, includes a meal). Cat Daycare Rs 199/day (morning, 12 hours, includes meal and litter). Safe, supervised daytime care while you are at work."
+  },
+  {
+    "id": "dog-grooming",
+    "text": "Dog grooming packages priced by size (Small / Medium / Large breeds): Basic Bath & Dry Rs 499 / Rs 799 / Rs 999. Full Grooming (Bath + Haircut) Rs 699 / Rs 1199 / Rs 1999. Nail Trimming Rs 199 (all sizes). Ear Cleaning Rs 199 (all sizes). De-shedding Treatment Rs 499 / Rs 799 / Rs 999. Spa Package (Bath + Haircut + Nail Trimming + Ear Cleaning) Rs 999 / Rs 1599 / Rs 2499. Small breeds e.g. Pomeranian, Shih Tzu; large breeds e.g. German Shepherd, Siberian Husky, Saint Bernard."
+  },
+  {
+    "id": "cat-grooming",
+    "text": "Cat grooming packages (Small / Medium-Large): Cat Bath & Dry Rs 399 / Rs 499. Cat Full Grooming (Bath + Haircut + Trimming) Rs 499 / Rs 599. Cat Nail Trimming Rs 199. Cat Ear Cleaning Rs 199. Cat De-matting Treatment Rs 399 / Rs 599."
+  },
+  {
+    "id": "pet-sitting",
+    "text": "Pet sitting and home visit rates: Dog Sitting (in home) Rs 499/visit (1 hour 30 minutes, includes feeding and walk). Cat Sitting Rs 399/visit (1 hour 30 minutes). Free within 10 km; beyond 10 km, Rs 20 per extra km."
+  },
+  {
+    "id": "dog-walking",
+    "text": "Dog walking rates: Single Walk (45 minutes) Rs 149/walk (early morning or evening). Single Walk (1 hour) Rs 329/walk (walk plus potty break, extended). Monthly Package (30 walks, 1 hour each) Rs 5549/month (about Rs 185/walk, daily walk)."
+  },
+  {
+    "id": "vaccination",
+    "text": "Vaccination and health services: Vaccine Service Rs 599 (includes basic examination; vaccine price excluded). Health Certificate Rs 499 (for travel purposes). Home Visit Vaccination Rs 999 (you can buy the vaccine or we can buy it). Free within 10 km; beyond 10 km, Rs 20 per extra km."
+  },
+  {
+    "id": "transport",
+    "text": "Pet transport rates: Pickup / Drop Rs 50 per 2 km. Safe and comfortable pet transport across Kolkata and North 24 Parganas."
+  },
+  {
+    "id": "training",
+    "text": "Pet training rates (obedience and behaviour training for dogs): Basic Obedience Rs 499/session (Sit, Stay, Come, Leash training). Puppy Training (10 sessions) Rs 3999 (socialization + basic commands). Advanced Training (10 sessions) Rs 4999 (behaviour correction + advanced). Boarding + Training (30 days) Rs 19999 (full month with daily training)."
+  },
+  {
+    "id": "policies",
+    "text": "Payment and policies: We accept UPI (Google Pay, PhonePe, Paytm) and bank transfers. Boarding requires a 50% advance. Long-term boarding (7+ days) gets a 10% discount. Cancellation: boarding cancellations 48+ hours before check-in get a full refund; within 48 hours, 50% refund; no-shows are charged the full first day. Grooming appointments can be rescheduled with 24 hours notice. Monthly grooming and membership plans are available - contact us for details."
+  },
+  {
+    "id": "registration",
+    "text": "Emily's Pet Heaven is a registered business. UDYAM Registration: UDYAM-WB-14-0256438. Trade License Application: CAF260A289068 (Barrackpore Municipality)."
+  },
+  {
+    "id": "faq-boarding-bring",
+    "text": "What to bring for boarding: your pet's regular food (optional - if you provide dry food, boarding is Rs 50/day cheaper), any current medications with instructions, vaccination records, and a familiar item like a blanket or toy to keep them comfortable. Pets should be up to date on core vaccinations before boarding."
+  },
+  {
+    "id": "faq-vomiting",
+    "text": "General guidance for a dog or cat that is vomiting: withhold food for several hours to rest the stomach while keeping fresh water available, then offer a small bland meal (plain boiled chicken and rice for dogs). Watch for warning signs. See a vet promptly if vomiting is repeated, contains blood, or is accompanied by lethargy, a swollen belly, or no urge to drink. This is general advice, not a diagnosis."
+  },
+  {
+    "id": "faq-diarrhea",
+    "text": "General guidance for diarrhoea in pets: ensure constant access to clean water to prevent dehydration, feed a small bland diet, and monitor closely. Seek a vet quickly if there is blood in the stool, the pet is very lethargic, vomiting at the same time, or it lasts more than a day, or for puppies and kittens which dehydrate fast."
+  },
+  {
+    "id": "faq-not-eating",
+    "text": "General guidance when a pet stops eating: a pet that refuses food for more than 24 hours, or is also lethargic, hiding, or showing other symptoms, should be seen by a vet, because loss of appetite can be an early sign of many illnesses. Keep them hydrated and in a calm comfortable place meanwhile. This is general advice only."
+  },
+  {
+    "id": "faq-vaccination-basics",
+    "text": "Vaccination basics: puppies and kittens need a series of core vaccinations in their first months, followed by regular boosters; dogs also need anti-rabies vaccination, which is legally important in India. Exact schedules depend on the pet's age and history, so confirm timing with a vet. Emily's Pet Heaven offers vaccination service and home-visit vaccination."
+  },
+  {
+    "id": "faq-parasites",
+    "text": "Fleas, ticks and worms: regular deworming and flea/tick prevention keep pets healthy, especially in Kolkata's warm humid climate. Signs of parasites include scratching, visible ticks, a dull coat, or worms in stool. A vet can recommend the right preventive product and dose for your pet's weight."
+  },
+  {
+    "id": "faq-heat",
+    "text": "Hot weather care in Kolkata: never leave a pet in a parked vehicle, provide shade and plenty of fresh water, walk dogs in the cooler early morning or evening, and watch for heatstroke signs such as heavy panting, drooling, weakness or collapse. Heatstroke is an emergency - cool the pet and get to a vet immediately."
+  },
+  {
+    "id": "emergency-redflags",
+    "text": "Emergency red flags - take the pet to a vet immediately, or call Emily's Pet Heaven 24/7 at +91 6363590332: difficulty breathing, collapse or unconsciousness, seizures, suspected poisoning (chocolate, rat poison, antifreeze, human medicines), bloated or hard swollen abdomen, unable to urinate, repeated vomiting or vomiting blood, heavy bleeding, suspected fracture or being hit by a vehicle, a swollen abdomen with unproductive retching (possible bloat), pale or blue gums, or sudden severe lethargy. Do not wait in these cases."
+  }
+]

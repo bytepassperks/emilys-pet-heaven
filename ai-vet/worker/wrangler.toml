@@ -1,0 +1,16 @@
+name = "emilys-ai-vet"
+main = "src/index.js"
+compatibility_date = "2025-06-01"
+
+# account_id is supplied at deploy time via the CLOUDFLARE_ACCOUNT_ID env var
+# so it is not published in this (public) repo.
+
+# Workers AI binding (Llama 4 Scout for chat, bge-m3 for embeddings)
+[ai]
+binding = "AI"
+
+[vars]
+# Comma-separated list of web origins allowed to call /chat
+ALLOWED_ORIGINS = "https://emilyspetheaven.com,https://www.emilyspetheaven.com"
+CHAT_MODEL = "@cf/meta/llama-4-scout-17b-16e-instruct"
+EMBED_MODEL = "@cf/baai/bge-m3"
