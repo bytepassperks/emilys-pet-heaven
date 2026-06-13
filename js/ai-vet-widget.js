@@ -33,11 +33,11 @@
 
   var css =
     "" +
-    "#aivet-launcher{position:fixed;left:20px;bottom:20px;z-index:99998;display:flex;align-items:center;gap:10px;background:#4e0000;color:#fff;border:none;border-radius:500px;padding:12px 18px 12px 14px;box-shadow:0 6px 22px rgba(0,0,0,.28);cursor:pointer;font-family:'Poppins',system-ui,sans-serif;font-size:15px;font-weight:600;transition:transform .25s ease,box-shadow .25s ease}" +
+    "#aivet-launcher{position:fixed;right:24px;bottom:24px;z-index:99998;display:flex;align-items:center;gap:9px;background:#4e0000;color:#fff;border:none;border-radius:500px;padding:11px 17px 11px 12px;box-shadow:0 6px 22px rgba(0,0,0,.28);cursor:pointer;font-family:'Poppins',system-ui,sans-serif;font-size:14.5px;font-weight:600;line-height:1;transition:transform .25s ease,box-shadow .25s ease}" +
     "#aivet-launcher:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.35)}" +
     "#aivet-launcher .aivet-ic{width:30px;height:30px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;background:#ffae01;color:#4e0000;border-radius:50%;font-size:17px}" +
-    "#aivet-launcher .aivet-dot{position:absolute;top:8px;left:34px;width:9px;height:9px;background:#10b981;border:2px solid #4e0000;border-radius:50%}" +
-    "#aivet-panel{position:fixed;left:20px;bottom:20px;z-index:99999;width:370px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - 40px);background:#fff;border-radius:20px;box-shadow:0 18px 60px rgba(0,0,0,.32);display:none;flex-direction:column;overflow:hidden;font-family:'Poppins',system-ui,sans-serif}" +
+    "#aivet-launcher .aivet-dot{position:absolute;top:7px;left:33px;width:9px;height:9px;background:#10b981;border:2px solid #4e0000;border-radius:50%}" +
+    "#aivet-panel{position:fixed;right:24px;bottom:24px;z-index:99999;width:374px;max-width:calc(100vw - 32px);height:560px;max-height:calc(100vh - 48px);background:#fff;border-radius:20px;box-shadow:0 18px 60px rgba(0,0,0,.32);display:none;flex-direction:column;overflow:hidden;font-family:'Poppins',system-ui,sans-serif}" +
     "#aivet-panel.aivet-open{display:flex;animation:aivetIn .22s ease}" +
     "@keyframes aivetIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}" +
     "#aivet-head{background:#4e0000;color:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px}" +
@@ -66,7 +66,7 @@
     "#aivet-input:focus{border-color:#ffae01}" +
     "#aivet-send{flex:0 0 auto;width:42px;height:42px;border-radius:50%;border:none;background:#4e0000;color:#fff;font-size:18px;cursor:pointer}" +
     "#aivet-send:disabled{opacity:.5;cursor:default}" +
-    "@media(max-width:480px){#aivet-panel{left:8px;right:8px;width:auto;bottom:8px;height:calc(100vh - 16px)}#aivet-launcher{left:12px;bottom:12px}}";
+    "@media(max-width:480px){#aivet-panel{left:8px;right:8px;width:auto;bottom:8px;top:8px;height:auto;max-height:none;border-radius:16px}#aivet-head{padding:12px 14px}#aivet-msgs{padding:12px}#aivet-launcher{right:12px;gap:8px;padding:10px 15px 10px 11px;font-size:14px}#aivet-launcher .aivet-ic{width:27px;height:27px;font-size:15px}#aivet-launcher .aivet-dot{left:30px}#aivet-input{font-size:16px}}";
 
   function injectStyle() {
     var s = el("style");
@@ -75,6 +75,26 @@
   }
 
   var panel, msgs, input, sendBtn, launcher, chipWrap;
+
+  // Position the launcher just above the site's floating contact stack
+  // (the WhatsApp/call/booking buttons), right-aligned to it. Falls back to
+  // the bottom-right corner if that stack isn't on the page.
+  function positionLauncher() {
+    if (!launcher) return;
+    var stack = document.querySelector(".floating-contact");
+    if (stack && stack.getBoundingClientRect) {
+      var r = stack.getBoundingClientRect();
+      if (r.width && r.height) {
+        launcher.style.left = "auto";
+        launcher.style.right = Math.max(8, Math.round(window.innerWidth - r.right)) + "px";
+        launcher.style.bottom = Math.round(window.innerHeight - r.top + 12) + "px";
+        return;
+      }
+    }
+    launcher.style.left = "auto";
+    launcher.style.right = "";
+    launcher.style.bottom = "";
+  }
 
   function scrollDown() {
     msgs.scrollTop = msgs.scrollHeight;
@@ -150,6 +170,7 @@
   function closePanel() {
     panel.classList.remove("aivet-open");
     launcher.style.display = "flex";
+    positionLauncher();
   }
 
   function build() {
@@ -230,6 +251,13 @@
     document.body.appendChild(panel);
 
     addMsg("bot", GREETING);
+
+    positionLauncher();
+    window.addEventListener("resize", positionLauncher);
+    window.addEventListener("load", positionLauncher);
+    // The site's floating buttons may render slightly after us; recheck.
+    setTimeout(positionLauncher, 600);
+    setTimeout(positionLauncher, 1800);
   }
 
   if (document.readyState === "loading") {
