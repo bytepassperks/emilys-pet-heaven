@@ -44,6 +44,17 @@ function detectLang(text) {
   return "English";
 }
 
+// Detect when the user explicitly asks for a reply in a specific language
+// (even if they typed the request in Latin script, e.g. "tell me in bengali").
+// Returns the target language or null when no explicit request is found.
+function detectRequestedLang(text) {
+  const t = text.toLowerCase();
+  if (/বাংলা|বাঙ্গালি|\bbangla\b|\bbengali\b/.test(t)) return "Bengali (বাংলা)";
+  if (/हिंदी|हिन्दी|হিন্দি|\bhindi\b/.test(t)) return "Hindi (हिंदी)";
+  if (/ইংরেজি|अंग्रेज|इंग्लिश|\benglish\b/.test(t)) return "English";
+  return null;
+}
+
 function cosine(a, b) {
   let dot = 0,
     na = 0,
@@ -110,10 +121,15 @@ export default {
           ? hits.map((h) => `- ${h.text}`).join("\n")
           : "(No specific business info matched. Answer general pet-care questions normally and, for business-specific questions, suggest calling +91 6363590332.)";
 
-        const lang = detectLang(message);
+        const requestedLang = detectRequestedLang(message);
+        const lang = requestedLang || detectLang(message);
+        const langReason = requestedLang
+          ? `The user explicitly asked for the answer in ${lang}`
+          : `The user's message is written in ${lang}`;
         const langDirective =
-          `IMPORTANT: The user's message is written in ${lang}. Write your ENTIRE reply, ` +
-          `including the opening disclaimer, in ${lang} only. Do not switch to any other language.`;
+          `IMPORTANT: ${langReason}. Write your ENTIRE reply, ` +
+          `including the opening disclaimer, in ${lang} only. Do not switch to any other language. ` +
+          `If a previous answer was in another language, translate it into ${lang}.`;
 
         const messages = [
           { role: "system", content: SYSTEM_TEMPLATE.replace("{{CONTEXT}}", context) },
