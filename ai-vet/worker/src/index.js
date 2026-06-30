@@ -1,5 +1,5 @@
 import KB from "./kb-embeddings.json";
-import { handlePetcard } from "./petcard.js";
+import { handlePetcard, runBackup } from "./petcard.js";
 
 const TOP_K = 5;
 const MIN_SCORE = 0.3;
@@ -157,5 +157,13 @@ export default {
     }
 
     return json({ error: "Not found" }, 404, cors);
+  },
+
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(
+      runBackup(env)
+        .then((n) => console.log(`Daily backup ok: ${n} records`))
+        .catch((e) => console.error("Daily backup failed:", String(e))),
+    );
   },
 };

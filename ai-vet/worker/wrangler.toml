@@ -23,3 +23,10 @@ EMBED_MODEL = "@cf/baai/bge-m3"
 # Admin email is not secret; the password hash + session secret are set via
 # `wrangler secret put ADMIN_PASSWORD_HASH` and `... SESSION_SECRET`.
 ADMIN_EMAIL = "emilimondal1998@gmail.com"
+# Private GitHub repo that daily backups are committed to. The PAT is a secret:
+# `wrangler secret put GITHUB_BACKUP_TOKEN`.
+BACKUP_REPO = "bytepassperks/emilys-petcards-backups"
+
+# Daily backup of the Pet Aadhaar D1 database to the private GitHub repo above.
+[triggers]
+crons = ["17 1 * * *"]

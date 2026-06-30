@@ -98,6 +98,39 @@ async function requireAdmin(request, env) {
   return data && data.e === (env.ADMIN_EMAIL || "") ? data : null;
 }
 
+// ---- Off-Cloudflare backup: dump the whole table to a private GitHub repo ----
+async function putGithubFile(repo, token, path, content, message) {
+  const api = `https://api.github.com/repos/${repo}/contents/${path}`;
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/vnd.github+json",
+    "User-Agent": "emilys-petcard-backup",
+    "Content-Type": "application/json",
+  };
+  let sha;
+  const cur = await fetch(api, { headers });
+  if (cur.status === 200) sha = (await cur.json()).sha;
+  const b64 = btoa(unescape(encodeURIComponent(content)));
+  const body = { message, content: b64 };
+  if (sha) body.sha = sha;
+  const res = await fetch(api, { method: "PUT", headers, body: JSON.stringify(body) });
+  if (!res.ok) throw new Error(`GitHub PUT ${path} ${res.status}: ${(await res.text()).slice(0, 200)}`);
+}
+
+export async function runBackup(env) {
+  if (!env.DB) throw new Error("DB not configured");
+  if (!env.BACKUP_REPO || !env.GITHUB_BACKUP_TOKEN) throw new Error("Backup not configured");
+  const { results } = await env.DB.prepare(`SELECT * FROM pets ORDER BY created_at ASC`).all();
+  const now = new Date();
+  const payload = { exportedAt: now.toISOString(), count: (results || []).length, records: results || [] };
+  const content = JSON.stringify(payload, null, 2);
+  const date = now.toISOString().slice(0, 10);
+  const msg = `Backup ${now.toISOString()} (${payload.count} records)`;
+  await putGithubFile(env.BACKUP_REPO, env.GITHUB_BACKUP_TOKEN, `backups/petcards-${date}.json`, content, msg);
+  await putGithubFile(env.BACKUP_REPO, env.GITHUB_BACKUP_TOKEN, `backups/petcards-latest.json`, content, msg);
+  return payload.count;
+}
+
 // Main entry: handle any /petcard/* route. Returns a Response, or null if the
 // path is not a petcard route (so the caller can continue its own routing).
 export async function handlePetcard(request, env, url, cors) {
@@ -239,6 +272,24 @@ export async function handlePetcard(request, env, url, cors) {
     const deleted = res.meta && res.meta.changes ? res.meta.changes : 0;
     if (!deleted) return json({ error: "Not found" }, 404, cors);
     return json({ ok: true, deleted }, 200, cors);
+  }
+
+  // ---- Admin: full export (backup) ----
+  if (path === "/petcard/admin/export" && request.method === "GET") {
+    if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
+    const { results } = await env.DB.prepare(`SELECT * FROM pets ORDER BY created_at ASC`).all();
+    return json({ ok: true, exportedAt: new Date().toISOString(), count: (results || []).length, records: results || [] }, 200, cors);
+  }
+
+  // ---- Admin: run a backup now (also runs daily via cron) ----
+  if (path === "/petcard/admin/backup-now" && request.method === "POST") {
+    if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
+    try {
+      const n = await runBackup(env);
+      return json({ ok: true, backedUp: n }, 200, cors);
+    } catch (e) {
+      return json({ error: "Backup failed", detail: String(e).slice(0, 300) }, 500, cors);
+    }
   }
 
   // ---- Public: fetch a card for the verification page ----
