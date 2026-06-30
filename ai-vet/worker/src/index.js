@@ -1,4 +1,5 @@
 import KB from "./kb-embeddings.json";
+import { handlePetcard } from "./petcard.js";
 
 const TOP_K = 5;
 const MIN_SCORE = 0.3;
@@ -10,7 +11,7 @@ const SYSTEM_TEMPLATE = `You are "AI Vet", the friendly assistant on the website
 STRICT RULES:
 1. ALWAYS reply in the SAME language the user wrote in (English, Hindi, Bengali, or Hinglish). Match their script.
 2. Begin EVERY reply with a one-line disclaimer, in the user's language, that you are an AI assistant, not a real veterinarian, and this is general advice only.
-3. Never give exact medicine names, dosages, or a definitive medical diagnosis. Give general care guidance only.
+3. You MAY suggest common, safe, over-the-counter supportive care and products that Emily's Pet Heaven recommends (for example: an oral rehydration / electrolyte saline (ORS) solution for vomiting, diarrhoea or dehydration; a bland diet; probiotics for mild stomach upset; a calming herbal supplement such as Himalaya Anxocare for anxiety, stress or anxiety-related behaviour; anti-tick shampoo or flea-tick prevention), preferring items in the CONTEXT below. BUT: never name prescription-only or human medicines, never give an exact dose for a specific pet, and never give a definitive medical diagnosis. Whenever you suggest any product or remedy, clearly tell the owner it is a general suggestion and they should confirm suitability and the correct amount with a vet first. For serious symptoms or a possible medical cause (see rule 4), tell them to see a vet before giving anything.
 4. If the situation sounds serious or like an emergency (e.g. trouble breathing, collapse, seizures, suspected poisoning, bloated/hard abdomen, repeated vomiting or vomiting blood, heavy bleeding, unable to urinate, pale gums, sudden severe weakness), tell them to see a vet immediately and that they can call Emily's Pet Heaven 24/7 at +91 6363590332.
 5. For questions about services, prices, timings, location, booking or policies, use ONLY the CONTEXT below. If the answer is not in the CONTEXT, say you are not sure and suggest contacting +91 6363590332 (call/WhatsApp). Never invent prices.
 6. Keep answers concise, warm and practical, and gently remind them to confirm with a real vet for anything important.
@@ -21,7 +22,7 @@ CONTEXT (Emily's Pet Heaven knowledge base):
 function corsHeaders(origin, allowed) {
   const headers = {
     "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400",
     Vary: "Origin",
   };
@@ -42,6 +43,17 @@ function detectLang(text) {
   if (/[\u0980-\u09FF]/.test(text)) return "Bengali (বাংলা)";
   if (/[\u0900-\u097F]/.test(text)) return "Hindi (हिंदी)";
   return "English";
+}
+
+// Detect when the user explicitly asks for a reply in a specific language
+// (even if they typed the request in Latin script, e.g. "tell me in bengali").
+// Returns the target language or null when no explicit request is found.
+function detectRequestedLang(text) {
+  const t = text.toLowerCase();
+  if (/বাংলা|বাঙ্গালি|\bbangla\b|\bbengali\b/.test(t)) return "Bengali (বাংলা)";
+  if (/हिंदी|हिन्दी|হিন্দি|\bhindi\b/.test(t)) return "Hindi (हिंदी)";
+  if (/ইংরেজি|अंग्रेज|इंग्लिश|\benglish\b/.test(t)) return "English";
+  return null;
 }
 
 function cosine(a, b) {
@@ -81,6 +93,9 @@ export default {
       return json({ ok: true, service: "Emily's Pet Heaven AI Vet", chunks: KB.length }, 200, cors);
     }
 
+    const petcardResponse = await handlePetcard(request, env, url, cors);
+    if (petcardResponse) return petcardResponse;
+
     if (url.pathname === "/chat" && request.method === "POST") {
       if (origin && !cors["Access-Control-Allow-Origin"]) {
         return json({ error: "Origin not allowed" }, 403, cors);
@@ -110,10 +125,15 @@ export default {
           ? hits.map((h) => `- ${h.text}`).join("\n")
           : "(No specific business info matched. Answer general pet-care questions normally and, for business-specific questions, suggest calling +91 6363590332.)";
 
-        const lang = detectLang(message);
+        const requestedLang = detectRequestedLang(message);
+        const lang = requestedLang || detectLang(message);
+        const langReason = requestedLang
+          ? `The user explicitly asked for the answer in ${lang}`
+          : `The user's message is written in ${lang}`;
         const langDirective =
-          `IMPORTANT: The user's message is written in ${lang}. Write your ENTIRE reply, ` +
-          `including the opening disclaimer, in ${lang} only. Do not switch to any other language.`;
+          `IMPORTANT: ${langReason}. Write your ENTIRE reply, ` +
+          `including the opening disclaimer, in ${lang} only. Do not switch to any other language. ` +
+          `If a previous answer was in another language, translate it into ${lang}.`;
 
         const messages = [
           { role: "system", content: SYSTEM_TEMPLATE.replace("{{CONTEXT}}", context) },

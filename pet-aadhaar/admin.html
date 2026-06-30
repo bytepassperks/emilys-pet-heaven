@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+  <title>Pet Aadhaar — Admin | Emily's Pet Heaven</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../assets/brand/logo-icon-transparent.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--maroon:#4E0000;--golden:#FFAE01;--saffron:#FF9933;--green:#138808}
+    body{font-family:'Poppins',sans-serif;color:#2b2b2b;background:linear-gradient(135deg,#FFF5E1,#FFE8CC 55%,#FFF0D4);min-height:100vh}
+    .wrap{max-width:1000px;margin:0 auto;padding:0 14px 50px}
+    header{background:var(--maroon);color:#fff;padding:12px 0}
+    header .wrap{display:flex;align-items:center;justify-content:space-between}
+    header .brand{font-family:'Fredoka';color:var(--golden);font-weight:600;display:flex;gap:8px;align-items:center}
+    header img{height:34px}
+    header button{background:transparent;border:1px solid #FFECBC;color:#FFECBC;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:.85rem}
+    .card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.08);margin-top:16px}
+    h2{font-family:'Fredoka';color:var(--maroon);font-size:1.15rem;margin-bottom:12px}
+    label{display:block;font-size:.82rem;font-weight:600;color:#444;margin:8px 0 4px}
+    input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid #e4d4b6;border-radius:10px;font-size:16px;font-family:inherit;background:#fffdf8}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--saffron)}
+    textarea{resize:vertical;min-height:56px}
+    .btn{display:inline-flex;gap:6px;align-items:center;justify-content:center;padding:11px 14px;border-radius:10px;font-weight:700;cursor:pointer;border:none;text-decoration:none;font-size:.92rem}
+    .btn-primary{background:var(--maroon);color:#fff}
+    .btn-green{background:var(--green);color:#fff}
+    .btn-ghost{background:#fff;color:var(--maroon);border:1.5px solid var(--golden)}
+    .btn-red{background:#fff;color:#b3261e;border:1.5px solid #f0a9a3}
+    .btn-sm{padding:7px 10px;font-size:.8rem;border-radius:8px}
+    .login{max-width:380px;margin:60px auto}
+    .err{color:#b3261e;font-size:.85rem;margin-top:8px;min-height:18px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:860px){.grid{grid-template-columns:1fr}}
+    canvas#prev{width:100%;height:auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+    .row-actions{display:flex;gap:6px;flex-wrap:wrap}
+    .result{background:#f4fff0;border:1px solid #bfe3b0;border-radius:10px;padding:10px;margin-top:10px;font-size:.85rem}
+    .result a{color:var(--maroon);font-weight:600;word-break:break-all}
+    .toolbar{display:flex;gap:8px;margin-bottom:10px}
+    .toolbar input{flex:1}
+    table{width:100%;border-collapse:collapse;font-size:.86rem}
+    th,td{text-align:left;padding:8px 6px;border-bottom:1px solid #eee;vertical-align:middle}
+    th{color:#8a6d3b;font-weight:600}
+    .thumb{width:42px;height:42px;border-radius:8px;object-fit:cover;background:#eee}
+    .pill{font-size:.72rem;padding:2px 8px;border-radius:999px;font-weight:700}
+    .pill.ordered{background:#fff3e0;color:#b26a00}
+    .pill.shipped{background:#e7f6e7;color:#1b7e1b}
+    .hide{display:none}
+    .mode-banner{background:#fff4e6;border:1px solid #ffd8a8;border-radius:8px;padding:8px 10px;font-size:.82rem;color:#8a4b00;margin-bottom:10px}
+    @media(max-width:860px){table thead{display:none}table,tbody,tr,td{display:block;width:100%}tr{border:1px solid #eee;border-radius:10px;margin-bottom:10px;padding:8px}td{border:none;padding:4px 6px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="brand"><img src="../assets/brand/logo-icon-transparent.webp" alt="" />Pet Aadhaar Admin</span>
+      <button id="logoutBtn" class="hide">Log out</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- LOGIN -->
+    <div id="loginView" class="card login">
+      <h2>Admin login</h2>
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" placeholder="admin email" />
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="password" />
+      <button id="loginBtn" class="btn btn-primary" style="width:100%;margin-top:14px">Log in</button>
+      <div class="err" id="loginErr"></div>
+    </div>
+
+    <!-- PANEL -->
+    <div id="panel" class="hide">
+      <div class="grid">
+        <div class="card">
+          <h2 id="formTitle">Create a Pet Aadhaar Card</h2>
+          <div id="editBanner" class="mode-banner hide"></div>
+          <label for="aPhoto">Pet photo</label>
+          <input id="aPhoto" type="file" accept="image/*" />
+          <label for="aName">Pet name *</label>
+          <input id="aName" maxlength="40" placeholder="e.g. Leo" />
+          <label for="aOwner">Owner's name</label>
+          <input id="aOwner" maxlength="40" />
+          <label for="aBreed">Breed</label>
+          <input id="aBreed" maxlength="40" />
+          <label for="aGender">Gender</label>
+          <select id="aGender"><option value="">Select</option><option>Male</option><option>Female</option></select>
+          <label for="aDob">Date of birth</label>
+          <input id="aDob" maxlength="20" placeholder="e.g. 12.07.2024" />
+          <label for="aAddress">Address</label>
+          <textarea id="aAddress" maxlength="120"></textarea>
+          <label for="aPhone">Owner phone (for lost &amp; found)</label>
+          <input id="aPhone" maxlength="20" placeholder="+91 …" />
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <button id="saveBtn" class="btn btn-primary" style="flex:1">Generate card</button>
+            <button id="cancelEdit" class="btn btn-ghost hide">Cancel</button>
+          </div>
+          <div class="err" id="formErr"></div>
+          <div id="resultBox" class="result hide"></div>
+        </div>
+
+        <div class="card">
+          <h2>Preview</h2>
+          <canvas id="prev" width="1536" height="1024"></canvas>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button id="dlPng" class="btn btn-ghost" style="flex:1">⬇ Download soft copy (PNG)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>All cards</h2>
+        <div class="toolbar">
+          <input id="search" placeholder="Search name, owner, Pet ID, phone…" />
+          <button id="refreshBtn" class="btn btn-ghost btn-sm">Refresh</button>
+        </div>
+        <table>
+          <thead><tr><th></th><th>Pet / Owner</th><th>Pet ID</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <canvas id="dlCanvas" width="1536" height="1024" class="hide"></canvas>
+
+  <script src="../js/qrcode.min.js"></script>
+  <script src="../js/petcard-card.js"></script>
+  <script>
+    (function () {
+      var TOKEN_KEY = "pc_token";
+      var token = sessionStorage.getItem(TOKEN_KEY) || "";
+      var editId = null;
+      var photoUrl = "";
+      var lastCard = null; // {petNo,id,...} of the card currently in preview
+
+      var $ = function (id) { return document.getElementById(id); };
+      var loginView = $("loginView"), panel = $("panel");
+
+      function show(authed) {
+        loginView.classList.toggle("hide", authed);
+        panel.classList.toggle("hide", !authed);
+        $("logoutBtn").classList.toggle("hide", !authed);
+      }
+
+      function api(path, opts) {
+        opts = opts || {};
+        opts.headers = Object.assign({ "Content-Type": "application/json" }, opts.headers || {});
+        if (token) opts.headers["Authorization"] = "Bearer " + token;
+        return fetch(PetCard.API_BASE + path, opts).then(function (r) {
+          return r.json().then(function (j) { return { ok: r.ok, status: r.status, body: j }; });
+        });
+      }
+
+      // ---- Login ----
+      $("loginBtn").addEventListener("click", function () {
+        $("loginErr").textContent = "";
+        api("/petcard/admin/login", { method: "POST", body: JSON.stringify({ email: $("email").value.trim(), password: $("password").value }) })
+          .then(function (res) {
+            if (res.ok && res.body.token) {
+              token = res.body.token; sessionStorage.setItem(TOKEN_KEY, token);
+              show(true); loadList(); renderPreview();
+            } else { $("loginErr").textContent = res.body.error || "Login failed"; }
+          })
+          .catch(function () { $("loginErr").textContent = "Network error"; });
+      });
+      $("password").addEventListener("keydown", function (e) { if (e.key === "Enter") $("loginBtn").click(); });
+
+      $("logoutBtn").addEventListener("click", function () { sessionStorage.removeItem(TOKEN_KEY); token = ""; show(false); });
+
+      // ---- Form / preview ----
+      function readForm() {
+        return {
+          name: $("aName").value.trim(), owner: $("aOwner").value.trim(), breed: $("aBreed").value.trim(),
+          gender: $("aGender").value.trim(), dob: $("aDob").value.trim(), address: $("aAddress").value.trim(),
+          phone: $("aPhone").value.trim()
+        };
+      }
+      function renderPreview() {
+        var f = readForm();
+        var data = Object.assign({}, f, {
+          photoUrl: photoUrl,
+          petNo: lastCard ? lastCard.petNo : "0000 0000 0000",
+          verifyUrl: lastCard ? PetCard.verifyUrlFor(lastCard.id) : (PetCard.SITE + "/pet-aadhaar/")
+        });
+        PetCard.renderCard($("prev"), data, { templateUrl: "../assets/petcard/template.png" });
+      }
+      var t; ["aName","aOwner","aBreed","aGender","aDob","aAddress","aPhone"].forEach(function (id) {
+        $(id).addEventListener("input", function () { clearTimeout(t); t = setTimeout(renderPreview, 120); });
+      });
+      $("aPhoto").addEventListener("change", function (e) {
+        var fl = e.target.files && e.target.files[0]; if (!fl) return;
+        PetCard.fileToCompressedDataURL(fl, 700, 0.85).then(function (u) { photoUrl = u; renderPreview(); });
+      });
+
+      function resetForm() {
+        editId = null; photoUrl = ""; lastCard = null;
+        ["aName","aOwner","aBreed","aGender","aDob","aAddress","aPhone"].forEach(function (id) { $(id).value = ""; });
+        $("aPhoto").value = "";
+        $("formTitle").textContent = "Create a Pet Aadhaar Card";
+        $("saveBtn").textContent = "Generate card";
+        $("editBanner").classList.add("hide");
+        $("cancelEdit").classList.add("hide");
+        $("resultBox").classList.add("hide");
+        renderPreview();
+      }
+      $("cancelEdit").addEventListener("click", resetForm);
+
+      // ---- Save (create or update) ----
+      $("saveBtn").addEventListener("click", function () {
+        $("formErr").textContent = "";
+        var f = readForm();
+        if (!f.name) { $("formErr").textContent = "Pet name is required"; return; }
+        var payload = Object.assign({}, f);
+        if (photoUrl) payload.photo = photoUrl;
+        if (editId) {
+          payload.id = editId;
+          api("/petcard/admin/update", { method: "POST", body: JSON.stringify(payload) }).then(function (res) {
+            if (res.ok) { resetForm(); loadList(); }
+            else handleAuth(res, "formErr");
+          });
+        } else {
+          api("/petcard/admin/create", { method: "POST", body: JSON.stringify(payload) }).then(function (res) {
+            if (res.ok) {
+              lastCard = { id: res.body.id, petNo: res.body.petNo };
+              renderPreview();
+              var url = PetCard.verifyUrlFor(res.body.id);
+              $("resultBox").classList.remove("hide");
+              $("resultBox").innerHTML = "✅ Card created — Pet ID <b>" + res.body.petNo + "</b><br>Verify URL: <a href='" + url + "' target='_blank'>" + url + "</a><br><span style='color:#666'>Download the soft copy on the right, then print &amp; laminate.</span>";
+              loadList();
+            } else handleAuth(res, "formErr");
+          });
+        }
+      });
+
+      function handleAuth(res, errEl) {
+        if (res.status === 401) { sessionStorage.removeItem(TOKEN_KEY); token = ""; show(false); }
+        else if (errEl) $(errEl).textContent = (res.body && res.body.error) || "Error";
+      }
+
+      // ---- Download soft copy ----
+      $("dlPng").addEventListener("click", function () {
+        var name = (readForm().name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+        var no = lastCard ? "-" + lastCard.petNo.replace(/\s/g, "") : "";
+        var link = document.createElement("a");
+        link.download = "pet-aadhaar-" + name + no + ".png";
+        link.href = $("prev").toDataURL("image/png");
+        link.click();
+      });
+
+      // ---- List ----
+      function statusPill(s) { return "<span class='pill " + (s === "shipped" ? "shipped" : "ordered") + "'>" + (s === "shipped" ? "Shipped" : "Ordered") + "</span>"; }
+
+      function loadList() {
+        var q = $("search").value.trim();
+        api("/petcard/admin/list" + (q ? "?q=" + encodeURIComponent(q) : ""), { method: "GET" }).then(function (res) {
+          if (!res.ok) { handleAuth(res); return; }
+          var items = res.body.items || [];
+          if (!items.length) { $("rows").innerHTML = "<tr><td colspan='5'>No cards yet.</td></tr>"; return; }
+          $("rows").innerHTML = items.map(function (it) {
+            var img = it.photo ? "<img class='thumb' src='" + it.photo + "' alt=''>" : "<div class='thumb'></div>";
+            return "<tr>" +
+              "<td>" + img + "</td>" +
+              "<td><b>" + esc(it.name) + "</b><br><span style='color:#888'>" + esc(it.owner || "") + "</span></td>" +
+              "<td>" + esc(it.petNo) + "</td>" +
+              "<td>" + statusPill(it.status) + "</td>" +
+              "<td><div class='row-actions'>" +
+                "<a class='btn btn-ghost btn-sm' href='../pet/?id=" + it.id + "' target='_blank'>View</a>" +
+                "<button class='btn btn-ghost btn-sm' data-act='dl' data-id='" + it.id + "'>Download</button>" +
+                "<button class='btn btn-ghost btn-sm' data-act='edit' data-id='" + it.id + "'>Edit</button>" +
+                "<button class='btn btn-green btn-sm' data-act='ship' data-id='" + it.id + "'>" + (it.status === "shipped" ? "Mark ordered" : "Mark shipped") + "</button>" +
+                "<button class='btn btn-red btn-sm' data-act='del' data-id='" + it.id + "'>Delete</button>" +
+              "</div></td></tr>";
+          }).join("");
+          window.__items = items;
+        });
+      }
+      function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+      $("rows").addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-act]"); if (!btn) return;
+        var id = btn.getAttribute("data-id"); var act = btn.getAttribute("data-act");
+        var item = (window.__items || []).filter(function (x) { return x.id === id; })[0];
+        if (act === "del") {
+          if (!confirm("Delete this card permanently? The QR will stop working.")) return;
+          api("/petcard/admin/delete", { method: "POST", body: JSON.stringify({ id: id }) }).then(function (res) { if (res.ok) loadList(); else handleAuth(res); });
+        } else if (act === "ship") {
+          var ns = item && item.status === "shipped" ? "ordered" : "shipped";
+          api("/petcard/admin/update", { method: "POST", body: JSON.stringify({ id: id, status: ns }) }).then(function (res) { if (res.ok) loadList(); else handleAuth(res); });
+        } else if (act === "edit") {
+          if (!item) return;
+          editId = id; lastCard = { id: item.id, petNo: item.petNo }; photoUrl = item.photo || "";
+          $("aName").value = item.name || ""; $("aOwner").value = item.owner || ""; $("aBreed").value = item.breed || "";
+          $("aGender").value = item.gender || ""; $("aDob").value = item.dob || ""; $("aAddress").value = item.address || ""; $("aPhone").value = item.phone || "";
+          $("formTitle").textContent = "Edit card";
+          $("saveBtn").textContent = "Save changes";
+          $("editBanner").classList.remove("hide"); $("editBanner").textContent = "Editing " + item.name + " · Pet ID " + item.petNo;
+          $("cancelEdit").classList.remove("hide");
+          renderPreview(); window.scrollTo({ top: 0, behavior: "smooth" });
+        } else if (act === "dl") {
+          if (!item) return;
+          var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
+          PetCard.renderCard($("dlCanvas"), data, { templateUrl: "../assets/petcard/template.png" }).then(function (cv) {
+            var link = document.createElement("a");
+            link.download = "pet-aadhaar-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-" + item.petNo.replace(/\s/g, "") + ".png";
+            link.href = cv.toDataURL("image/png"); link.click();
+          });
+        }
+      });
+
+      $("refreshBtn").addEventListener("click", loadList);
+      var st; $("search").addEventListener("input", function () { clearTimeout(st); st = setTimeout(loadList, 250); });
+
+      // ---- Init ----
+      if (token) { show(true); loadList(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(renderPreview); else renderPreview(); }
+      else show(false);
+    })();
+  </script>
+</body>
+</html>
