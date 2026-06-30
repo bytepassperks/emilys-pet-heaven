@@ -106,9 +106,11 @@
         <div class="card">
           <h2>Preview</h2>
           <canvas id="prev" width="1536" height="1024"></canvas>
-          <div style="display:flex;gap:8px;margin-top:12px">
-            <button id="dlPng" class="btn btn-ghost" style="flex:1">⬇ Download soft copy (PNG)</button>
+          <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
+            <button id="dlPng" class="btn btn-ghost" style="flex:1;min-width:160px">⬇ Download soft copy (PNG)</button>
+            <button id="dlPdf" class="btn btn-primary" style="flex:1;min-width:160px">🖨️ Download A4 PDF (print)</button>
           </div>
+          <p style="font-size:.76rem;color:#777;margin-top:8px">A4 PDF = one card at ID-card size (81 × 54 mm, fits a standard lamination pouch). Print at <b>100% / Actual size</b> (turn off “Fit to page”), then cut along the dashed line.</p>
         </div>
       </div>
 
@@ -129,6 +131,7 @@
   <canvas id="dlCanvas" width="1536" height="1024" class="hide"></canvas>
 
   <script src="../js/qrcode.min.js"></script>
+  <script src="../js/jspdf.umd.min.js"></script>
   <script src="../js/petcard-card.js"></script>
   <script>
     (function () {
@@ -252,6 +255,66 @@
         link.click();
       });
 
+      // ---- A4 print PDF: one card at ID-card size (81 x 54 mm), centered, with
+      //      a dashed cut line + corner crop marks so it can be cut & laminated. ----
+      function buildA4Pdf(canvas, filename, meta) {
+        var jsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+        if (!jsPDF) { alert("PDF library failed to load. Please refresh and try again."); return; }
+        var pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+        var PAGE_W = 210, PAGE_H = 297;
+        // Card art is 3:2; fit to 54 mm height (standard ID-card height) → 81 mm wide.
+        var cardH = 54, cardW = cardH * (canvas.width / canvas.height); // ≈ 81 mm
+        var x = (PAGE_W - cardW) / 2, y = 46;
+        var imgData = canvas.toDataURL("image/png");
+
+        // Heading.
+        pdf.setFont("helvetica", "bold"); pdf.setFontSize(15); pdf.setTextColor(78, 0, 0);
+        pdf.text("Emily's Pet Heaven — Pet Aadhaar Card", PAGE_W / 2, 20, { align: "center" });
+        pdf.setFont("helvetica", "normal"); pdf.setFontSize(9); pdf.setTextColor(90, 90, 90);
+        pdf.text("Print at 100% / Actual size (turn off \"Fit to page\"). Cut along the dashed line, then laminate.", PAGE_W / 2, 27, { align: "center" });
+
+        // Card image.
+        pdf.addImage(imgData, "PNG", x, y, cardW, cardH);
+
+        // Dashed cut border.
+        pdf.setDrawColor(120, 120, 120); pdf.setLineWidth(0.2);
+        if (pdf.setLineDashPattern) pdf.setLineDashPattern([1.2, 1.2], 0);
+        pdf.rect(x, y, cardW, cardH);
+        if (pdf.setLineDashPattern) pdf.setLineDashPattern([], 0);
+
+        // Corner crop marks (solid ticks just outside each corner).
+        var m = 4, g = 1; pdf.setLineWidth(0.3); pdf.setDrawColor(40, 40, 40);
+        var corners = [[x, y, -1, -1], [x + cardW, y, 1, -1], [x, y + cardH, -1, 1], [x + cardW, y + cardH, 1, 1]];
+        corners.forEach(function (c) {
+          var cx = c[0], cy = c[1], sx = c[2], sy = c[3];
+          pdf.line(cx + sx * g, cy, cx + sx * (g + m), cy);
+          pdf.line(cx, cy + sy * g, cx, cy + sy * (g + m));
+        });
+
+        // Caption with Pet ID / name.
+        pdf.setFontSize(9); pdf.setTextColor(60, 60, 60);
+        var cap = "ID-card size: 81 × 54 mm (fits a standard 86 × 54 mm lamination pouch)";
+        pdf.text(cap, PAGE_W / 2, y + cardH + 10, { align: "center" });
+        if (meta && (meta.petNo || meta.name)) {
+          pdf.setFont("helvetica", "bold"); pdf.setTextColor(78, 0, 0);
+          var line = (meta.name ? meta.name : "") + (meta.petNo ? "  ·  Pet ID " + meta.petNo : "");
+          pdf.text(line, PAGE_W / 2, y + cardH + 17, { align: "center" });
+        }
+
+        pdf.save(filename);
+      }
+
+      function pdfNameFor(name, petNo) {
+        var n = (name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
+        var no = petNo ? "-" + String(petNo).replace(/\s/g, "") : "";
+        return "pet-aadhaar-" + n + no + "-A4.pdf";
+      }
+
+      $("dlPdf").addEventListener("click", function () {
+        var f = readForm();
+        buildA4Pdf($("prev"), pdfNameFor(f.name, lastCard && lastCard.petNo), { name: f.name, petNo: lastCard && lastCard.petNo });
+      });
+
       // ---- List ----
       function statusPill(s) { return "<span class='pill " + (s === "shipped" ? "shipped" : "ordered") + "'>" + (s === "shipped" ? "Shipped" : "Ordered") + "</span>"; }
 
@@ -270,7 +333,8 @@
               "<td>" + statusPill(it.status) + "</td>" +
               "<td><div class='row-actions'>" +
                 "<a class='btn btn-ghost btn-sm' href='../pet/?id=" + it.id + "' target='_blank'>View</a>" +
-                "<button class='btn btn-ghost btn-sm' data-act='dl' data-id='" + it.id + "'>Download</button>" +
+                "<button class='btn btn-ghost btn-sm' data-act='dl' data-id='" + it.id + "'>PNG</button>" +
+                "<button class='btn btn-ghost btn-sm' data-act='pdf' data-id='" + it.id + "'>A4 PDF</button>" +
                 "<button class='btn btn-ghost btn-sm' data-act='edit' data-id='" + it.id + "'>Edit</button>" +
                 "<button class='btn btn-green btn-sm' data-act='ship' data-id='" + it.id + "'>" + (it.status === "shipped" ? "Mark ordered" : "Mark shipped") + "</button>" +
                 "<button class='btn btn-red btn-sm' data-act='del' data-id='" + it.id + "'>Delete</button>" +
@@ -301,13 +365,17 @@
           $("editBanner").classList.remove("hide"); $("editBanner").textContent = "Editing " + item.name + " · Pet ID " + item.petNo;
           $("cancelEdit").classList.remove("hide");
           renderPreview(); window.scrollTo({ top: 0, behavior: "smooth" });
-        } else if (act === "dl") {
+        } else if (act === "dl" || act === "pdf") {
           if (!item) return;
           var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
           PetCard.renderCard($("dlCanvas"), data, { templateUrl: "../assets/petcard/template.png" }).then(function (cv) {
-            var link = document.createElement("a");
-            link.download = "pet-aadhaar-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-" + item.petNo.replace(/\s/g, "") + ".png";
-            link.href = cv.toDataURL("image/png"); link.click();
+            if (act === "pdf") {
+              buildA4Pdf(cv, pdfNameFor(item.name, item.petNo), { name: item.name, petNo: item.petNo });
+            } else {
+              var link = document.createElement("a");
+              link.download = "pet-aadhaar-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-" + item.petNo.replace(/\s/g, "") + ".png";
+              link.href = cv.toDataURL("image/png"); link.click();
+            }
           });
         }
       });
