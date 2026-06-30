@@ -9,8 +9,17 @@ compatibility_date = "2025-06-01"
 [ai]
 binding = "AI"
 
+# Pet Aadhaar Card registry (D1)
+[[d1_databases]]
+binding = "DB"
+database_name = "emilys-petcards"
+database_id = "62e5c967-5cf0-487f-a25b-f686acdf64f8"
+
 [vars]
-# Comma-separated list of web origins allowed to call /chat
+# Comma-separated list of web origins allowed to call /chat and /petcard
 ALLOWED_ORIGINS = "https://emilyspetheaven.com,https://www.emilyspetheaven.com"
 CHAT_MODEL = "@cf/meta/llama-4-scout-17b-16e-instruct"
 EMBED_MODEL = "@cf/baai/bge-m3"
+# Admin email is not secret; the password hash + session secret are set via
+# `wrangler secret put ADMIN_PASSWORD_HASH` and `... SESSION_SECRET`.
+ADMIN_EMAIL = "emilimondal1998@gmail.com"

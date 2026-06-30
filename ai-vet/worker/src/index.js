@@ -1,4 +1,5 @@
 import KB from "./kb-embeddings.json";
+import { handlePetcard } from "./petcard.js";
 
 const TOP_K = 5;
 const MIN_SCORE = 0.3;
@@ -21,7 +22,7 @@ CONTEXT (Emily's Pet Heaven knowledge base):
 function corsHeaders(origin, allowed) {
   const headers = {
     "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Max-Age": "86400",
     Vary: "Origin",
   };
@@ -91,6 +92,9 @@ export default {
     if (url.pathname === "/health" || url.pathname === "/") {
       return json({ ok: true, service: "Emily's Pet Heaven AI Vet", chunks: KB.length }, 200, cors);
     }
+
+    const petcardResponse = await handlePetcard(request, env, url, cors);
+    if (petcardResponse) return petcardResponse;
 
     if (url.pathname === "/chat" && request.method === "POST") {
       if (origin && !cors["Access-Control-Allow-Origin"]) {
