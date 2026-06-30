@@ -784,6 +784,17 @@ ul, ol { list-style: none; }
   margin-bottom: var(--space-md);
 }
 
+.features-bar-card-dark h2 {
+  color: white;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.features-bar-card-dark {
+  justify-content: center;
+}
+
 .features-bar-card-light {
   background: #FF8C42;
   position: relative;
