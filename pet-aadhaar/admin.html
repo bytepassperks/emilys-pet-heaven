@@ -73,6 +73,8 @@
     .m-num button{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--golden);background:#fff;color:var(--maroon);font-size:1.3rem;font-weight:700;cursor:pointer}
     .m-num input{width:90px;text-align:center;font-size:1.2rem;font-weight:700}
     .modal textarea.m-copy{width:100%;min-height:140px;font-size:.8rem}
+    .modal label{display:block;font-size:.76rem;font-weight:600;color:#8a6d3b;margin:8px 0 3px}
+    .modal [data-f]{width:100%;font-size:.9rem}
     .toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:1100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
     .toast{background:#2b2b2b;color:#fff;padding:11px 18px;border-radius:12px;font-size:.86rem;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:90vw}
     .toast.show{opacity:1;transform:none}
@@ -442,7 +444,7 @@
             if (e.target === ov || m === "ok") closeModal(ov);
           });
         }
-        return { toast: toast, askNumber: askNumber, askText: askText, confirm: confirmBox, choose: choose, info: info, showCopy: showCopy };
+        return { toast: toast, askNumber: askNumber, askText: askText, confirm: confirmBox, choose: choose, info: info, showCopy: showCopy, open: openModal, close: closeModal };
       })();
 
       // ---- WhatsApp order message (copy-paste template) ----
@@ -828,41 +830,68 @@
       });
 
       // ---- Shiprocket shipping ----
+      // Step 1: editable shipment details form (like Shiprocket's panel), prefilled from the order.
+      function askShipDetails(item) {
+        return new Promise(function (resolve) {
+          var pinMatch = String(item.address || "").match(/\b[1-9][0-9]{5}\b/);
+          var ov = ui.open(
+            "<h3>\ud83d\ude80 Ship " + esc(item.name || "") + " via Shiprocket</h3>" +
+            "<p>Confirm the delivery details \u2014 this is exactly what goes on the Shiprocket order. Pickup: Emily's Pet Heaven, Barrackpore (700122).</p>" +
+            "<label>Recipient name *</label><input data-f='name' maxlength='60'>" +
+            "<label>Phone (10-digit mobile) *</label><input data-f='phone' maxlength='20'>" +
+            "<label>Full delivery address *</label><textarea data-f='address' maxlength='300' style='min-height:76px'></textarea>" +
+            "<div style='display:flex;gap:10px'><div style='flex:1'><label>PIN code *</label><input data-f='pin' maxlength='6' inputmode='numeric'></div>" +
+            "<div style='flex:1'><label>No. of cards</label><input data-f='pack' type='number' min='1' value='1'></div></div>" +
+            "<div class='m-actions'><button class='btn btn-ghost' data-m='cancel'>Cancel</button><button class='btn btn-primary' data-m='ok'>Check courier rates \u2192</button></div>");
+          var f = function (k) { return ov.querySelector("[data-f=" + k + "]"); };
+          f("name").value = item.owner || "";
+          f("phone").value = item.phone || "";
+          f("address").value = item.address || "";
+          f("pin").value = pinMatch ? pinMatch[0] : "";
+          function finish(v) { ui.close(ov); resolve(v); }
+          ov.addEventListener("click", function (e) {
+            var m = e.target.getAttribute && e.target.getAttribute("data-m");
+            if (e.target === ov || m === "cancel") finish(null);
+            else if (m === "ok") {
+              var d = { name: f("name").value.trim(), phone: f("phone").value.trim(), address: f("address").value.trim(), pin: f("pin").value.trim(), pack: parseInt(f("pack").value, 10) || 1 };
+              if (!d.name) { ui.toast("Recipient name is required", "err"); return; }
+              if (d.phone.replace(/\D/g, "").slice(-10).length !== 10) { ui.toast("Enter a valid 10-digit phone", "err"); return; }
+              if (!d.address) { ui.toast("Delivery address is required", "err"); return; }
+              if (!/^[1-9][0-9]{5}$/.test(d.pin)) { ui.toast("Enter a valid 6-digit PIN code", "err"); return; }
+              finish(d);
+            }
+          });
+        });
+      }
+
       function shipViaShiprocket(item, btn) {
-        var pinMatch = String(item.address || "").match(/\b[1-9][0-9]{5}\b/);
-        var pinValidate = function (v) { return /^[1-9][0-9]{5}$/.test(v); };
-        pinValidate.msg = "Enter a valid 6-digit PIN code";
-        var pinPromise = pinMatch ? Promise.resolve(pinMatch[0]) : ui.askText("Customer PIN code", "No PIN code found in the address \u2014 enter the customer's 6-digit PIN.", "e.g. 421204", pinValidate);
-        pinPromise.then(function (pin) {
-          if (!pin) return;
+        askShipDetails(item).then(function (d) {
+          if (!d) return;
           var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Rates\u2026"; btn.disabled = true;
           var restore = function () { btn.textContent = old; btn.disabled = false; };
-          api("/petcard/admin/ship/rates", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin }) }).then(function (res) {
+          api("/petcard/admin/ship/rates", { method: "POST", body: JSON.stringify({ id: item.id, pin: d.pin }) }).then(function (res) {
             if (!res.ok) { restore(); ui.toast("Rate check failed: " + (res.body.error || res.status), "err"); return; }
             var cs = res.body.couriers || [];
-            if (!cs.length) { restore(); ui.toast("No courier serves PIN " + pin + " \u2014 use India Post instead", "err"); return; }
+            if (!cs.length) { restore(); ui.toast("No courier serves PIN " + d.pin + " \u2014 use India Post instead", "err"); return; }
             restore();
-            ui.choose("Choose a courier", "Delivery to PIN " + pin + " \u00b7 pickup from Emily's Pet Heaven, Barrackpore.", cs.map(function (c) {
+            ui.choose("Choose a courier", "Delivery to PIN " + d.pin + " \u00b7 pickup from Emily's Pet Heaven, Barrackpore.", cs.map(function (c) {
               return { label: c.name + " \u2014 \u20b9" + Math.round(c.rate), sub: (c.days ? c.days + " days" : "") + (c.etd ? " \u00b7 ETA " + c.etd : ""), value: c };
             })).then(function (sel) {
               if (!sel) return;
               var c = sel.value;
-              ui.askNumber("Cards in this shipment", "How many cards is " + (item.name || "this order") + " getting?", 1).then(function (pack) {
-                if (pack === null) return;
-                ui.confirm("Create shipment?", item.name + " \u00b7 " + pack + " card" + (pack > 1 ? "s" : "") + "\n" + c.name + " \u2014 \u20b9" + c.rate + "\nThis books a real, billable Shiprocket order.", "Create shipment").then(function (yes) {
-                  if (!yes) return;
-                  btn.innerHTML = "<span class='m-spin'></span>Creating\u2026"; btn.disabled = true;
-                  api("/petcard/admin/ship/create", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin, courierId: c.id, pack: pack }) }).then(function (r2) {
-                    restore();
-                    if (!r2.ok) { ui.info("Shipment failed", esc((r2.body.error || "") + " " + (r2.body.detail || ""))); return; }
-                    var b = r2.body;
-                    if (b.awb) {
-                      ui.info("\u2705 Shipment created", "Courier: <b>" + esc(b.courier) + "</b>\nAWB: <b>" + esc(b.awb) + "</b>\nTracking: <a href='" + esc(b.tracking) + "' target='_blank'>" + esc(b.tracking) + "</a>\n\nPickup requested from Barrackpore. Send the tracking link to the customer on WhatsApp.");
-                    } else {
-                      ui.info("Order created \u2014 action needed", "Shiprocket order <b>" + esc(String(b.orderId)) + "</b> was created but AWB assignment needs attention:\n" + esc(b.awbError || "check the Shiprocket dashboard") + "\nOpen app.shiprocket.in to complete it.");
-                    }
-                    loadList();
-                  });
+              ui.confirm("Create shipment?", "To: " + d.name + ", " + d.phone + "\n" + d.address + " \u2014 PIN " + d.pin + "\n" + d.pack + " card" + (d.pack > 1 ? "s" : "") + " \u00b7 " + c.name + " \u2014 \u20b9" + Math.round(c.rate) + "\nThis books a real, billable Shiprocket order.", "Create shipment").then(function (yes) {
+                if (!yes) return;
+                btn.innerHTML = "<span class='m-spin'></span>Creating\u2026"; btn.disabled = true;
+                api("/petcard/admin/ship/create", { method: "POST", body: JSON.stringify({ id: item.id, pin: d.pin, courierId: c.id, pack: d.pack, name: d.name, phone: d.phone, address: d.address }) }).then(function (r2) {
+                  restore();
+                  if (!r2.ok) { ui.info("Shipment failed", esc((r2.body.error || "") + " " + (r2.body.detail || ""))); return; }
+                  var b = r2.body;
+                  if (b.awb) {
+                    ui.info("\u2705 Shipment created", "Courier: <b>" + esc(b.courier) + "</b>\nAWB: <b>" + esc(b.awb) + "</b>\nTracking: <a href='" + esc(b.tracking) + "' target='_blank'>" + esc(b.tracking) + "</a>\n\nPickup requested from Barrackpore. Use Label PDF for the official Shiprocket label and send the tracking link to the customer on WhatsApp.");
+                  } else {
+                    ui.info("Order created \u2014 action needed", "Shiprocket order <b>" + esc(String(b.orderId)) + "</b> was created but AWB assignment needs attention:\n" + esc(b.awbError || "check the Shiprocket dashboard") + "\nOpen app.shiprocket.in to complete it.");
+                  }
+                  loadList();
                 });
               });
             });
