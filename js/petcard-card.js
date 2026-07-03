@@ -91,20 +91,36 @@
     return sizes[sizes.length - 1];
   }
 
-  function field(ctx, value, y, maxWidth) {
+  function fieldFont(size) {
+    return '600 ' + size + 'px Poppins, "Noto Sans Devanagari", Arial, sans-serif';
+  }
+
+  // Largest single size at which every field fits its width/line budget, so
+  // all values on the front render at one uniform size.
+  function uniformFieldSize(ctx, specs) {
+    var sizes = [38, 34, 30, 27, 24];
+    for (var s = 0; s < sizes.length; s++) {
+      ctx.font = fieldFont(sizes[s]);
+      var ok = true;
+      for (var i = 0; i < specs.length; i++) {
+        if (!specs[i].value) continue;
+        if (wrapLines(ctx, specs[i].value, specs[i].maxWidth).length > specs[i].maxLines) { ok = false; break; }
+      }
+      if (ok) return sizes[s];
+    }
+    return sizes[sizes.length - 1];
+  }
+
+  function field(ctx, value, y, maxWidth, size, maxLines) {
     if (!value) return;
     ctx.fillStyle = "#1a1a1a";
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
-    fitFont(ctx, value, maxWidth, [38, 34, 30, 27], "600");
-    var lines = wrapLines(ctx, value, maxWidth);
-    if (lines.length <= 1) {
-      ctx.fillText(lines[0] || "", VALUE_X, y, maxWidth);
-    } else {
-      lines = lines.slice(0, 2);
-      var lh = 42, startY = y - lh / 2;
-      for (var i = 0; i < lines.length; i++) ctx.fillText(lines[i], VALUE_X, startY + i * lh, maxWidth);
-    }
+    ctx.font = fieldFont(size);
+    var lines = wrapLines(ctx, value, maxWidth).slice(0, maxLines || 2);
+    var lh = size + 6;
+    var startY = y - (lines.length - 1) * lh / 2;
+    for (var i = 0; i < lines.length; i++) ctx.fillText(lines[i], VALUE_X, startY + i * lh, maxWidth);
   }
 
   // Pixelate a rectangular region of the canvas (used to blur the Pet ID on
@@ -135,13 +151,23 @@
       ctx.clearRect(0, 0, TPL_W, TPL_H);
       ctx.drawImage(tpl, 0, 0, TPL_W, TPL_H);
 
-      // Fields (Address kept clear of the QR column).
-      field(ctx, data.name, ROWS.name, 740);
-      field(ctx, data.owner, ROWS.owner, 405);
-      field(ctx, data.breed, ROWS.breed, 405);
-      field(ctx, data.gender, ROWS.gender, 405);
-      field(ctx, data.dob, ROWS.dob, 405);
-      field(ctx, data.address, ROWS.address, 385);
+      // Fields — one uniform font size chosen so the longest value still fits
+      // (owner/breed/gender/dob kept clear of the QR column, address up to 3 lines).
+      var specs = [
+        { value: data.name, maxWidth: 740, maxLines: 1 },
+        { value: data.owner, maxWidth: 405, maxLines: 2 },
+        { value: data.breed, maxWidth: 405, maxLines: 1 },
+        { value: data.gender, maxWidth: 405, maxLines: 1 },
+        { value: data.dob, maxWidth: 405, maxLines: 1 },
+        { value: data.address, maxWidth: 385, maxLines: 4 },
+      ];
+      var fsize = uniformFieldSize(ctx, specs);
+      field(ctx, data.name, ROWS.name, 740, fsize, 1);
+      field(ctx, data.owner, ROWS.owner, 405, fsize, 2);
+      field(ctx, data.breed, ROWS.breed, 405, fsize, 1);
+      field(ctx, data.gender, ROWS.gender, 405, fsize, 1);
+      field(ctx, data.dob, ROWS.dob, 405, fsize, 1);
+      field(ctx, data.address, ROWS.address, 385, fsize, 4);
 
       // Pet ID number, centered in the bottom box.
       if (data.petNo) {
