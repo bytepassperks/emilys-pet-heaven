@@ -501,6 +501,11 @@ export async function handlePetcard(request, env, url, cors) {
       });
       const labelUrl = r.body.label_url || "";
       if (!r.ok || !labelUrl) return json({ error: "Label not ready", detail: JSON.stringify(r.body).slice(0, 300) }, 502, cors);
+      if (body.raw) {
+        const pdfRes = await fetch(labelUrl);
+        if (!pdfRes.ok) return json({ error: "Label fetch failed" }, 502, cors);
+        return new Response(pdfRes.body, { status: 200, headers: { ...cors, "Content-Type": "application/pdf" } });
+      }
       return json({ ok: true, labelUrl }, 200, cors);
     } catch (e) {
       return json({ error: String(e.message || e).slice(0, 200) }, 502, cors);
