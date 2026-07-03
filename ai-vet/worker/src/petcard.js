@@ -391,14 +391,17 @@ export async function handlePetcard(request, env, url, cors) {
     const id = sanitize(body.id, 40);
     const row = await env.DB.prepare(`SELECT * FROM pets WHERE id = ?`).bind(id).first();
     if (!row) return json({ error: "Not found" }, 404, cors);
-    const pin = sanitize(body.pin, 6) || pinFrom(row.address);
+    const shipAddress = sanitize(body.address, 300) || sanitize(row.address, 300);
+    const shipName = sanitize(body.name, 80) || String(row.owner || "Pet Owner");
+    const pin = sanitize(body.pin, 6) || pinFrom(shipAddress);
     if (!pin) return json({ error: "No PIN code — pass one", needPin: true }, 400, cors);
-    const phone = phone10(row.phone);
-    if (phone.length !== 10) return json({ error: "Order has no valid 10-digit phone" }, 400, cors);
+    const phone = phone10(sanitize(body.phone, 20) || row.phone);
+    if (phone.length !== 10) return json({ error: "No valid 10-digit phone" }, 400, cors);
+    if (!shipAddress) return json({ error: "No delivery address" }, 400, cors);
     const pack = Math.max(1, parseInt(body.pack, 10) || row.pack || 1);
     const amount = 199 + (pack - 1) * 150 + 49;
     const loc = (await pinLookup(pin)) || { city: "", state: "" };
-    const ownerParts = String(row.owner || "Pet Owner").trim().split(/\s+/);
+    const ownerParts = String(shipName).trim().split(/\s+/);
     try {
       await ensureShipColumns(env);
       const orderId = `PET-${String(row.pet_no).replace(/\s/g, "")}-${Date.now().toString().slice(-5)}`;
@@ -411,7 +414,7 @@ export async function handlePetcard(request, env, url, cors) {
           pickup_location: PICKUP_LOCATION,
           billing_customer_name: ownerParts[0],
           billing_last_name: ownerParts.slice(1).join(" ") || ".",
-          billing_address: sanitize(row.address, 300),
+          billing_address: shipAddress,
           billing_city: loc.city || "India",
           billing_pincode: pin,
           billing_state: loc.state || "India",
