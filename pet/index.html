@@ -119,7 +119,7 @@
             dob: c.dob, address: c.address, petNo: c.petNo, photoUrl: c.photo,
             verifyUrl: PetCard.verifyUrlFor(c.id)
           };
-          var render = function () { PetCard.renderCard(document.getElementById("cardCanvas"), data, { templateUrl: "../assets/petcard/template.png?v=4" }); };
+          var render = function () { PetCard.renderCard(document.getElementById("cardCanvas"), data, { templateUrl: "../assets/petcard/template.png?v=5" }); };
           if (document.fonts && document.fonts.ready) document.fonts.ready.then(render); else render();
           loader.style.display = "none";
         })

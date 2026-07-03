@@ -200,8 +200,8 @@
       }
       function renderPreview() {
         var data = previewData();
-        PetCard.renderCard($("prev"), data, { templateUrl: "../assets/petcard/template.png?v=4" });
-        PetCard.renderCardBack($("prevBack"), data, { templateUrl: "../assets/petcard/template-back.png?v=4" });
+        PetCard.renderCard($("prev"), data, { templateUrl: "../assets/petcard/template.png?v=5" });
+        PetCard.renderCardBack($("prevBack"), data, { templateUrl: "../assets/petcard/template-back.png?v=5" });
       }
       var t; ["aName","aOwner","aBreed","aGender","aDob","aAddress","aPhone"].forEach(function (id) {
         $(id).addEventListener("input", function () { clearTimeout(t); t = setTimeout(renderPreview, 120); });
@@ -271,7 +271,7 @@
       $("dlPng").addEventListener("click", function () { saveCanvas($("prev"), dlName("")); });
       $("dlPngBack").addEventListener("click", function () { saveCanvas($("prevBack"), dlName("-back")); });
       $("dlReview").addEventListener("click", function () {
-        PetCard.renderCard($("dlCanvas"), previewData(), { templateUrl: "../assets/petcard/template.png?v=4", review: true }).then(function (cv) {
+        PetCard.renderCard($("dlCanvas"), previewData(), { templateUrl: "../assets/petcard/template.png?v=5", review: true }).then(function (cv) {
           saveCanvas(cv, dlName("-review"));
         });
       });
@@ -381,8 +381,8 @@
       function renderOrder(item) {
         var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
         var front = document.createElement("canvas"), back = document.createElement("canvas");
-        return PetCard.renderCard(front, data, { templateUrl: "../assets/petcard/template.png?v=4" }).then(function () {
-          return PetCard.renderCardBack(back, data, { templateUrl: "../assets/petcard/template-back.png?v=4" });
+        return PetCard.renderCard(front, data, { templateUrl: "../assets/petcard/template.png?v=5" }).then(function () {
+          return PetCard.renderCardBack(back, data, { templateUrl: "../assets/petcard/template-back.png?v=5" });
         }).then(function () {
           return { front: front, back: back, meta: { name: item.name, petNo: item.petNo } };
         });
@@ -463,9 +463,9 @@
               buildA4Pdf([order], pdfNameFor(item.name, item.petNo));
             });
           } else if (act === "dlback") {
-            PetCard.renderCardBack($("dlCanvas"), data, { templateUrl: "../assets/petcard/template-back.png?v=4" }).then(function (cv) { saveCanvas(cv, base + "-back.png"); });
+            PetCard.renderCardBack($("dlCanvas"), data, { templateUrl: "../assets/petcard/template-back.png?v=5" }).then(function (cv) { saveCanvas(cv, base + "-back.png"); });
           } else {
-            PetCard.renderCard($("dlCanvas"), data, { templateUrl: "../assets/petcard/template.png?v=4", review: act === "review" }).then(function (cv) {
+            PetCard.renderCard($("dlCanvas"), data, { templateUrl: "../assets/petcard/template.png?v=5", review: act === "review" }).then(function (cv) {
               saveCanvas(cv, base + (act === "review" ? "-review" : "") + ".png");
             });
           }
