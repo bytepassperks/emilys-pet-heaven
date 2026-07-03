@@ -203,6 +203,10 @@
           <label for="phone">Your WhatsApp / phone</label>
           <input type="tel" id="phone" maxlength="20" placeholder="e.g. +91 98xxxxxxx" />
 
+          <label for="pin">PIN code (for shipping cost)</label>
+          <input type="tel" id="pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" placeholder="e.g. 700122" />
+          <p class="note" id="shipNote" style="margin:4px 0 0">Enter your PIN code to see the exact shipping cost.</p>
+
           <label>Choose pack</label>
           <div class="pack">
             <label><input type="radio" name="pack" value="1" checked /><span><b>₹199</b>1 card</span></label>
@@ -267,6 +271,32 @@
       var form = document.getElementById("petForm");
       var PRICES = { "1": 199, "2": 349 };
       var state = { name: "", owner: "", breed: "", gender: "", dob: "", address: "", phone: "", photoUrl: "" };
+      var ship = { pin: "", cost: 0, days: "" };
+
+      var shipNote = document.getElementById("shipNote");
+      var shipTimer;
+      document.getElementById("pin").addEventListener("input", function (e) {
+        var pin = e.target.value.replace(/\D/g, "");
+        e.target.value = pin;
+        clearTimeout(shipTimer);
+        ship.pin = ""; ship.cost = 0; ship.days = "";
+        if (pin.length !== 6) { shipNote.textContent = "Enter your PIN code to see the exact shipping cost."; return; }
+        shipNote.textContent = "Checking shipping cost\u2026";
+        shipTimer = setTimeout(function () {
+          fetch(PetCard.API_BASE + "/petcard/shiprate?pin=" + pin)
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+              if (document.getElementById("pin").value !== pin) return;
+              if (d && d.ok) {
+                ship.pin = pin; ship.cost = d.shipping; ship.days = d.days ? d.days + " days" : "";
+                shipNote.textContent = "\uD83D\uDE9A Shipping to " + pin + ": \u20B9" + d.shipping + (ship.days ? " \u00B7 approx " + ship.days : "");
+              } else {
+                shipNote.textContent = (d && d.error) || "Couldn't check this PIN \u2014 we'll confirm shipping on WhatsApp.";
+              }
+            })
+            .catch(function () { shipNote.textContent = "Couldn't check shipping \u2014 we'll confirm it on WhatsApp."; });
+        }, 400);
+      });
 
       function read() {
         state.name = document.getElementById("name").value.trim();
@@ -308,16 +338,20 @@
         e.preventDefault();
         read();
         var p = pack();
+        var cardPrice = PRICES[p] || 199;
+        var packLabel = p === "2" ? "2 cards (₹349)" : "1 card (₹199)";
         var lines = [
           "Hi Emily's Pet Heaven! I'd like to order a Pet Aadhaar Card 🐾",
-          "Pack: " + (p === "2" ? "2 cards (₹349)" : "1 card (₹199)") + " + shipping",
+          ship.cost
+            ? "Pack: " + packLabel + " + shipping ₹" + ship.cost + " (PIN " + ship.pin + ") = Total ₹" + (cardPrice + ship.cost)
+            : "Pack: " + packLabel + " + shipping",
           "",
           "Pet Name: " + (state.name || "-"),
           "Owner: " + (state.owner || "-"),
           "Breed: " + (state.breed || "-"),
           "Gender: " + (state.gender || "-"),
           "DOB: " + (state.dob || "-"),
-          "Address: " + (state.address || "-"),
+          "Address: " + (state.address || "-") + (ship.pin ? " — " + ship.pin : ""),
           "My phone: " + (state.phone || "-"),
           "",
           "(I will send my pet's photo here on WhatsApp.)"
