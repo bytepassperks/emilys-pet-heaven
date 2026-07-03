@@ -887,9 +887,16 @@
                   if (!r2.ok) { ui.info("Shipment failed", esc((r2.body.error || "") + " " + (r2.body.detail || ""))); return; }
                   var b = r2.body;
                   if (b.awb) {
-                    ui.info("\u2705 Shipment created", "Courier: <b>" + esc(b.courier) + "</b>\nAWB: <b>" + esc(b.awb) + "</b>\nTracking: <a href='" + esc(b.tracking) + "' target='_blank'>" + esc(b.tracking) + "</a>\n\nPickup requested from Barrackpore. Use Label PDF for the official Shiprocket label and send the tracking link to the customer on WhatsApp.");
+                    ui.info("\u2705 Shipment " + (b.reused ? "completed" : "created"), "Courier: <b>" + esc(b.courier) + "</b>\nAWB: <b>" + esc(b.awb) + "</b>\nTracking: <a href='" + esc(b.tracking) + "' target='_blank'>" + esc(b.tracking) + "</a>\n\nPickup requested from Barrackpore. Use Label PDF for the official Shiprocket label and send the tracking link to the customer on WhatsApp.");
                   } else {
-                    ui.info("Order created \u2014 action needed", "Shiprocket order <b>" + esc(String(b.orderId)) + "</b> was created but AWB assignment needs attention:\n" + esc(b.awbError || "check the Shiprocket dashboard") + "\nOpen app.shiprocket.in to complete it.");
+                    var msg = b.awbError || "";
+                    try { var pj = JSON.parse(msg); msg = pj.message || (pj.response && pj.response.data && pj.response.data.awb_assign_error) || msg; } catch (_) {}
+                    var isWallet = /recharge|wallet|balance/i.test(msg);
+                    ui.info(isWallet ? "\ud83d\udcb0 Recharge Shiprocket wallet" : "Order created \u2014 action needed",
+                      "Shiprocket order <b>" + esc(String(b.orderId)) + "</b> is created and saved.\n" +
+                      (isWallet
+                        ? "Courier booking needs wallet balance: <b>" + esc(msg) + "</b>\n\n1. Recharge at <a href='https://app.shiprocket.in' target='_blank'>app.shiprocket.in</a> (Billing \u2192 Wallet)\n2. Come back and click \ud83d\ude80 Ship on this row again \u2014 it will assign the AWB to the SAME order (no duplicate)."
+                        : "AWB assignment needs attention: " + esc(msg) + "\nClick \ud83d\ude80 Ship again to retry (the same order is reused), or open app.shiprocket.in."));
                   }
                   loadList();
                 });
