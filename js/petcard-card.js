@@ -143,7 +143,7 @@
   // QR at the website homepage instead of the verification page.
   function renderCard(canvas, data, opts) {
     opts = opts || {};
-    var templateUrl = opts.templateUrl || "assets/petcard/template.png?v=6";
+    var templateUrl = opts.templateUrl || "assets/petcard/template.png?v=7";
     canvas.width = TPL_W; canvas.height = TPL_H;
     var ctx = canvas.getContext("2d");
 
@@ -238,7 +238,7 @@
   // pet name and Pet ID.
   function renderCardBack(canvas, data, opts) {
     opts = opts || {};
-    var templateUrl = opts.templateUrl || "assets/petcard/template-back.png?v=6";
+    var templateUrl = opts.templateUrl || "assets/petcard/template-back.png?v=7";
     canvas.width = TPL_W; canvas.height = TPL_H;
     var ctx = canvas.getContext("2d");
 
