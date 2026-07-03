@@ -98,13 +98,18 @@
   // Largest single size at which every field fits its width/line budget, so
   // all values on the front render at one uniform size.
   function uniformFieldSize(ctx, specs) {
-    var sizes = [38, 34, 30, 27, 24];
+    var sizes = [38, 34, 30, 27, 24, 22, 20, 18, 16];
     for (var s = 0; s < sizes.length; s++) {
-      ctx.font = fieldFont(sizes[s]);
+      var size = sizes[s], lh = size + 6;
+      ctx.font = fieldFont(size);
       var ok = true;
       for (var i = 0; i < specs.length; i++) {
-        if (!specs[i].value) continue;
-        if (wrapLines(ctx, specs[i].value, specs[i].maxWidth).length > specs[i].maxLines) { ok = false; break; }
+        var sp = specs[i];
+        if (!sp.value) continue;
+        var n = wrapLines(ctx, sp.value, sp.maxWidth).length;
+        if (n > sp.maxLines) { ok = false; break; }
+        // Vertical budget: the block must fit between minY and maxY.
+        if (sp.minY !== undefined && sp.minY + lh + 10 + (n - 1) * lh > sp.maxY) { ok = false; break; }
       }
       if (ok) return sizes[s];
     }
@@ -159,7 +164,7 @@
         { value: data.breed, maxWidth: 405, maxLines: 1 },
         { value: data.gender, maxWidth: 405, maxLines: 1 },
         { value: data.dob, maxWidth: 405, maxLines: 1 },
-        { value: data.address, maxWidth: 385, maxLines: 4 },
+        { value: data.address, maxWidth: 385, maxLines: 6, minY: ROWS.dob, maxY: 828 },
       ];
       var fsize = uniformFieldSize(ctx, specs);
       field(ctx, data.name, ROWS.name, 740, fsize, 1);
@@ -170,7 +175,7 @@
       // Address block stays below the DOB line and above the divider.
       ctx.font = fieldFont(fsize);
       var alh = fsize + 6;
-      var aLines = data.address ? wrapLines(ctx, data.address, 385).slice(0, 4) : [];
+      var aLines = data.address ? wrapLines(ctx, data.address, 385).slice(0, 6) : [];
       if (aLines.length) {
         var aTop = Math.max(ROWS.address - (aLines.length - 1) * alh / 2, ROWS.dob + alh + 10);
         aTop = Math.min(aTop, 828 - (aLines.length - 1) * alh);
