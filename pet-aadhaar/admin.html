@@ -281,13 +281,15 @@
       });
 
       // ---- WhatsApp order message (copy-paste template) ----
+      // 1 card = ₹199, each extra card = +₹150 (2 = ₹349, 3 = ₹499, ...)
+      function packPrice(n) { return 199 + (n - 1) * 150; }
       function waMessage(name, pack) {
-        var two = pack === 2;
-        var price = two ? 349 : 199, total = price + 49;
+        var n = Math.max(1, pack || 1);
+        var price = packPrice(n), total = price + 49;
         return "Hi! \ud83d\udc3e Thank you for ordering the *Pet Aadhaar Card* from *Emily's Pet Heaven*!\n\n" +
           "Here's your order summary:\n" +
           "\ud83d\udc36 Pet: *" + (name || "your pet") + "*\n" +
-          "\ud83d\udce6 Pack: *" + (two ? "2 cards \u2014 \u20b9349" : "1 card \u2014 \u20b9199") + "*\n" +
+          "\ud83d\udce6 Pack: *" + n + " card" + (n > 1 ? "s" : "") + " \u2014 \u20b9" + price + "*\n" +
           "\ud83d\ude9a Delivery charge: *\u20b949* (flat, anywhere in India)\n" +
           "\ud83d\udcb0 *Total: \u20b9" + total + "*\n\n" +
           "Please pay the total using the Paytm QR code in my next message (any UPI app works \u2014 Paytm / GPay / PhonePe). \ud83d\udcf2\n\n" +
@@ -299,9 +301,11 @@
           "Please confirm your *full delivery address with PIN code* \ud83d\udccd and send your pet's *photo* here if you haven't already. \u2764\ufe0f";
       }
       function copyWaFor(name, btn) {
-        var pack = prompt("How many cards in this order? (1 or 2)", "1");
+        var pack = prompt("How many cards in this order?", "1");
         if (pack === null) return;
-        var msg = waMessage(name, parseInt(pack, 10) === 2 ? 2 : 1);
+        var n = parseInt(pack, 10);
+        if (!(n >= 1)) { alert("Enter a number of cards (1 or more)."); return; }
+        var msg = waMessage(name, n);
         var done = function () {
           if (!btn) return;
           var old = btn.textContent; btn.textContent = "\u2705 Copied!";
@@ -375,9 +379,20 @@
         return "pet-aadhaar-" + n + no + "-A4.pdf";
       }
 
+      function askCopies() {
+        var c = prompt("How many copies of this card? (3 per A4 sheet, extra sheets added automatically)", "1");
+        if (c === null) return null;
+        var n = parseInt(c, 10);
+        if (!(n >= 1)) { alert("Enter a number of copies (1 or more)."); return null; }
+        return n;
+      }
+      function repeatOrder(order, n) {
+        var out = []; for (var i = 0; i < n; i++) out.push(order); return out;
+      }
       $("dlPdf").addEventListener("click", function () {
         var f = readForm();
-        buildA4Pdf([{ front: $("prev"), back: $("prevBack"), meta: { name: f.name, petNo: lastCard && lastCard.petNo } }],
+        var n = askCopies(); if (n === null) return;
+        buildA4Pdf(repeatOrder({ front: $("prev"), back: $("prevBack"), meta: { name: f.name, petNo: lastCard && lastCard.petNo } }, n),
           pdfNameFor(f.name, lastCard && lastCard.petNo));
       });
 
@@ -463,8 +478,9 @@
           var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
           var base = "pet-aadhaar-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-" + item.petNo.replace(/\s/g, "");
           if (act === "pdf") {
+            var n = askCopies(); if (n === null) return;
             renderOrder(item).then(function (order) {
-              buildA4Pdf([order], pdfNameFor(item.name, item.petNo));
+              buildA4Pdf(repeatOrder(order, n), pdfNameFor(item.name, item.petNo));
             });
           } else if (act === "dlback") {
             PetCard.renderCardBack($("dlCanvas"), data, { templateUrl: "../assets/petcard/template-back.png?v=7" }).then(function (cv) { saveCanvas(cv, base + "-back.png"); });
