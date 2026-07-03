@@ -353,6 +353,38 @@ export async function handlePetcard(request, env, url, cors) {
     }
   }
 
+  // ---- Public: shipping cost for a PIN code (rounded, cached, rate-limited) ----
+  if (path === "/petcard/shiprate" && request.method === "GET") {
+    const pin = sanitize(url.searchParams.get("pin"), 6);
+    if (!/^[1-9][0-9]{5}$/.test(pin)) return json({ error: "Invalid PIN" }, 400, cors);
+    const cache = caches.default;
+    const cacheKey = new Request("https://petcard.cache/shiprate/" + pin);
+    const hit = await cache.match(cacheKey);
+    if (hit) {
+      const cached = await hit.json();
+      return json(cached, 200, cors);
+    }
+    const ip = request.headers.get("CF-Connecting-IP") || "?";
+    const now = Date.now();
+    globalThis.__rateHits = globalThis.__rateHits || new Map();
+    const hits = (globalThis.__rateHits.get(ip) || []).filter((t) => now - t < 60000);
+    if (hits.length >= 10) return json({ error: "Too many requests — try again in a minute" }, 429, cors);
+    hits.push(now);
+    globalThis.__rateHits.set(ip, hits);
+    try {
+      const r = await srFetch(env, `/courier/serviceability/?pickup_postcode=${PICKUP_PIN}&delivery_postcode=${pin}&weight=0.05&cod=0`);
+      const list = (r.body.data && r.body.data.available_courier_companies) || [];
+      if (!list.length) return json({ error: "Delivery not available for this PIN" }, 404, cors);
+      const cheapest = list.reduce((a, b) => (a.rate <= b.rate ? a : b));
+      const shipping = Math.ceil(cheapest.rate / 5) * 5;
+      const out = { ok: true, pin, shipping, etd: cheapest.etd || "", days: cheapest.estimated_delivery_days || "" };
+      await cache.put(cacheKey, new Response(JSON.stringify(out), { headers: { "Content-Type": "application/json", "Cache-Control": "max-age=21600" } }));
+      return json(out, 200, cors);
+    } catch (e) {
+      return json({ error: String(e.message || e).slice(0, 200) }, 502, cors);
+    }
+  }
+
   // ---- Admin: Shiprocket courier rates for an order ----
   if (path === "/petcard/admin/ship/rates" && request.method === "POST") {
     if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
