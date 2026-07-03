@@ -271,8 +271,12 @@
       $("dlPng").addEventListener("click", function () { saveCanvas($("prev"), dlName("")); });
       $("dlPngBack").addEventListener("click", function () { saveCanvas($("prevBack"), dlName("-back")); });
       $("dlReview").addEventListener("click", function () {
-        PetCard.renderCard($("dlCanvas"), previewData(), { templateUrl: "../assets/petcard/template.png?v=7", review: true }).then(function (cv) {
+        var rdata = previewData();
+        PetCard.renderCard($("dlCanvas"), rdata, { templateUrl: "../assets/petcard/template.png?v=7", review: true }).then(function (cv) {
           saveCanvas(cv, dlName("-review"));
+          return PetCard.renderCardBack($("dlCanvas"), rdata, { templateUrl: "../assets/petcard/template-back.png?v=7", review: true });
+        }).then(function (cv) {
+          saveCanvas(cv, dlName("-review-back"));
         });
       });
 
@@ -467,6 +471,11 @@
           } else {
             PetCard.renderCard($("dlCanvas"), data, { templateUrl: "../assets/petcard/template.png?v=7", review: act === "review" }).then(function (cv) {
               saveCanvas(cv, base + (act === "review" ? "-review" : "") + ".png");
+              if (act === "review") {
+                return PetCard.renderCardBack($("dlCanvas"), data, { templateUrl: "../assets/petcard/template-back.png?v=7", review: true }).then(function (cv2) {
+                  saveCanvas(cv2, base + "-review-back.png");
+                });
+              }
             });
           }
         }

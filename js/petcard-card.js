@@ -274,6 +274,7 @@
       ctx.fillStyle = "#111111";
       ctx.font = '700 54px Poppins, Arial, sans-serif';
       ctx.fillText(data.petNo || "0000 0000 0000", 417, 828, 480);
+      if (opts.review) pixelate(ctx, 177, 790, 480, 60, 16);
 
       // QR inside the bordered box on the right (box ~1046..1446 x 296..722).
       var qrUrl = opts.review ? SITE : data.verifyUrl;
