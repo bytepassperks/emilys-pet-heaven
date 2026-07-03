@@ -51,6 +51,12 @@
     .pill.shipped{background:#e7f6e7;color:#1b7e1b}
     .hide{display:none}
     .mode-banner{background:#fff4e6;border:1px solid #ffd8a8;border-radius:8px;padding:8px 10px;font-size:.82rem;color:#8a4b00;margin-bottom:10px}
+    .tabs{display:flex;gap:8px;margin-top:16px}
+    .tabs button{font-family:'Fredoka';font-size:.95rem;font-weight:600;padding:10px 18px;border-radius:12px 12px 0 0;border:none;cursor:pointer;background:#f3e6cf;color:#8a6d3b}
+    .tabs button.active{background:var(--maroon);color:#fff}
+    .addr-cell{font-size:.78rem;color:#666;max-width:260px}
+    .awb-box{font-size:.78rem}
+    .awb-box a{color:var(--maroon);font-weight:700}
     .modal-overlay{position:fixed;inset:0;background:rgba(30,15,0,.45);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:1000;padding:16px;opacity:0;transition:opacity .18s}
     .modal-overlay.open{opacity:1}
     .modal{background:#fff;border-radius:16px;max-width:420px;width:100%;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.25);transform:translateY(14px) scale(.97);transition:transform .18s;max-height:85vh;overflow:auto}
@@ -99,6 +105,11 @@
 
     <!-- PANEL -->
     <div id="panel" class="hide">
+      <div class="tabs">
+        <button id="tabBtnCards" class="active">🪪 Cards</button>
+        <button id="tabBtnShipping">📦 Shipping</button>
+      </div>
+      <div id="tabCards">
       <div class="grid">
         <div class="card">
           <h2 id="formTitle">Create a Pet Aadhaar Card</h2>
@@ -153,6 +164,23 @@
           <thead><tr><th></th><th></th><th>Pet / Owner</th><th>Pet ID</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="rows"><tr><td colspan="6">Loading…</td></tr></tbody>
         </table>
+      </div>
+      </div>
+
+      <!-- SHIPPING TAB -->
+      <div id="tabShipping" class="hide">
+        <div class="card" style="margin-top:0;border-radius:0 16px 16px 16px">
+          <h2>📦 Shiprocket shipping</h2>
+          <p style="font-size:.8rem;color:#777;margin-bottom:10px">Live Shiprocket integration — pickup from <b>Emily's Pet Heaven, Barrackpore (700122)</b>, contact Emili Mondal. 🚀 Ship checks real courier rates and books the AWB; <b>Label PDF</b> prints the envelope label with the real AWB barcode. Track pulls live courier status.</p>
+          <div class="toolbar">
+            <input id="shipSearch" placeholder="Search name, owner, AWB, PIN…" />
+            <button id="shipRefresh" class="btn btn-ghost btn-sm">Refresh</button>
+          </div>
+          <table>
+            <thead><tr><th>Pet / Owner</th><th>Delivery address</th><th>Status / AWB</th><th>Actions</th></tr></thead>
+            <tbody id="shipRows"><tr><td colspan="4">Loading…</td></tr></tbody>
+          </table>
+        </div>
       </div>
     </div>
   </main>
@@ -582,7 +610,149 @@
               "</div></td></tr>";
           }).join("");
           window.__items = items;
+          renderShipList();
         });
+      }
+
+      // ---- Shipping tab ----
+      $("tabBtnCards").addEventListener("click", function () { setTab("cards"); });
+      $("tabBtnShipping").addEventListener("click", function () { setTab("shipping"); });
+      function setTab(t) {
+        $("tabCards").classList.toggle("hide", t !== "cards");
+        $("tabShipping").classList.toggle("hide", t !== "shipping");
+        $("tabBtnCards").classList.toggle("active", t === "cards");
+        $("tabBtnShipping").classList.toggle("active", t === "shipping");
+      }
+
+      function pinOf(it) { var m = String(it.address || "").match(/\b[1-9][0-9]{5}\b/); return m ? m[0] : ""; }
+
+      function renderShipList() {
+        var q = $("shipSearch").value.trim().toLowerCase();
+        var items = (window.__items || []).filter(function (it) {
+          if (!q) return true;
+          return [it.name, it.owner, it.awb, it.address, it.phone, it.petNo].join(" ").toLowerCase().indexOf(q) !== -1;
+        });
+        if (!items.length) { $("shipRows").innerHTML = "<tr><td colspan='4'>No orders found.</td></tr>"; return; }
+        $("shipRows").innerHTML = items.map(function (it) {
+          var awbHtml = it.awb
+            ? "<div class='awb-box'>" + statusPill(it.status) + "<br><a href='https://shiprocket.co/tracking/" + esc(it.awb) + "' target='_blank'>" + esc(it.courier || "AWB") + " " + esc(it.awb) + "</a></div>"
+            : statusPill(it.status);
+          return "<tr>" +
+            "<td><b>" + esc(it.name) + "</b><br><span style='color:#888;font-size:.8rem'>" + esc(it.owner || "") + "</span></td>" +
+            "<td class='addr-cell'>" + esc(it.address || "\u2014 no address \u2014") + (it.phone ? "<br>\ud83d\udcde " + esc(it.phone) : "") + (pinOf(it) ? "<br>PIN <b>" + pinOf(it) + "</b>" : "") + "</td>" +
+            "<td>" + awbHtml + "</td>" +
+            "<td><div class='row-actions'>" +
+              (it.awb ? "" : "<button class='btn btn-primary btn-sm' data-act='srship' data-id='" + it.id + "'>\ud83d\ude80 Ship</button>") +
+              "<button class='btn btn-ghost btn-sm' data-act='label' data-id='" + it.id + "'>\ud83c\udff7\ufe0f Label PDF</button>" +
+              (it.awb ? "<button class='btn btn-ghost btn-sm' data-act='track' data-id='" + it.id + "'>\ud83d\udd0d Track</button>" : "") +
+            "</div></td></tr>";
+        }).join("");
+      }
+      $("shipSearch").addEventListener("input", renderShipList);
+      $("shipRefresh").addEventListener("click", loadList);
+
+      $("shipRows").addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-act]"); if (!btn) return;
+        var id = btn.getAttribute("data-id"); var act = btn.getAttribute("data-act");
+        var item = (window.__items || []).filter(function (x) { return x.id === id; })[0];
+        if (!item) return;
+        if (act === "srship") shipViaShiprocket(item, btn);
+        else if (act === "label") buildLabelPdf(item);
+        else if (act === "track") trackShipment(item, btn);
+      });
+
+      function trackShipment(item, btn) {
+        var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Tracking\u2026"; btn.disabled = true;
+        api("/petcard/admin/ship/track?awb=" + encodeURIComponent(item.awb), { method: "GET" }).then(function (res) {
+          btn.textContent = old; btn.disabled = false;
+          if (!res.ok) { ui.toast("Tracking failed: " + (res.body.error || res.status), "err"); return; }
+          var b = res.body;
+          var acts = (b.activities || []).slice(0, 8).map(function (a) { return "\u2022 " + (a.date || "") + " \u2014 " + (a.activity || a.status || ""); }).join("\n");
+          ui.info("\ud83d\udd0d " + (item.courier || "Shipment") + " " + item.awb, "<b>Status: " + esc(b.status || "\u2014") + "</b>\n\n" + esc(acts || "No tracking activity yet \u2014 courier scan usually appears after pickup.") + "\n\n<a href='https://shiprocket.co/tracking/" + esc(item.awb) + "' target='_blank'>Open full tracking page \u2192</a>");
+        });
+      }
+
+      // ---- Shipping label PDF (envelope label with AWB Code-39 barcode) ----
+      var C39 = { "0": "nnnwwnwnn", "1": "wnnwnnnnw", "2": "nnwwnnnnw", "3": "wnwwnnnnn", "4": "nnnwwnnnw", "5": "wnnwwnnnn", "6": "nnwwwnnnn", "7": "nnnwnnwnw", "8": "wnnwnnwnn", "9": "nnwwnnwnn", "A": "wnnnnwnnw", "B": "nnwnnwnnw", "C": "wnwnnwnnn", "D": "nnnnwwnnw", "E": "wnnnwwnnn", "F": "nnwnwwnnn", "G": "nnnnnwwnw", "H": "wnnnnwwnn", "I": "nnwnnwwnn", "J": "nnnnwwwnn", "K": "wnnnnnnww", "L": "nnwnnnnww", "M": "wnwnnnnwn", "N": "nnnnwnnww", "O": "wnnnwnnwn", "P": "nnwnwnnwn", "Q": "nnnnnnwww", "R": "wnnnnnwwn", "S": "nnwnnnwwn", "T": "nnnnwnwwn", "U": "wwnnnnnnw", "V": "nwwnnnnnw", "W": "wwwnnnnnn", "X": "nwnnwnnnw", "Y": "wwnnwnnnn", "Z": "nwwnwnnnn", "-": "nwnnnnwnw", ".": "wwnnnnwnn", " ": "nwwnnnwnn", "*": "nwnnwnwnn" };
+      function drawBarcode39(pdf, text, x, y, h, targetW) {
+        var code = "*" + String(text).toUpperCase().replace(/[^0-9A-Z\-. ]/g, "-") + "*";
+        var units = 0;
+        for (var i = 0; i < code.length; i++) { var pat = C39[code[i]] || C39["-"]; for (var j = 0; j < 9; j++) units += (pat[j] === "w" ? 3 : 1); units += 1; }
+        var u = targetW / units, cx = x;
+        pdf.setFillColor(0, 0, 0);
+        for (var i2 = 0; i2 < code.length; i2++) {
+          var p = C39[code[i2]] || C39["-"];
+          for (var k = 0; k < 9; k++) {
+            var w = (p[k] === "w" ? 3 : 1) * u;
+            if (k % 2 === 0) pdf.rect(cx, y, w, h, "F");
+            cx += w;
+          }
+          cx += u;
+        }
+      }
+
+      function buildLabelPdf(item) {
+        var jsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+        if (!jsPDF) { ui.toast("PDF library failed to load \u2014 refresh and try again", "err"); return; }
+        var pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+        var W = 210, LX = 25, LW = 160, LY = 30, LH = 150;
+        // outer dashed cut border
+        if (pdf.setLineDashPattern) pdf.setLineDashPattern([1.5, 1.5], 0);
+        pdf.setDrawColor(120, 120, 120); pdf.setLineWidth(0.3);
+        pdf.rect(LX, LY, LW, LH);
+        if (pdf.setLineDashPattern) pdf.setLineDashPattern([], 0);
+        var y = LY + 10;
+        // courier + AWB header
+        pdf.setFont("helvetica", "bold"); pdf.setFontSize(13); pdf.setTextColor(0, 0, 0);
+        pdf.text((item.courier ? item.courier : "India Post"), LX + 8, y);
+        pdf.setFontSize(9); pdf.setFont("helvetica", "normal"); pdf.setTextColor(90, 90, 90);
+        pdf.text("Order date: " + new Date().toLocaleDateString("en-IN"), LX + LW - 8, y, { align: "right" });
+        y += 5;
+        if (item.awb) {
+          y += 3;
+          drawBarcode39(pdf, item.awb, LX + 20, y, 16, LW - 40);
+          y += 20;
+          pdf.setFont("courier", "bold"); pdf.setFontSize(13); pdf.setTextColor(0, 0, 0);
+          pdf.text("AWB: " + item.awb, LX + LW / 2, y, { align: "center" });
+          y += 7;
+        } else {
+          y += 5;
+          pdf.setFont("helvetica", "bold"); pdf.setFontSize(11);
+          pdf.text("AWB: ____________________ (manual booking)", LX + 8, y);
+          y += 7;
+        }
+        pdf.setDrawColor(78, 0, 0); pdf.setLineWidth(0.5);
+        pdf.line(LX + 8, y, LX + LW - 8, y); y += 8;
+        // SHIP TO
+        pdf.setFont("helvetica", "bold"); pdf.setFontSize(10); pdf.setTextColor(78, 0, 0);
+        pdf.text("SHIP TO:", LX + 8, y); y += 6;
+        pdf.setFontSize(14); pdf.setTextColor(0, 0, 0);
+        pdf.text((item.owner || item.name || "") + "", LX + 8, y); y += 6;
+        pdf.setFont("helvetica", "normal"); pdf.setFontSize(11);
+        var addr = pdf.splitTextToSize(item.address || "", LW - 16);
+        pdf.text(addr, LX + 8, y); y += addr.length * 5.4 + 2;
+        var pin = pinOf(item);
+        if (pin) { pdf.setFont("helvetica", "bold"); pdf.setFontSize(13); pdf.text("PIN: " + pin, LX + 8, y); y += 6; }
+        if (item.phone) { pdf.setFont("helvetica", "normal"); pdf.setFontSize(11); pdf.text("Phone: " + item.phone, LX + 8, y); y += 6; }
+        pdf.setFontSize(9); pdf.setTextColor(90, 90, 90);
+        pdf.text("Contents: Pet Aadhaar Card (documents) \u00b7 Pet: " + (item.name || "") + " \u00b7 Pet ID " + (item.petNo || ""), LX + 8, y);
+        // FROM (bottom of label)
+        var fy = LY + LH - 26;
+        pdf.setDrawColor(78, 0, 0); pdf.setLineWidth(0.5);
+        pdf.line(LX + 8, fy, LX + LW - 8, fy); fy += 5;
+        pdf.setFont("helvetica", "bold"); pdf.setFontSize(9); pdf.setTextColor(78, 0, 0);
+        pdf.text("FROM (return address):", LX + 8, fy); fy += 4.5;
+        pdf.setFont("helvetica", "normal"); pdf.setFontSize(9); pdf.setTextColor(0, 0, 0);
+        pdf.text("Emily's Pet Heaven \u00b7 Emili Mondal \u00b7 Ph 6363590332", LX + 8, fy); fy += 4.5;
+        pdf.text("18/1 Banerjee Para Road, Nona Chandanpukur, Barrackpore, Kolkata 700122", LX + 8, fy); fy += 4.5;
+        pdf.setTextColor(90, 90, 90);
+        pdf.text("emilyspetheaven.com \u00b7 Handle with care \u00b7 Do not bend", LX + 8, fy);
+        // footer note (outside label)
+        pdf.setFontSize(8.5); pdf.setTextColor(120, 120, 120);
+        pdf.text("Print at 100% / Actual size \u00b7 cut along the dashed border \u00b7 paste on the envelope", W / 2, LY + LH + 8, { align: "center" });
+        var fname = "shipping-label-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + (item.awb ? "-" + item.awb : "") + ".pdf";
+        pdf.save(fname);
+        ui.toast("Label PDF downloaded", "ok");
       }
       function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
