@@ -171,7 +171,7 @@
       <div id="tabShipping" class="hide">
         <div class="card" style="margin-top:0;border-radius:0 16px 16px 16px">
           <h2>📦 Shiprocket shipping</h2>
-          <p style="font-size:.8rem;color:#777;margin-bottom:10px">Live Shiprocket integration — pickup from <b>Emily's Pet Heaven, Barrackpore (700122)</b>, contact Emili Mondal. 🚀 Ship checks real courier rates and books the AWB; <b>Label PDF</b> prints the envelope label with the real AWB barcode. Track pulls live courier status.</p>
+          <p style="font-size:.8rem;color:#777;margin-bottom:10px">Live Shiprocket integration — pickup from <b>Emily's Pet Heaven, Barrackpore (700122)</b>, contact Emili Mondal. 🚀 Ship checks real courier rates and books the AWB; <b>Label PDF</b> downloads the official Shiprocket shipping label for shipped orders (fallback envelope label for manual/India Post). Track pulls live courier status.</p>
           <div class="toolbar">
             <input id="shipSearch" placeholder="Search name, owner, AWB, PIN…" />
             <button id="shipRefresh" class="btn btn-ghost btn-sm">Refresh</button>
@@ -657,9 +657,26 @@
         var item = (window.__items || []).filter(function (x) { return x.id === id; })[0];
         if (!item) return;
         if (act === "srship") shipViaShiprocket(item, btn);
-        else if (act === "label") buildLabelPdf(item);
+        else if (act === "label") downloadLabel(item, btn);
         else if (act === "track") trackShipment(item, btn);
       });
+
+      // Official Shiprocket label for shipped orders; custom fallback for manual/India Post.
+      function downloadLabel(item, btn) {
+        if (!item.awb) { buildLabelPdf(item); return; }
+        var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Label\u2026"; btn.disabled = true;
+        var restore = function () { btn.textContent = old; btn.disabled = false; };
+        api("/petcard/admin/ship/label", { method: "POST", body: JSON.stringify({ id: item.id }) }).then(function (res) {
+          restore();
+          if (res.ok && res.body.labelUrl) {
+            window.open(res.body.labelUrl, "_blank");
+            ui.toast("Official Shiprocket label opened", "ok");
+          } else {
+            ui.toast("Shiprocket label not ready \u2014 using fallback label", "err");
+            buildLabelPdf(item);
+          }
+        }).catch(function () { restore(); buildLabelPdf(item); });
+      }
 
       function trackShipment(item, btn) {
         var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Tracking\u2026"; btn.disabled = true;

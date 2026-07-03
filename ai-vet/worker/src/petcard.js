@@ -470,6 +470,32 @@ export async function handlePetcard(request, env, url, cors) {
     }
   }
 
+  // ---- Admin: official Shiprocket label PDF for a shipment ----
+  if (path === "/petcard/admin/ship/label" && request.method === "POST") {
+    if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "Invalid JSON" }, 400, cors);
+    }
+    const id = sanitize(body.id, 40);
+    const row = await env.DB.prepare(`SELECT * FROM pets WHERE id = ?`).bind(id).first();
+    if (!row) return json({ error: "Not found" }, 404, cors);
+    if (!row.sr_shipment_id) return json({ error: "No Shiprocket shipment for this order", noShipment: true }, 400, cors);
+    try {
+      const r = await srFetch(env, "/courier/generate/label", {
+        method: "POST",
+        body: JSON.stringify({ shipment_id: [Number(row.sr_shipment_id) || row.sr_shipment_id] }),
+      });
+      const labelUrl = r.body.label_url || "";
+      if (!r.ok || !labelUrl) return json({ error: "Label not ready", detail: JSON.stringify(r.body).slice(0, 300) }, 502, cors);
+      return json({ ok: true, labelUrl }, 200, cors);
+    } catch (e) {
+      return json({ error: String(e.message || e).slice(0, 200) }, 502, cors);
+    }
+  }
+
   // ---- Admin: track a Shiprocket shipment ----
   if (path === "/petcard/admin/ship/track" && request.method === "GET") {
     if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
