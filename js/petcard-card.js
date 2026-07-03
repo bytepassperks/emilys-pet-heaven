@@ -82,12 +82,21 @@
     return c;
   }
 
+  // Pick the largest font size (from `sizes`) at which the text fits maxWidth.
+  function fitFont(ctx, text, maxWidth, sizes, weight) {
+    for (var i = 0; i < sizes.length; i++) {
+      ctx.font = weight + " " + sizes[i] + 'px Poppins, "Noto Sans Devanagari", Arial, sans-serif';
+      if (ctx.measureText(String(text)).width <= maxWidth) return sizes[i];
+    }
+    return sizes[sizes.length - 1];
+  }
+
   function field(ctx, value, y, maxWidth) {
     if (!value) return;
     ctx.fillStyle = "#1a1a1a";
     ctx.textBaseline = "middle";
     ctx.textAlign = "left";
-    ctx.font = '600 38px Poppins, "Noto Sans Devanagari", Arial, sans-serif';
+    fitFont(ctx, value, maxWidth, [38, 34, 30, 27], "600");
     var lines = wrapLines(ctx, value, maxWidth);
     if (lines.length <= 1) {
       ctx.fillText(lines[0] || "", VALUE_X, y, maxWidth);
@@ -118,7 +127,7 @@
   // QR at the website homepage instead of the verification page.
   function renderCard(canvas, data, opts) {
     opts = opts || {};
-    var templateUrl = opts.templateUrl || "assets/petcard/template.png?v=5";
+    var templateUrl = opts.templateUrl || "assets/petcard/template.png?v=6";
     canvas.width = TPL_W; canvas.height = TPL_H;
     var ctx = canvas.getContext("2d");
 
@@ -127,11 +136,11 @@
       ctx.drawImage(tpl, 0, 0, TPL_W, TPL_H);
 
       // Fields (Address kept clear of the QR column).
-      field(ctx, data.name, ROWS.name, 760);
-      field(ctx, data.owner, ROWS.owner, 760);
-      field(ctx, data.breed, ROWS.breed, 760);
-      field(ctx, data.gender, ROWS.gender, 760);
-      field(ctx, data.dob, ROWS.dob, 760);
+      field(ctx, data.name, ROWS.name, 740);
+      field(ctx, data.owner, ROWS.owner, 405);
+      field(ctx, data.breed, ROWS.breed, 405);
+      field(ctx, data.gender, ROWS.gender, 405);
+      field(ctx, data.dob, ROWS.dob, 405);
       field(ctx, data.address, ROWS.address, 385);
 
       // Pet ID number, centered in the bottom box.
@@ -203,7 +212,7 @@
   // pet name and Pet ID.
   function renderCardBack(canvas, data, opts) {
     opts = opts || {};
-    var templateUrl = opts.templateUrl || "assets/petcard/template-back.png?v=5";
+    var templateUrl = opts.templateUrl || "assets/petcard/template-back.png?v=6";
     canvas.width = TPL_W; canvas.height = TPL_H;
     var ctx = canvas.getContext("2d");
 
@@ -227,9 +236,15 @@
       // Pet name (on the first underline) and Pet ID (on the second).
       ctx.textAlign = "center";
       ctx.fillStyle = "#4E0000";
-      ctx.font = '700 42px Poppins, Arial, sans-serif';
       var petLine = (data.name || "") + (data.breed ? "  \u00b7  " + data.breed : "") + (data.gender ? "  \u00b7  " + data.gender : "");
-      ctx.fillText(petLine, 417, 736, 480);
+      fitFont(ctx, petLine, 560, [42, 38, 34, 30], "700");
+      ctx.fillText(petLine, 417, 736, 560);
+      if (data.owner) {
+        ctx.fillStyle = "#7a4a00";
+        var ownerLine = "Owner: " + data.owner;
+        fitFont(ctx, ownerLine, 560, [30, 27, 24], "600");
+        ctx.fillText(ownerLine, 417, 778, 560);
+      }
       ctx.fillStyle = "#111111";
       ctx.font = '700 54px Poppins, Arial, sans-serif';
       ctx.fillText(data.petNo || "0000 0000 0000", 417, 828, 480);
