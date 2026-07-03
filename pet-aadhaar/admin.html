@@ -432,7 +432,7 @@
               "<td>" + img + "</td>" +
               "<td><b>" + esc(it.name) + "</b><br><span style='color:#888'>" + esc(it.owner || "") + "</span></td>" +
               "<td>" + esc(it.petNo) + "</td>" +
-              "<td>" + statusPill(it.status) + "</td>" +
+              "<td>" + statusPill(it.status) + (it.awb ? "<br><a href='https://shiprocket.co/tracking/" + esc(it.awb) + "' target='_blank' style='font-size:11px'>" + esc(it.courier || "AWB") + " " + esc(it.awb) + "</a>" : "") + "</td>" +
               "<td><div class='row-actions'>" +
                 "<a class='btn btn-ghost btn-sm' href='../pet/?id=" + it.id + "' target='_blank'>View</a>" +
                 "<button class='btn btn-ghost btn-sm' data-act='dl' data-id='" + it.id + "'>PNG</button>" +
@@ -440,6 +440,7 @@
                 "<button class='btn btn-ghost btn-sm' data-act='review' data-id='" + it.id + "'>Review</button>" +
                 "<button class='btn btn-ghost btn-sm' data-act='pdf' data-id='" + it.id + "'>A4 PDF</button>" +
                 "<button class='btn btn-ghost btn-sm' data-act='wa' data-id='" + it.id + "'>WA msg</button>" +
+                (it.awb ? "" : "<button class='btn btn-ghost btn-sm' data-act='srship' data-id='" + it.id + "'>\ud83d\ude80 Shiprocket</button>") +
                 "<button class='btn btn-ghost btn-sm' data-act='edit' data-id='" + it.id + "'>Edit</button>" +
                 "<button class='btn btn-green btn-sm' data-act='ship' data-id='" + it.id + "'>" + (it.status === "shipped" ? "Mark ordered" : "Mark shipped") + "</button>" +
                 "<button class='btn btn-red btn-sm' data-act='del' data-id='" + it.id + "'>Delete</button>" +
@@ -473,6 +474,9 @@
         } else if (act === "wa") {
           if (!item) return;
           copyWaFor(item.name, btn);
+        } else if (act === "srship") {
+          if (!item) return;
+          shipViaShiprocket(item, btn);
         } else if (act === "dl" || act === "dlback" || act === "review" || act === "pdf") {
           if (!item) return;
           var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
@@ -496,6 +500,41 @@
           }
         }
       });
+
+      // ---- Shiprocket shipping ----
+      function shipViaShiprocket(item, btn) {
+        var pinMatch = String(item.address || "").match(/\b[1-9][0-9]{5}\b/);
+        var pin = pinMatch ? pinMatch[0] : prompt("Customer PIN code (not found in address):", "");
+        if (!pin || !/^[1-9][0-9]{5}$/.test(pin.trim())) { if (pin !== null) alert("A valid 6-digit PIN code is required."); return; }
+        pin = pin.trim();
+        var old = btn.textContent; btn.textContent = "\u23f3 Rates\u2026"; btn.disabled = true;
+        var restore = function () { btn.textContent = old; btn.disabled = false; };
+        api("/petcard/admin/ship/rates", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin }) }).then(function (res) {
+          if (!res.ok) { restore(); alert("Rate check failed: " + (res.body.error || res.status)); return; }
+          var cs = res.body.couriers || [];
+          if (!cs.length) { restore(); alert("No courier services this PIN code. Use India Post instead."); return; }
+          var listTxt = cs.map(function (c, i) { return (i + 1) + ". " + c.name + " \u2014 \u20b9" + c.rate + (c.etd ? " (ETA " + c.etd + ")" : ""); }).join("\n");
+          var choice = prompt("Choose courier (enter number):\n\n" + listTxt, "1");
+          if (choice === null) { restore(); return; }
+          var sel = cs[parseInt(choice, 10) - 1];
+          if (!sel) { restore(); alert("Invalid choice."); return; }
+          var pack = prompt("How many cards in this shipment?", "1");
+          if (pack === null) { restore(); return; }
+          if (!confirm("Create shipment via " + sel.name + " (\u20b9" + sel.rate + ") for " + item.name + "?\nPickup: Emily's Pet Heaven, Barrackpore.")) { restore(); return; }
+          btn.textContent = "\u23f3 Creating\u2026";
+          api("/petcard/admin/ship/create", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin, courierId: sel.id, pack: parseInt(pack, 10) || 1 }) }).then(function (r2) {
+            restore();
+            if (!r2.ok) { alert("Shipment failed: " + (r2.body.error || "") + " " + (r2.body.detail || "")); return; }
+            var b = r2.body;
+            if (b.awb) {
+              alert("\u2705 Shipment created!\nCourier: " + b.courier + "\nAWB: " + b.awb + "\nTracking: " + b.tracking + "\n\nPickup requested from Barrackpore. Send the tracking link to the customer on WhatsApp.");
+            } else {
+              alert("Order created in Shiprocket (ID " + b.orderId + ") but AWB assignment needs attention: " + (b.awbError || "check Shiprocket dashboard") + "\nOpen app.shiprocket.in to complete it.");
+            }
+            loadList();
+          });
+        });
+      }
 
       $("refreshBtn").addEventListener("click", loadList);
       var st; $("search").addEventListener("input", function () { clearTimeout(st); st = setTimeout(loadList, 250); });
