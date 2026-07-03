@@ -51,6 +51,29 @@
     .pill.shipped{background:#e7f6e7;color:#1b7e1b}
     .hide{display:none}
     .mode-banner{background:#fff4e6;border:1px solid #ffd8a8;border-radius:8px;padding:8px 10px;font-size:.82rem;color:#8a4b00;margin-bottom:10px}
+    .modal-overlay{position:fixed;inset:0;background:rgba(30,15,0,.45);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:1000;padding:16px;opacity:0;transition:opacity .18s}
+    .modal-overlay.open{opacity:1}
+    .modal{background:#fff;border-radius:16px;max-width:420px;width:100%;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.25);transform:translateY(14px) scale(.97);transition:transform .18s;max-height:85vh;overflow:auto}
+    .modal-overlay.open .modal{transform:none}
+    .modal h3{font-family:'Fredoka';color:var(--maroon);font-size:1.05rem;margin-bottom:6px}
+    .modal p{font-size:.83rem;color:#666;margin-bottom:12px;white-space:pre-line}
+    .modal .m-actions{display:flex;gap:8px;margin-top:14px}
+    .modal .m-actions .btn{flex:1}
+    .m-opt{display:block;width:100%;text-align:left;background:#fffdf8;border:1.5px solid #e4d4b6;border-radius:12px;padding:12px;margin-bottom:8px;cursor:pointer;font-family:inherit;font-size:.9rem;transition:border-color .12s,background .12s}
+    .m-opt:hover{border-color:var(--saffron);background:#fff7ea}
+    .m-opt b{color:var(--maroon)}
+    .m-opt .m-sub{font-size:.78rem;color:#888;margin-top:2px}
+    .m-num{display:flex;align-items:center;gap:10px;justify-content:center;margin:6px 0}
+    .m-num button{width:44px;height:44px;border-radius:12px;border:1.5px solid var(--golden);background:#fff;color:var(--maroon);font-size:1.3rem;font-weight:700;cursor:pointer}
+    .m-num input{width:90px;text-align:center;font-size:1.2rem;font-weight:700}
+    .modal textarea.m-copy{width:100%;min-height:140px;font-size:.8rem}
+    .toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:1100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+    .toast{background:#2b2b2b;color:#fff;padding:11px 18px;border-radius:12px;font-size:.86rem;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:90vw}
+    .toast.show{opacity:1;transform:none}
+    .toast.ok{background:var(--green)}
+    .toast.err{background:#b3261e}
+    .m-spin{display:inline-block;width:16px;height:16px;border:2.5px solid #eee;border-top-color:var(--maroon);border-radius:50%;animation:mspin .7s linear infinite;vertical-align:-3px;margin-right:6px}
+    @keyframes mspin{to{transform:rotate(360deg)}}
     @media(max-width:860px){table thead{display:none}table,tbody,tr,td{display:block;width:100%}tr{border:1px solid #eee;border-radius:10px;margin-bottom:10px;padding:8px}td{border:none;padding:4px 6px}}
   </style>
 </head>
@@ -133,6 +156,9 @@
       </div>
     </div>
   </main>
+
+  <div class="toasts" id="toasts"></div>
+  <div id="modalRoot"></div>
 
   <canvas id="dlCanvas" width="1536" height="1024" class="hide"></canvas>
   <canvas id="dlCanvas2" width="1536" height="1024" class="hide"></canvas>
@@ -280,6 +306,117 @@
         });
       });
 
+      // ---- Modern modal + toast UI (replaces prompt/confirm/alert) ----
+      var ui = (function () {
+        function toast(msg, type) {
+          var el = document.createElement("div");
+          el.className = "toast" + (type ? " " + type : "");
+          el.textContent = msg;
+          $("toasts").appendChild(el);
+          requestAnimationFrame(function () { el.classList.add("show"); });
+          setTimeout(function () { el.classList.remove("show"); setTimeout(function () { el.remove(); }, 250); }, 3200);
+        }
+        function openModal(html) {
+          var ov = document.createElement("div");
+          ov.className = "modal-overlay";
+          ov.innerHTML = "<div class='modal'>" + html + "</div>";
+          $("modalRoot").appendChild(ov);
+          requestAnimationFrame(function () { ov.classList.add("open"); });
+          return ov;
+        }
+        function closeModal(ov) { ov.classList.remove("open"); setTimeout(function () { ov.remove(); }, 200); }
+        function askNumber(title, desc, def) {
+          return new Promise(function (resolve) {
+            var ov = openModal("<h3>" + esc(title) + "</h3>" + (desc ? "<p>" + esc(desc) + "</p>" : "") +
+              "<div class='m-num'><button type='button' data-m='minus'>\u2212</button><input type='number' min='1' value='" + (def || 1) + "' data-m='val'><button type='button' data-m='plus'>+</button></div>" +
+              "<div class='m-actions'><button class='btn btn-ghost' data-m='cancel'>Cancel</button><button class='btn btn-primary' data-m='ok'>OK</button></div>");
+            var inp = ov.querySelector("[data-m=val]");
+            inp.focus(); inp.select();
+            function finish(v) { closeModal(ov); resolve(v); }
+            ov.addEventListener("click", function (e) {
+              var m = e.target.getAttribute && e.target.getAttribute("data-m");
+              if (e.target === ov || m === "cancel") finish(null);
+              else if (m === "minus") inp.value = Math.max(1, (parseInt(inp.value, 10) || 1) - 1);
+              else if (m === "plus") inp.value = (parseInt(inp.value, 10) || 0) + 1;
+              else if (m === "ok") {
+                var n = parseInt(inp.value, 10);
+                if (!(n >= 1)) { toast("Enter a number of 1 or more", "err"); return; }
+                finish(n);
+              }
+            });
+            inp.addEventListener("keydown", function (e) { if (e.key === "Enter") ov.querySelector("[data-m=ok]").click(); });
+          });
+        }
+        function askText(title, desc, placeholder, validate) {
+          return new Promise(function (resolve) {
+            var ov = openModal("<h3>" + esc(title) + "</h3>" + (desc ? "<p>" + esc(desc) + "</p>" : "") +
+              "<input type='text' data-m='val' placeholder='" + esc(placeholder || "") + "'>" +
+              "<div class='m-actions'><button class='btn btn-ghost' data-m='cancel'>Cancel</button><button class='btn btn-primary' data-m='ok'>OK</button></div>");
+            var inp = ov.querySelector("[data-m=val]");
+            inp.focus();
+            function finish(v) { closeModal(ov); resolve(v); }
+            ov.addEventListener("click", function (e) {
+              var m = e.target.getAttribute && e.target.getAttribute("data-m");
+              if (e.target === ov || m === "cancel") finish(null);
+              else if (m === "ok") {
+                var v = inp.value.trim();
+                if (validate && !validate(v)) { toast(validate.msg || "Invalid value", "err"); return; }
+                finish(v);
+              }
+            });
+            inp.addEventListener("keydown", function (e) { if (e.key === "Enter") ov.querySelector("[data-m=ok]").click(); });
+          });
+        }
+        function confirmBox(title, desc, okLabel, danger) {
+          return new Promise(function (resolve) {
+            var ov = openModal("<h3>" + esc(title) + "</h3>" + (desc ? "<p>" + esc(desc) + "</p>" : "") +
+              "<div class='m-actions'><button class='btn btn-ghost' data-m='cancel'>Cancel</button><button class='btn " + (danger ? "btn-red" : "btn-primary") + "' data-m='ok'>" + esc(okLabel || "Confirm") + "</button></div>");
+            function finish(v) { closeModal(ov); resolve(v); }
+            ov.addEventListener("click", function (e) {
+              var m = e.target.getAttribute && e.target.getAttribute("data-m");
+              if (e.target === ov || m === "cancel") finish(false);
+              else if (m === "ok") finish(true);
+            });
+          });
+        }
+        function choose(title, desc, options) {
+          return new Promise(function (resolve) {
+            var body = options.map(function (o, i) {
+              return "<button type='button' class='m-opt' data-i='" + i + "'><b>" + esc(o.label) + "</b>" + (o.sub ? "<div class='m-sub'>" + esc(o.sub) + "</div>" : "") + "</button>";
+            }).join("");
+            var ov = openModal("<h3>" + esc(title) + "</h3>" + (desc ? "<p>" + esc(desc) + "</p>" : "") + body +
+              "<div class='m-actions'><button class='btn btn-ghost' data-m='cancel'>Cancel</button></div>");
+            function finish(v) { closeModal(ov); resolve(v); }
+            ov.addEventListener("click", function (e) {
+              var opt = e.target.closest && e.target.closest(".m-opt");
+              if (opt) { finish(options[parseInt(opt.getAttribute("data-i"), 10)]); return; }
+              var m = e.target.getAttribute && e.target.getAttribute("data-m");
+              if (e.target === ov || m === "cancel") finish(null);
+            });
+          });
+        }
+        function info(title, descHtml, okLabel) {
+          return new Promise(function (resolve) {
+            var ov = openModal("<h3>" + esc(title) + "</h3><p style='white-space:pre-line'>" + descHtml + "</p>" +
+              "<div class='m-actions'><button class='btn btn-primary' data-m='ok'>" + esc(okLabel || "OK") + "</button></div>");
+            ov.addEventListener("click", function (e) {
+              var m = e.target.getAttribute && e.target.getAttribute("data-m");
+              if (e.target === ov || m === "ok") { closeModal(ov); resolve(true); }
+            });
+          });
+        }
+        function showCopy(title, text) {
+          var ov = openModal("<h3>" + esc(title) + "</h3><textarea class='m-copy' readonly></textarea>" +
+            "<div class='m-actions'><button class='btn btn-primary' data-m='ok'>Close</button></div>");
+          var ta = ov.querySelector("textarea"); ta.value = text; ta.focus(); ta.select();
+          ov.addEventListener("click", function (e) {
+            var m = e.target.getAttribute && e.target.getAttribute("data-m");
+            if (e.target === ov || m === "ok") closeModal(ov);
+          });
+        }
+        return { toast: toast, askNumber: askNumber, askText: askText, confirm: confirmBox, choose: choose, info: info, showCopy: showCopy };
+      })();
+
       // ---- WhatsApp order message (copy-paste template) ----
       // 1 card = ₹199, each extra card = +₹150 (2 = ₹349, 3 = ₹499, ...)
       function packPrice(n) { return 199 + (n - 1) * 150; }
@@ -301,19 +438,19 @@
           "Please confirm your *full delivery address with PIN code* \ud83d\udccd and send your pet's *photo* here if you haven't already. \u2764\ufe0f";
       }
       function copyWaFor(name, btn) {
-        var pack = prompt("How many cards in this order?", "1");
-        if (pack === null) return;
-        var n = parseInt(pack, 10);
-        if (!(n >= 1)) { alert("Enter a number of cards (1 or more)."); return; }
-        var msg = waMessage(name, n);
-        var done = function () {
-          if (!btn) return;
-          var old = btn.textContent; btn.textContent = "\u2705 Copied!";
-          setTimeout(function () { btn.textContent = old; }, 1600);
-        };
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(msg).then(done, function () { window.prompt("Copy the message:", msg); });
-        } else { window.prompt("Copy the message:", msg); }
+        ui.askNumber("WhatsApp order message", "How many cards in this order? Price updates automatically.", 1).then(function (n) {
+          if (n === null) return;
+          var msg = waMessage(name, n);
+          var done = function () {
+            ui.toast("Message copied \u2014 " + n + " card" + (n > 1 ? "s" : "") + ", total \u20b9" + (packPrice(n) + 49), "ok");
+            if (!btn) return;
+            var old = btn.textContent; btn.textContent = "\u2705 Copied!";
+            setTimeout(function () { btn.textContent = old; }, 1600);
+          };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(msg).then(done, function () { ui.showCopy("Copy the message", msg); });
+          } else { ui.showCopy("Copy the message", msg); }
+        });
       }
       $("copyWa").addEventListener("click", function () { copyWaFor(readForm().name, $("copyWa")); });
 
@@ -324,7 +461,7 @@
       // 3 orders per A4 page, extra pages added automatically.
       function buildA4Pdf(orders, filename) {
         var jsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
-        if (!jsPDF) { alert("PDF library failed to load. Please refresh and try again."); return; }
+        if (!jsPDF) { ui.toast("PDF library failed to load \u2014 refresh and try again", "err"); return; }
         var pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
         var PAGE_W = 210, PAGE_H = 297;
         var CARD_H = 54, CARD_W = 81, GAP_X = 18, ROW_H = CARD_H + 16;
@@ -380,20 +517,18 @@
       }
 
       function askCopies() {
-        var c = prompt("How many copies of this card? (3 per A4 sheet, extra sheets added automatically)", "1");
-        if (c === null) return null;
-        var n = parseInt(c, 10);
-        if (!(n >= 1)) { alert("Enter a number of copies (1 or more)."); return null; }
-        return n;
+        return ui.askNumber("A4 print copies", "How many copies of this card? 3 fit per A4 sheet \u2014 extra sheets are added automatically.", 1);
       }
       function repeatOrder(order, n) {
         var out = []; for (var i = 0; i < n; i++) out.push(order); return out;
       }
       $("dlPdf").addEventListener("click", function () {
         var f = readForm();
-        var n = askCopies(); if (n === null) return;
-        buildA4Pdf(repeatOrder({ front: $("prev"), back: $("prevBack"), meta: { name: f.name, petNo: lastCard && lastCard.petNo } }, n),
-          pdfNameFor(f.name, lastCard && lastCard.petNo));
+        askCopies().then(function (n) {
+          if (n === null) return;
+          buildA4Pdf(repeatOrder({ front: $("prev"), back: $("prevBack"), meta: { name: f.name, petNo: lastCard && lastCard.petNo } }, n),
+            pdfNameFor(f.name, lastCard && lastCard.petNo));
+        });
       });
 
       // Render front + back for a saved card into fresh canvases.
@@ -409,7 +544,7 @@
 
       $("printSelected").addEventListener("click", function () {
         var ids = Array.prototype.slice.call(document.querySelectorAll(".rowSel:checked")).map(function (cb) { return cb.getAttribute("data-id"); });
-        if (!ids.length) { alert("Tick the checkbox of at least one card first."); return; }
+        if (!ids.length) { ui.toast("Tick the checkbox of at least one card first", "err"); return; }
         var items = ids.map(function (id) { return (window.__items || []).filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
         Promise.all(items.map(renderOrder)).then(function (orders) {
           buildA4Pdf(orders, "pet-aadhaar-batch-" + orders.length + "-orders-A4.pdf");
@@ -456,8 +591,10 @@
         var id = btn.getAttribute("data-id"); var act = btn.getAttribute("data-act");
         var item = (window.__items || []).filter(function (x) { return x.id === id; })[0];
         if (act === "del") {
-          if (!confirm("Delete this card permanently? The QR will stop working.")) return;
-          api("/petcard/admin/delete", { method: "POST", body: JSON.stringify({ id: id }) }).then(function (res) { if (res.ok) loadList(); else handleAuth(res); });
+          ui.confirm("Delete this card?", (item ? item.name + " \u00b7 Pet ID " + item.petNo + " \u2014 " : "") + "This is permanent and the QR code will stop working.", "Delete", true).then(function (yes) {
+            if (!yes) return;
+            api("/petcard/admin/delete", { method: "POST", body: JSON.stringify({ id: id }) }).then(function (res) { if (res.ok) { ui.toast("Card deleted", "ok"); loadList(); } else handleAuth(res); });
+          });
         } else if (act === "ship") {
           var ns = item && item.status === "shipped" ? "ordered" : "shipped";
           api("/petcard/admin/update", { method: "POST", body: JSON.stringify({ id: id, status: ns }) }).then(function (res) { if (res.ok) loadList(); else handleAuth(res); });
@@ -482,9 +619,11 @@
           var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
           var base = "pet-aadhaar-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-" + item.petNo.replace(/\s/g, "");
           if (act === "pdf") {
-            var n = askCopies(); if (n === null) return;
-            renderOrder(item).then(function (order) {
-              buildA4Pdf(repeatOrder(order, n), pdfNameFor(item.name, item.petNo));
+            askCopies().then(function (n) {
+              if (n === null) return;
+              renderOrder(item).then(function (order) {
+                buildA4Pdf(repeatOrder(order, n), pdfNameFor(item.name, item.petNo));
+              });
             });
           } else if (act === "dlback") {
             PetCard.renderCardBack($("dlCanvas"), data, { templateUrl: "../assets/petcard/template-back.png?v=7" }).then(function (cv) { saveCanvas(cv, base + "-back.png"); });
@@ -504,34 +643,42 @@
       // ---- Shiprocket shipping ----
       function shipViaShiprocket(item, btn) {
         var pinMatch = String(item.address || "").match(/\b[1-9][0-9]{5}\b/);
-        var pin = pinMatch ? pinMatch[0] : prompt("Customer PIN code (not found in address):", "");
-        if (!pin || !/^[1-9][0-9]{5}$/.test(pin.trim())) { if (pin !== null) alert("A valid 6-digit PIN code is required."); return; }
-        pin = pin.trim();
-        var old = btn.textContent; btn.textContent = "\u23f3 Rates\u2026"; btn.disabled = true;
-        var restore = function () { btn.textContent = old; btn.disabled = false; };
-        api("/petcard/admin/ship/rates", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin }) }).then(function (res) {
-          if (!res.ok) { restore(); alert("Rate check failed: " + (res.body.error || res.status)); return; }
-          var cs = res.body.couriers || [];
-          if (!cs.length) { restore(); alert("No courier services this PIN code. Use India Post instead."); return; }
-          var listTxt = cs.map(function (c, i) { return (i + 1) + ". " + c.name + " \u2014 \u20b9" + c.rate + (c.etd ? " (ETA " + c.etd + ")" : ""); }).join("\n");
-          var choice = prompt("Choose courier (enter number):\n\n" + listTxt, "1");
-          if (choice === null) { restore(); return; }
-          var sel = cs[parseInt(choice, 10) - 1];
-          if (!sel) { restore(); alert("Invalid choice."); return; }
-          var pack = prompt("How many cards in this shipment?", "1");
-          if (pack === null) { restore(); return; }
-          if (!confirm("Create shipment via " + sel.name + " (\u20b9" + sel.rate + ") for " + item.name + "?\nPickup: Emily's Pet Heaven, Barrackpore.")) { restore(); return; }
-          btn.textContent = "\u23f3 Creating\u2026";
-          api("/petcard/admin/ship/create", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin, courierId: sel.id, pack: parseInt(pack, 10) || 1 }) }).then(function (r2) {
+        var pinValidate = function (v) { return /^[1-9][0-9]{5}$/.test(v); };
+        pinValidate.msg = "Enter a valid 6-digit PIN code";
+        var pinPromise = pinMatch ? Promise.resolve(pinMatch[0]) : ui.askText("Customer PIN code", "No PIN code found in the address \u2014 enter the customer's 6-digit PIN.", "e.g. 421204", pinValidate);
+        pinPromise.then(function (pin) {
+          if (!pin) return;
+          var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Rates\u2026"; btn.disabled = true;
+          var restore = function () { btn.textContent = old; btn.disabled = false; };
+          api("/petcard/admin/ship/rates", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin }) }).then(function (res) {
+            if (!res.ok) { restore(); ui.toast("Rate check failed: " + (res.body.error || res.status), "err"); return; }
+            var cs = res.body.couriers || [];
+            if (!cs.length) { restore(); ui.toast("No courier serves PIN " + pin + " \u2014 use India Post instead", "err"); return; }
             restore();
-            if (!r2.ok) { alert("Shipment failed: " + (r2.body.error || "") + " " + (r2.body.detail || "")); return; }
-            var b = r2.body;
-            if (b.awb) {
-              alert("\u2705 Shipment created!\nCourier: " + b.courier + "\nAWB: " + b.awb + "\nTracking: " + b.tracking + "\n\nPickup requested from Barrackpore. Send the tracking link to the customer on WhatsApp.");
-            } else {
-              alert("Order created in Shiprocket (ID " + b.orderId + ") but AWB assignment needs attention: " + (b.awbError || "check Shiprocket dashboard") + "\nOpen app.shiprocket.in to complete it.");
-            }
-            loadList();
+            ui.choose("Choose a courier", "Delivery to PIN " + pin + " \u00b7 pickup from Emily's Pet Heaven, Barrackpore.", cs.map(function (c) {
+              return { label: c.name + " \u2014 \u20b9" + Math.round(c.rate), sub: (c.days ? c.days + " days" : "") + (c.etd ? " \u00b7 ETA " + c.etd : ""), value: c };
+            })).then(function (sel) {
+              if (!sel) return;
+              var c = sel.value;
+              ui.askNumber("Cards in this shipment", "How many cards is " + (item.name || "this order") + " getting?", 1).then(function (pack) {
+                if (pack === null) return;
+                ui.confirm("Create shipment?", item.name + " \u00b7 " + pack + " card" + (pack > 1 ? "s" : "") + "\n" + c.name + " \u2014 \u20b9" + c.rate + "\nThis books a real, billable Shiprocket order.", "Create shipment").then(function (yes) {
+                  if (!yes) return;
+                  btn.innerHTML = "<span class='m-spin'></span>Creating\u2026"; btn.disabled = true;
+                  api("/petcard/admin/ship/create", { method: "POST", body: JSON.stringify({ id: item.id, pin: pin, courierId: c.id, pack: pack }) }).then(function (r2) {
+                    restore();
+                    if (!r2.ok) { ui.info("Shipment failed", esc((r2.body.error || "") + " " + (r2.body.detail || ""))); return; }
+                    var b = r2.body;
+                    if (b.awb) {
+                      ui.info("\u2705 Shipment created", "Courier: <b>" + esc(b.courier) + "</b>\nAWB: <b>" + esc(b.awb) + "</b>\nTracking: <a href='" + esc(b.tracking) + "' target='_blank'>" + esc(b.tracking) + "</a>\n\nPickup requested from Barrackpore. Send the tracking link to the customer on WhatsApp.");
+                    } else {
+                      ui.info("Order created \u2014 action needed", "Shiprocket order <b>" + esc(String(b.orderId)) + "</b> was created but AWB assignment needs attention:\n" + esc(b.awbError || "check the Shiprocket dashboard") + "\nOpen app.shiprocket.in to complete it.");
+                    }
+                    loadList();
+                  });
+                });
+              });
+            });
           });
         });
       }
