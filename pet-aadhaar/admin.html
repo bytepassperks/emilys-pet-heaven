@@ -195,6 +195,7 @@
 
   <script src="../js/qrcode.min.js"></script>
   <script src="../js/jspdf.umd.min.js"></script>
+  <script src="../js/pdf-lib.min.js"></script>
   <script src="../js/petcard-card.js"></script>
   <script>
     (function () {
@@ -646,6 +647,7 @@
             "<td><div class='row-actions'>" +
               (it.awb ? "" : "<button class='btn btn-primary btn-sm' data-act='srship' data-id='" + it.id + "'>\ud83d\ude80 Ship</button>") +
               "<button class='btn btn-ghost btn-sm' data-act='label' data-id='" + it.id + "'>\ud83c\udff7\ufe0f Label PDF</button>" +
+              (it.awb ? "<button class='btn btn-ghost btn-sm' data-act='brand' data-id='" + it.id + "'>\ud83c\udfa8 Branded label</button>" : "") +
               (it.awb ? "<button class='btn btn-ghost btn-sm' data-act='track' data-id='" + it.id + "'>\ud83d\udd0d Track</button>" : "") +
             "</div></td></tr>";
         }).join("");
@@ -660,6 +662,7 @@
         if (!item) return;
         if (act === "srship") shipViaShiprocket(item, btn);
         else if (act === "label") downloadLabel(item, btn);
+        else if (act === "brand") downloadBrandedLabel(item, btn);
         else if (act === "track") trackShipment(item, btn);
       });
 
@@ -678,6 +681,48 @@
             buildLabelPdf(item);
           }
         }).catch(function () { restore(); buildLabelPdf(item); });
+      }
+
+      // Branded envelope: template artwork with the official Shiprocket label in the white box.
+      var BRAND_BOX = { x0: 0.2087, y0: 0.3391, x1: 0.7903, y1: 0.8217 };
+      function downloadBrandedLabel(item, btn) {
+        if (!window.PDFLib) { ui.toast("PDF library failed to load \u2014 refresh and try again", "err"); return; }
+        var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Label\u2026"; btn.disabled = true;
+        var restore = function () { btn.textContent = old; btn.disabled = false; };
+        var labelReq = fetch(PetCard.API_BASE + "/petcard/admin/ship/label", { method: "POST", headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token }, body: JSON.stringify({ id: item.id, raw: true }) })
+          .then(function (r) { if (!r.ok) throw new Error("label"); return r.arrayBuffer(); });
+        var tplReq = fetch("../assets/petcard/branded-envelope-template.png").then(function (r) { return r.arrayBuffer(); });
+        Promise.all([labelReq, tplReq]).then(function (res) {
+          var PDFDocument = window.PDFLib.PDFDocument;
+          var A4W = 595.28, A4H = 841.89;
+          return PDFDocument.create().then(function (doc) {
+            return doc.embedPng(res[1]).then(function (png) {
+              return PDFDocument.load(res[0]).then(function (src) {
+                var sp = src.getPages()[0];
+                return doc.embedPage(sp, { left: 0, bottom: 0, right: sp.getWidth() / 2 - 3, top: sp.getHeight() }).then(function (emb) {
+                  var page = doc.addPage([A4W, A4H]);
+                  page.drawImage(png, { x: 0, y: 0, width: A4W, height: A4H });
+                  var bw = (BRAND_BOX.x1 - BRAND_BOX.x0) * A4W, bh = (BRAND_BOX.y1 - BRAND_BOX.y0) * A4H;
+                  var s = Math.min(bw / emb.width, bh / emb.height);
+                  var w = emb.width * s, h = emb.height * s;
+                  var x = BRAND_BOX.x0 * A4W + (bw - w) / 2;
+                  var y = A4H - BRAND_BOX.y0 * A4H - bh + (bh - h) / 2;
+                  page.drawPage(emb, { x: x, y: y, width: w, height: h });
+                  return doc.save();
+                });
+              });
+            });
+          });
+        }).then(function (bytes) {
+          restore();
+          var blob = new Blob([bytes], { type: "application/pdf" });
+          var a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = "branded-envelope-" + (item.name || "order").toLowerCase().replace(/[^a-z0-9]+/g, "-") + ".pdf";
+          a.click();
+          setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+          ui.toast("Branded envelope PDF downloaded", "ok");
+        }).catch(function () { restore(); ui.toast("Branded label failed \u2014 is this order shipped via Shiprocket?", "err"); });
       }
 
       function trackShipment(item, btn) {
