@@ -167,7 +167,16 @@
       field(ctx, data.breed, ROWS.breed, 405, fsize, 1);
       field(ctx, data.gender, ROWS.gender, 405, fsize, 1);
       field(ctx, data.dob, ROWS.dob, 405, fsize, 1);
-      field(ctx, data.address, ROWS.address, 385, fsize, 4);
+      // Address block stays below the DOB line and above the divider.
+      ctx.font = fieldFont(fsize);
+      var alh = fsize + 6;
+      var aLines = data.address ? wrapLines(ctx, data.address, 385).slice(0, 4) : [];
+      if (aLines.length) {
+        var aTop = Math.max(ROWS.address - (aLines.length - 1) * alh / 2, ROWS.dob + alh + 10);
+        aTop = Math.min(aTop, 828 - (aLines.length - 1) * alh);
+        ctx.fillStyle = "#1a1a1a"; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+        for (var ai = 0; ai < aLines.length; ai++) ctx.fillText(aLines[ai], VALUE_X, aTop + ai * alh, 385);
+      }
 
       // Pet ID number, centered in the bottom box.
       if (data.petNo) {
