@@ -118,7 +118,7 @@
   // QR at the website homepage instead of the verification page.
   function renderCard(canvas, data, opts) {
     opts = opts || {};
-    var templateUrl = opts.templateUrl || "assets/petcard/template.png";
+    var templateUrl = opts.templateUrl || "assets/petcard/template.png?v=4";
     canvas.width = TPL_W; canvas.height = TPL_H;
     var ctx = canvas.getContext("2d");
 
@@ -198,92 +198,55 @@
     });
   }
 
-  // Back side of the card — drawn programmatically in the same Aadhaar-style
-  // palette (saffron header, green footer): lost & found message, owner phone,
-  // address, verification QR and the Pet ID number.
+  // Back side of the card — drawn on the back template image (saffron header,
+  // green footer, blank value areas): owner phone, address, verification QR,
+  // pet name and Pet ID.
   function renderCardBack(canvas, data, opts) {
     opts = opts || {};
+    var templateUrl = opts.templateUrl || "assets/petcard/template-back.png?v=4";
     canvas.width = TPL_W; canvas.height = TPL_H;
     var ctx = canvas.getContext("2d");
 
-    // Base.
-    ctx.fillStyle = "#ffffff";
-    ctx.fillRect(0, 0, TPL_W, TPL_H);
+    return loadImage(templateUrl).then(function (tpl) {
+      ctx.clearRect(0, 0, TPL_W, TPL_H);
+      ctx.drawImage(tpl, 0, 0, TPL_W, TPL_H);
 
-    // Saffron header band.
-    var hdr = ctx.createLinearGradient(0, 0, TPL_W, 0);
-    hdr.addColorStop(0, "#FF9933"); hdr.addColorStop(1, "#ffb35c");
-    ctx.fillStyle = hdr;
-    ctx.fillRect(0, 0, TPL_W, 118);
-    ctx.fillStyle = "#ffffff";
-    ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.font = '700 52px Poppins, Arial, sans-serif';
-    ctx.fillText("PET AADHAAR CARD", TPL_W / 2, 48);
-    ctx.font = '600 30px Poppins, Arial, sans-serif';
-    ctx.fillText("Emily's Pet Heaven \u00b7 Barrackpore, Kolkata", TPL_W / 2, 90);
+      var LX = 80;
+      ctx.textAlign = "left"; ctx.textBaseline = "alphabetic";
 
-    // Green footer band.
-    ctx.fillStyle = "#138808";
-    ctx.fillRect(0, TPL_H - 92, TPL_W, 92);
-    ctx.fillStyle = "#ffffff";
-    ctx.font = '600 30px Poppins, Arial, sans-serif';
-    ctx.fillText("emilyspetheaven.com  \u00b7  Novelty keepsake \u2014 not a government document", TPL_W / 2, TPL_H - 46);
+      // Phone (below the "Call / WhatsApp my owner:" label).
+      ctx.fillStyle = "#1a1a1a";
+      ctx.font = '700 58px Poppins, Arial, sans-serif';
+      ctx.fillText(data.phone || "\u2014", LX, 415);
 
-    // Thin tricolor divider under the header.
-    ctx.fillStyle = "#FFAE01"; ctx.fillRect(0, 118, TPL_W, 8);
+      // Address (below the "Home address:" label, up to 3 lines).
+      ctx.font = '600 38px Poppins, "Noto Sans Devanagari", Arial, sans-serif';
+      var addrLines = wrapLines(ctx, data.address || "\u2014", 880).slice(0, 3);
+      for (var i = 0; i < addrLines.length; i++) ctx.fillText(addrLines[i], LX, 528 + i * 52);
 
-    // Left column: lost & found message, phone, address.
-    var LX = 80, RIGHT_EDGE = 1080;
-    ctx.textAlign = "left";
-    ctx.fillStyle = "#4E0000";
-    ctx.font = '700 54px Poppins, Arial, sans-serif';
-    ctx.fillText("If found, please help me get home!", LX, 210);
-
-    ctx.fillStyle = "#8a6d3b";
-    ctx.font = '600 32px Poppins, Arial, sans-serif';
-    ctx.fillText("Call / WhatsApp my owner" + (data.owner ? " (" + data.owner + ")" : "") + ":", LX, 300);
-    ctx.fillStyle = "#1a1a1a";
-    ctx.font = '700 62px Poppins, Arial, sans-serif';
-    ctx.fillText(data.phone || "\u2014", LX, 370);
-
-    ctx.fillStyle = "#8a6d3b";
-    ctx.font = '600 32px Poppins, Arial, sans-serif';
-    ctx.fillText("Home address:", LX, 470);
-    ctx.fillStyle = "#1a1a1a";
-    ctx.font = '600 38px Poppins, "Noto Sans Devanagari", Arial, sans-serif';
-    var addrLines = wrapLines(ctx, data.address || "\u2014", RIGHT_EDGE - LX).slice(0, 4);
-    for (var i = 0; i < addrLines.length; i++) ctx.fillText(addrLines[i], LX, 530 + i * 52);
-
-    // Pet name + breed line.
-    ctx.fillStyle = "#4E0000";
-    ctx.font = '700 40px Poppins, Arial, sans-serif';
-    var petLine = (data.name || "") + (data.breed ? "  \u00b7  " + data.breed : "") + (data.gender ? "  \u00b7  " + data.gender : "");
-    ctx.fillText(petLine, LX, 790);
-
-    // Pet ID number.
-    ctx.fillStyle = "#111111";
-    ctx.font = '700 58px Poppins, Arial, sans-serif';
-    ctx.fillText(data.petNo || "0000 0000 0000", LX, 870);
-
-    // QR box on the right (mirrors the front's QR position).
-    var qrUrl = opts.review ? SITE : data.verifyUrl;
-    if (qrUrl) {
-      var side = 306;
-      var qx = 1166, qy = 300;
-      ctx.strokeStyle = "#dcc89a"; ctx.lineWidth = 3;
-      ctx.strokeRect(qx - 14, qy - 14, side + 28, side + 28);
-      var qc = makeQRCanvas(qrUrl, side);
-      ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(qc, qx, qy, side, side);
-      ctx.imageSmoothingEnabled = true;
-      ctx.fillStyle = "#8a6d3b";
+      // Pet name (on the first underline) and Pet ID (on the second).
       ctx.textAlign = "center";
-      ctx.font = '600 28px Poppins, Arial, sans-serif';
-      ctx.fillText("Scan to verify my identity", qx + side / 2, qy + side + 52);
-      ctx.textAlign = "left";
-    }
+      ctx.fillStyle = "#4E0000";
+      ctx.font = '700 42px Poppins, Arial, sans-serif';
+      var petLine = (data.name || "") + (data.breed ? "  \u00b7  " + data.breed : "") + (data.gender ? "  \u00b7  " + data.gender : "");
+      ctx.fillText(petLine, 417, 736, 480);
+      ctx.fillStyle = "#111111";
+      ctx.font = '700 54px Poppins, Arial, sans-serif';
+      ctx.fillText(data.petNo || "0000 0000 0000", 417, 828, 480);
 
-    return Promise.resolve(canvas);
+      // QR inside the bordered box on the right (box ~1046..1446 x 296..722).
+      var qrUrl = opts.review ? SITE : data.verifyUrl;
+      if (qrUrl) {
+        var side = 360;
+        var qx = 1046 + (400 - side) / 2, qy = 296 + (426 - side) / 2;
+        var qc = makeQRCanvas(qrUrl, side);
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(qc, qx, qy, side, side);
+        ctx.imageSmoothingEnabled = true;
+      }
+
+      return canvas;
+    });
   }
 
   function verifyUrlFor(id) { return SITE + "/pet/?id=" + encodeURIComponent(id); }
