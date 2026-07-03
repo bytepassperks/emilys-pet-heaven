@@ -35,7 +35,8 @@
     .err{color:#b3261e;font-size:.85rem;margin-top:8px;min-height:18px}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media(max-width:860px){.grid{grid-template-columns:1fr}}
-    canvas#prev{width:100%;height:auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+    canvas#prev,canvas#prevBack{width:100%;height:auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+    canvas#prevBack{margin-top:10px}
     .row-actions{display:flex;gap:6px;flex-wrap:wrap}
     .result{background:#f4fff0;border:1px solid #bfe3b0;border-radius:10px;padding:10px;margin-top:10px;font-size:.85rem}
     .result a{color:var(--maroon);font-weight:600;word-break:break-all}
@@ -104,13 +105,17 @@
         </div>
 
         <div class="card">
-          <h2>Preview</h2>
+          <h2>Preview (front &amp; back)</h2>
           <canvas id="prev" width="1536" height="1024"></canvas>
+          <canvas id="prevBack" width="1536" height="1024"></canvas>
           <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap">
-            <button id="dlPng" class="btn btn-ghost" style="flex:1;min-width:160px">⬇ Download soft copy (PNG)</button>
-            <button id="dlPdf" class="btn btn-primary" style="flex:1;min-width:160px">🖨️ Download A4 PDF (print)</button>
+            <button id="dlPng" class="btn btn-ghost" style="flex:1;min-width:150px">⬇ Front PNG</button>
+            <button id="dlPngBack" class="btn btn-ghost" style="flex:1;min-width:150px">⬇ Back PNG</button>
+            <button id="dlReview" class="btn btn-ghost" style="flex:1;min-width:150px">🔍 Review PNG (blurred ID)</button>
+            <button id="copyWa" class="btn btn-green" style="flex:1;min-width:150px">💬 Copy WhatsApp msg</button>
+            <button id="dlPdf" class="btn btn-primary" style="flex:1;min-width:160px">🖨️ A4 PDF (front + back)</button>
           </div>
-          <p style="font-size:.76rem;color:#777;margin-top:8px">A4 PDF = one card at ID-card size (81 × 54 mm, fits a standard lamination pouch). Print at <b>100% / Actual size</b> (turn off “Fit to page”), then cut along the dashed line.</p>
+          <p style="font-size:.76rem;color:#777;margin-top:8px">A4 PDF = front + back at ID-card size (81 × 54 mm each). Print at <b>100% / Actual size</b> (turn off “Fit to page”), cut along the dashed lines, then laminate. <b>Review PNG</b> = Pet ID blurred, QR points to homepage — send it before payment. To print several orders on one A4, tick them in the list and use “Print selected”.</p>
         </div>
       </div>
 
@@ -118,17 +123,19 @@
         <h2>All cards</h2>
         <div class="toolbar">
           <input id="search" placeholder="Search name, owner, Pet ID, phone…" />
+          <button id="printSelected" class="btn btn-primary btn-sm">Print selected (A4)</button>
           <button id="refreshBtn" class="btn btn-ghost btn-sm">Refresh</button>
         </div>
         <table>
-          <thead><tr><th></th><th>Pet / Owner</th><th>Pet ID</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody>
+          <thead><tr><th></th><th></th><th>Pet / Owner</th><th>Pet ID</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="6">Loading…</td></tr></tbody>
         </table>
       </div>
     </div>
   </main>
 
   <canvas id="dlCanvas" width="1536" height="1024" class="hide"></canvas>
+  <canvas id="dlCanvas2" width="1536" height="1024" class="hide"></canvas>
 
   <script src="../js/qrcode.min.js"></script>
   <script src="../js/jspdf.umd.min.js"></script>
@@ -183,14 +190,18 @@
           phone: $("aPhone").value.trim()
         };
       }
-      function renderPreview() {
+      function previewData() {
         var f = readForm();
-        var data = Object.assign({}, f, {
+        return Object.assign({}, f, {
           photoUrl: photoUrl,
           petNo: lastCard ? lastCard.petNo : "0000 0000 0000",
           verifyUrl: lastCard ? PetCard.verifyUrlFor(lastCard.id) : (PetCard.SITE + "/pet-aadhaar/")
         });
+      }
+      function renderPreview() {
+        var data = previewData();
         PetCard.renderCard($("prev"), data, { templateUrl: "../assets/petcard/template.png" });
+        PetCard.renderCardBack($("prevBack"), data);
       }
       var t; ["aName","aOwner","aBreed","aGender","aDob","aAddress","aPhone"].forEach(function (id) {
         $(id).addEventListener("input", function () { clearTimeout(t); t = setTimeout(renderPreview, 120); });
@@ -245,60 +256,110 @@
         else if (errEl) $(errEl).textContent = (res.body && res.body.error) || "Error";
       }
 
-      // ---- Download soft copy ----
-      $("dlPng").addEventListener("click", function () {
+      // ---- Downloads (front / back / blurred review soft copies) ----
+      function dlName(suffix) {
         var name = (readForm().name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase();
         var no = lastCard ? "-" + lastCard.petNo.replace(/\s/g, "") : "";
+        return "pet-aadhaar-" + name + no + suffix + ".png";
+      }
+      function saveCanvas(cv, filename) {
         var link = document.createElement("a");
-        link.download = "pet-aadhaar-" + name + no + ".png";
-        link.href = $("prev").toDataURL("image/png");
+        link.download = filename;
+        link.href = cv.toDataURL("image/png");
         link.click();
+      }
+      $("dlPng").addEventListener("click", function () { saveCanvas($("prev"), dlName("")); });
+      $("dlPngBack").addEventListener("click", function () { saveCanvas($("prevBack"), dlName("-back")); });
+      $("dlReview").addEventListener("click", function () {
+        PetCard.renderCard($("dlCanvas"), previewData(), { templateUrl: "../assets/petcard/template.png", review: true }).then(function (cv) {
+          saveCanvas(cv, dlName("-review"));
+        });
       });
+
+      // ---- WhatsApp order message (copy-paste template) ----
+      function waMessage(name, pack) {
+        var two = pack === 2;
+        var price = two ? 349 : 199, total = price + 49;
+        return "Hi! \ud83d\udc3e Thank you for ordering the *Pet Aadhaar Card* from *Emily's Pet Heaven*!\n\n" +
+          "Here's your order summary:\n" +
+          "\ud83d\udc36 Pet: *" + (name || "your pet") + "*\n" +
+          "\ud83d\udce6 Pack: *" + (two ? "2 cards \u2014 \u20b9349" : "1 card \u2014 \u20b9199") + "*\n" +
+          "\ud83d\ude9a Delivery charge: *\u20b949* (flat, anywhere in India)\n" +
+          "\ud83d\udcb0 *Total: \u20b9" + total + "*\n\n" +
+          "Please pay the total using the Paytm QR code in my next message (any UPI app works \u2014 Paytm / GPay / PhonePe). \ud83d\udcf2\n\n" +
+          "*What happens after payment:*\n" +
+          "1\ufe0f\u20e3 We generate your pet's *unique Pet ID + working QR code*\n" +
+          "2\ufe0f\u20e3 You get the *soft copy* right here on WhatsApp\n" +
+          "3\ufe0f\u20e3 Your *laminated card* is printed & shipped to your address\n\n" +
+          "\ud83d\ude9a *Delivery:* sent by *India Post (normal road/surface delivery)* \u2014 usually reaches you in *5\u20138 working days* depending on your location. We'll share the tracking/receipt once shipped.\n\n" +
+          "Please confirm your *full delivery address with PIN code* \ud83d\udccd and send your pet's *photo* here if you haven't already. \u2764\ufe0f";
+      }
+      function copyWaFor(name, btn) {
+        var pack = prompt("How many cards in this order? (1 or 2)", "1");
+        if (pack === null) return;
+        var msg = waMessage(name, parseInt(pack, 10) === 2 ? 2 : 1);
+        var done = function () {
+          if (!btn) return;
+          var old = btn.textContent; btn.textContent = "\u2705 Copied!";
+          setTimeout(function () { btn.textContent = old; }, 1600);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(msg).then(done, function () { window.prompt("Copy the message:", msg); });
+        } else { window.prompt("Copy the message:", msg); }
+      }
+      $("copyWa").addEventListener("click", function () { copyWaFor(readForm().name, $("copyWa")); });
 
       // ---- A4 print PDF: one card at ID-card size (81 x 54 mm), centered, with
       //      a dashed cut line + corner crop marks so it can be cut & laminated. ----
-      function buildA4Pdf(canvas, filename, meta) {
+      // orders: [{front: canvas, back: canvas, meta: {name, petNo}}, ...]
+      // Each order = front + back side by side at ID-card size (81 × 54 mm);
+      // 3 orders per A4 page, extra pages added automatically.
+      function buildA4Pdf(orders, filename) {
         var jsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
         if (!jsPDF) { alert("PDF library failed to load. Please refresh and try again."); return; }
         var pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
         var PAGE_W = 210, PAGE_H = 297;
-        // Card art is 3:2; fit to 54 mm height (standard ID-card height) → 81 mm wide.
-        var cardH = 54, cardW = cardH * (canvas.width / canvas.height); // ≈ 81 mm
-        var x = (PAGE_W - cardW) / 2, y = 46;
-        var imgData = canvas.toDataURL("image/png");
+        var CARD_H = 54, CARD_W = 81, GAP_X = 18, ROW_H = CARD_H + 16;
+        var startY = 36, maxRows = Math.floor((PAGE_H - startY - 12) / ROW_H); // 3 rows per page
 
-        // Heading.
-        pdf.setFont("helvetica", "bold"); pdf.setFontSize(15); pdf.setTextColor(78, 0, 0);
-        pdf.text("Emily's Pet Heaven — Pet Aadhaar Card", PAGE_W / 2, 20, { align: "center" });
-        pdf.setFont("helvetica", "normal"); pdf.setFontSize(9); pdf.setTextColor(90, 90, 90);
-        pdf.text("Print at 100% / Actual size (turn off \"Fit to page\"). Cut along the dashed line, then laminate.", PAGE_W / 2, 27, { align: "center" });
+        function heading() {
+          pdf.setFont("helvetica", "bold"); pdf.setFontSize(14); pdf.setTextColor(78, 0, 0);
+          pdf.text("Emily's Pet Heaven — Pet Aadhaar Cards (front + back)", PAGE_W / 2, 16, { align: "center" });
+          pdf.setFont("helvetica", "normal"); pdf.setFontSize(8.5); pdf.setTextColor(90, 90, 90);
+          pdf.text("Print at 100% / Actual size (turn off \"Fit to page\"). Cut along the dashed lines, then laminate.", PAGE_W / 2, 22, { align: "center" });
+        }
 
-        // Card image.
-        pdf.addImage(imgData, "PNG", x, y, cardW, cardH);
+        function cropMarks(x, y) {
+          var m = 4, g = 1; pdf.setLineWidth(0.3); pdf.setDrawColor(40, 40, 40);
+          var corners = [[x, y, -1, -1], [x + CARD_W, y, 1, -1], [x, y + CARD_H, -1, 1], [x + CARD_W, y + CARD_H, 1, 1]];
+          corners.forEach(function (c) {
+            var cx = c[0], cy = c[1], sx = c[2], sy = c[3];
+            pdf.line(cx + sx * g, cy, cx + sx * (g + m), cy);
+            pdf.line(cx, cy + sy * g, cx, cy + sy * (g + m));
+          });
+        }
 
-        // Dashed cut border.
-        pdf.setDrawColor(120, 120, 120); pdf.setLineWidth(0.2);
-        if (pdf.setLineDashPattern) pdf.setLineDashPattern([1.2, 1.2], 0);
-        pdf.rect(x, y, cardW, cardH);
-        if (pdf.setLineDashPattern) pdf.setLineDashPattern([], 0);
+        function placeCard(cv, x, y) {
+          pdf.addImage(cv.toDataURL("image/png"), "PNG", x, y, CARD_W, CARD_H);
+          pdf.setDrawColor(120, 120, 120); pdf.setLineWidth(0.2);
+          if (pdf.setLineDashPattern) pdf.setLineDashPattern([1.2, 1.2], 0);
+          pdf.rect(x, y, CARD_W, CARD_H);
+          if (pdf.setLineDashPattern) pdf.setLineDashPattern([], 0);
+          cropMarks(x, y);
+        }
 
-        // Corner crop marks (solid ticks just outside each corner).
-        var m = 4, g = 1; pdf.setLineWidth(0.3); pdf.setDrawColor(40, 40, 40);
-        var corners = [[x, y, -1, -1], [x + cardW, y, 1, -1], [x, y + cardH, -1, 1], [x + cardW, y + cardH, 1, 1]];
-        corners.forEach(function (c) {
-          var cx = c[0], cy = c[1], sx = c[2], sy = c[3];
-          pdf.line(cx + sx * g, cy, cx + sx * (g + m), cy);
-          pdf.line(cx, cy + sy * g, cx, cy + sy * (g + m));
-        });
-
-        // Caption with Pet ID / name.
-        pdf.setFontSize(9); pdf.setTextColor(60, 60, 60);
-        var cap = "ID-card size: 81 × 54 mm (fits a standard 86 × 54 mm lamination pouch)";
-        pdf.text(cap, PAGE_W / 2, y + cardH + 10, { align: "center" });
-        if (meta && (meta.petNo || meta.name)) {
-          pdf.setFont("helvetica", "bold"); pdf.setTextColor(78, 0, 0);
-          var line = (meta.name ? meta.name : "") + (meta.petNo ? "  ·  Pet ID " + meta.petNo : "");
-          pdf.text(line, PAGE_W / 2, y + cardH + 17, { align: "center" });
+        heading();
+        var x1 = (PAGE_W - (CARD_W * 2 + GAP_X)) / 2, x2 = x1 + CARD_W + GAP_X;
+        for (var i = 0; i < orders.length; i++) {
+          var row = i % maxRows;
+          if (i > 0 && row === 0) { pdf.addPage(); heading(); }
+          var y = startY + row * ROW_H;
+          placeCard(orders[i].front, x1, y);
+          placeCard(orders[i].back, x2, y);
+          pdf.setFont("helvetica", "bold"); pdf.setFontSize(8.5); pdf.setTextColor(78, 0, 0);
+          var meta = orders[i].meta || {};
+          var line = (meta.name || "") + (meta.petNo ? "  ·  Pet ID " + meta.petNo : "") + "   (front / back · 81 × 54 mm each)";
+          pdf.text(line, PAGE_W / 2, y + CARD_H + 8, { align: "center" });
         }
 
         pdf.save(filename);
@@ -312,7 +373,28 @@
 
       $("dlPdf").addEventListener("click", function () {
         var f = readForm();
-        buildA4Pdf($("prev"), pdfNameFor(f.name, lastCard && lastCard.petNo), { name: f.name, petNo: lastCard && lastCard.petNo });
+        buildA4Pdf([{ front: $("prev"), back: $("prevBack"), meta: { name: f.name, petNo: lastCard && lastCard.petNo } }],
+          pdfNameFor(f.name, lastCard && lastCard.petNo));
+      });
+
+      // Render front + back for a saved card into fresh canvases.
+      function renderOrder(item) {
+        var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
+        var front = document.createElement("canvas"), back = document.createElement("canvas");
+        return PetCard.renderCard(front, data, { templateUrl: "../assets/petcard/template.png" }).then(function () {
+          return PetCard.renderCardBack(back, data);
+        }).then(function () {
+          return { front: front, back: back, meta: { name: item.name, petNo: item.petNo } };
+        });
+      }
+
+      $("printSelected").addEventListener("click", function () {
+        var ids = Array.prototype.slice.call(document.querySelectorAll(".rowSel:checked")).map(function (cb) { return cb.getAttribute("data-id"); });
+        if (!ids.length) { alert("Tick the checkbox of at least one card first."); return; }
+        var items = ids.map(function (id) { return (window.__items || []).filter(function (x) { return x.id === id; })[0]; }).filter(Boolean);
+        Promise.all(items.map(renderOrder)).then(function (orders) {
+          buildA4Pdf(orders, "pet-aadhaar-batch-" + orders.length + "-orders-A4.pdf");
+        });
       });
 
       // ---- List ----
@@ -323,10 +405,11 @@
         api("/petcard/admin/list" + (q ? "?q=" + encodeURIComponent(q) : ""), { method: "GET" }).then(function (res) {
           if (!res.ok) { handleAuth(res); return; }
           var items = res.body.items || [];
-          if (!items.length) { $("rows").innerHTML = "<tr><td colspan='5'>No cards yet.</td></tr>"; return; }
+          if (!items.length) { $("rows").innerHTML = "<tr><td colspan='6'>No cards yet.</td></tr>"; return; }
           $("rows").innerHTML = items.map(function (it) {
             var img = it.photo ? "<img class='thumb' src='" + it.photo + "' alt=''>" : "<div class='thumb'></div>";
             return "<tr>" +
+              "<td><input type='checkbox' class='rowSel' data-id='" + it.id + "' title='Select for batch A4 print'></td>" +
               "<td>" + img + "</td>" +
               "<td><b>" + esc(it.name) + "</b><br><span style='color:#888'>" + esc(it.owner || "") + "</span></td>" +
               "<td>" + esc(it.petNo) + "</td>" +
@@ -334,7 +417,10 @@
               "<td><div class='row-actions'>" +
                 "<a class='btn btn-ghost btn-sm' href='../pet/?id=" + it.id + "' target='_blank'>View</a>" +
                 "<button class='btn btn-ghost btn-sm' data-act='dl' data-id='" + it.id + "'>PNG</button>" +
+                "<button class='btn btn-ghost btn-sm' data-act='dlback' data-id='" + it.id + "'>Back</button>" +
+                "<button class='btn btn-ghost btn-sm' data-act='review' data-id='" + it.id + "'>Review</button>" +
                 "<button class='btn btn-ghost btn-sm' data-act='pdf' data-id='" + it.id + "'>A4 PDF</button>" +
+                "<button class='btn btn-ghost btn-sm' data-act='wa' data-id='" + it.id + "'>WA msg</button>" +
                 "<button class='btn btn-ghost btn-sm' data-act='edit' data-id='" + it.id + "'>Edit</button>" +
                 "<button class='btn btn-green btn-sm' data-act='ship' data-id='" + it.id + "'>" + (it.status === "shipped" ? "Mark ordered" : "Mark shipped") + "</button>" +
                 "<button class='btn btn-red btn-sm' data-act='del' data-id='" + it.id + "'>Delete</button>" +
@@ -365,18 +451,24 @@
           $("editBanner").classList.remove("hide"); $("editBanner").textContent = "Editing " + item.name + " · Pet ID " + item.petNo;
           $("cancelEdit").classList.remove("hide");
           renderPreview(); window.scrollTo({ top: 0, behavior: "smooth" });
-        } else if (act === "dl" || act === "pdf") {
+        } else if (act === "wa") {
+          if (!item) return;
+          copyWaFor(item.name, btn);
+        } else if (act === "dl" || act === "dlback" || act === "review" || act === "pdf") {
           if (!item) return;
           var data = { name: item.name, owner: item.owner, breed: item.breed, gender: item.gender, dob: item.dob, address: item.address, phone: item.phone, photoUrl: item.photo, petNo: item.petNo, verifyUrl: PetCard.verifyUrlFor(item.id) };
-          PetCard.renderCard($("dlCanvas"), data, { templateUrl: "../assets/petcard/template.png" }).then(function (cv) {
-            if (act === "pdf") {
-              buildA4Pdf(cv, pdfNameFor(item.name, item.petNo), { name: item.name, petNo: item.petNo });
-            } else {
-              var link = document.createElement("a");
-              link.download = "pet-aadhaar-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-" + item.petNo.replace(/\s/g, "") + ".png";
-              link.href = cv.toDataURL("image/png"); link.click();
-            }
-          });
+          var base = "pet-aadhaar-" + (item.name || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase() + "-" + item.petNo.replace(/\s/g, "");
+          if (act === "pdf") {
+            renderOrder(item).then(function (order) {
+              buildA4Pdf([order], pdfNameFor(item.name, item.petNo));
+            });
+          } else if (act === "dlback") {
+            PetCard.renderCardBack($("dlCanvas"), data).then(function (cv) { saveCanvas(cv, base + "-back.png"); });
+          } else {
+            PetCard.renderCard($("dlCanvas"), data, { templateUrl: "../assets/petcard/template.png", review: act === "review" }).then(function (cv) {
+              saveCanvas(cv, base + (act === "review" ? "-review" : "") + ".png");
+            });
+          }
         }
       });
 
