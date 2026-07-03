@@ -78,6 +78,8 @@ function publicRecord(row) {
   return {
     id: row.id,
     petNo: row.pet_no,
+    awb: row.awb || "",
+    courier: row.courier || "",
     name: row.name,
     owner: row.owner,
     breed: row.breed,
@@ -96,6 +98,69 @@ async function requireAdmin(request, env) {
   const token = auth.replace(/^Bearer\s+/i, "");
   const data = await verifyToken(token, env.SESSION_SECRET || "");
   return data && data.e === (env.ADMIN_EMAIL || "") ? data : null;
+}
+
+// ---- Shiprocket integration (credentials live in worker secrets) ----
+let srToken = null;
+let srTokenAt = 0;
+
+async function srAuth(env) {
+  if (!env.SHIPROCKET_EMAIL || !env.SHIPROCKET_PASSWORD) throw new Error("Shiprocket not configured");
+  if (srToken && Date.now() - srTokenAt < 8 * 24 * 3600 * 1000) return srToken;
+  const res = await fetch("https://apiv2.shiprocket.in/v1/external/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: env.SHIPROCKET_EMAIL, password: env.SHIPROCKET_PASSWORD }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.token) throw new Error(`Shiprocket auth failed (${res.status})`);
+  srToken = data.token;
+  srTokenAt = Date.now();
+  return srToken;
+}
+
+async function srFetch(env, path, opts = {}) {
+  const token = await srAuth(env);
+  const res = await fetch(`https://apiv2.shiprocket.in/v1/external${path}`, {
+    ...opts,
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
+  });
+  const body = await res.json().catch(() => ({}));
+  return { ok: res.ok, status: res.status, body };
+}
+
+const PICKUP_PIN = "700122";
+const PICKUP_LOCATION = "Emilys Pet Heaven";
+
+function pinFrom(address) {
+  const m = String(address || "").match(/\b[1-9][0-9]{5}\b/);
+  return m ? m[0] : "";
+}
+
+async function pinLookup(pin) {
+  try {
+    const r = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+    const d = await r.json();
+    const po = d && d[0] && d[0].PostOffice && d[0].PostOffice[0];
+    return po ? { city: po.District, state: po.State } : null;
+  } catch {
+    return null;
+  }
+}
+
+function phone10(phone) {
+  const digits = String(phone || "").replace(/\D/g, "");
+  return digits.slice(-10);
+}
+
+async function ensureShipColumns(env) {
+  for (const col of ["sr_order_id TEXT", "sr_shipment_id TEXT", "awb TEXT", "courier TEXT"]) {
+    try {
+      await env.DB.prepare(`ALTER TABLE pets ADD COLUMN ${col}`).run();
+    } catch {
+      // column already exists
+    }
+  }
 }
 
 // ---- Off-Cloudflare backup: dump the whole table to a private GitHub repo ----
@@ -211,15 +276,11 @@ export async function handlePetcard(request, env, url, cors) {
     if (q) {
       const like = `%${q}%`;
       stmt = env.DB.prepare(
-        `SELECT id, pet_no, name, owner, breed, gender, dob, address, photo, phone, status, created_at
-         FROM pets WHERE name LIKE ? OR owner LIKE ? OR pet_no LIKE ? OR id LIKE ? OR phone LIKE ?
+        `SELECT * FROM pets WHERE name LIKE ? OR owner LIKE ? OR pet_no LIKE ? OR id LIKE ? OR phone LIKE ?
          ORDER BY created_at DESC LIMIT 200`,
       ).bind(like, like, like, like, like);
     } else {
-      stmt = env.DB.prepare(
-        `SELECT id, pet_no, name, owner, breed, gender, dob, address, photo, phone, status, created_at
-         FROM pets ORDER BY created_at DESC LIMIT 200`,
-      );
+      stmt = env.DB.prepare(`SELECT * FROM pets ORDER BY created_at DESC LIMIT 200`);
     }
     const { results } = await stmt.all();
     return json({ items: (results || []).map(publicRecord) }, 200, cors);
@@ -289,6 +350,142 @@ export async function handlePetcard(request, env, url, cors) {
       return json({ ok: true, backedUp: n }, 200, cors);
     } catch (e) {
       return json({ error: "Backup failed", detail: String(e).slice(0, 300) }, 500, cors);
+    }
+  }
+
+  // ---- Admin: Shiprocket courier rates for an order ----
+  if (path === "/petcard/admin/ship/rates" && request.method === "POST") {
+    if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "Invalid JSON" }, 400, cors);
+    }
+    const id = sanitize(body.id, 40);
+    const row = await env.DB.prepare(`SELECT * FROM pets WHERE id = ?`).bind(id).first();
+    if (!row) return json({ error: "Not found" }, 404, cors);
+    const pin = sanitize(body.pin, 6) || pinFrom(row.address);
+    if (!pin) return json({ error: "No PIN code — pass one", needPin: true }, 400, cors);
+    try {
+      const r = await srFetch(env, `/courier/serviceability/?pickup_postcode=${PICKUP_PIN}&delivery_postcode=${pin}&weight=0.05&cod=0`);
+      const list = ((r.body.data && r.body.data.available_courier_companies) || [])
+        .map((c) => ({ id: c.courier_company_id, name: c.courier_name, rate: c.rate, etd: c.etd, days: c.estimated_delivery_days }))
+        .sort((a, b) => a.rate - b.rate)
+        .slice(0, 8);
+      return json({ ok: true, pin, couriers: list }, 200, cors);
+    } catch (e) {
+      return json({ error: String(e.message || e).slice(0, 200) }, 502, cors);
+    }
+  }
+
+  // ---- Admin: create Shiprocket shipment (order + AWB + pickup) ----
+  if (path === "/petcard/admin/ship/create" && request.method === "POST") {
+    if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return json({ error: "Invalid JSON" }, 400, cors);
+    }
+    const id = sanitize(body.id, 40);
+    const row = await env.DB.prepare(`SELECT * FROM pets WHERE id = ?`).bind(id).first();
+    if (!row) return json({ error: "Not found" }, 404, cors);
+    const pin = sanitize(body.pin, 6) || pinFrom(row.address);
+    if (!pin) return json({ error: "No PIN code — pass one", needPin: true }, 400, cors);
+    const phone = phone10(row.phone);
+    if (phone.length !== 10) return json({ error: "Order has no valid 10-digit phone" }, 400, cors);
+    const pack = Math.max(1, parseInt(body.pack, 10) || row.pack || 1);
+    const amount = 199 + (pack - 1) * 150 + 49;
+    const loc = (await pinLookup(pin)) || { city: "", state: "" };
+    const ownerParts = String(row.owner || "Pet Owner").trim().split(/\s+/);
+    try {
+      await ensureShipColumns(env);
+      const orderId = `PET-${String(row.pet_no).replace(/\s/g, "")}-${Date.now().toString().slice(-5)}`;
+      const now = new Date();
+      const orderRes = await srFetch(env, "/orders/create/adhoc", {
+        method: "POST",
+        body: JSON.stringify({
+          order_id: orderId,
+          order_date: now.toISOString().slice(0, 10) + " " + now.toISOString().slice(11, 16),
+          pickup_location: PICKUP_LOCATION,
+          billing_customer_name: ownerParts[0],
+          billing_last_name: ownerParts.slice(1).join(" ") || ".",
+          billing_address: sanitize(row.address, 300),
+          billing_city: loc.city || "India",
+          billing_pincode: pin,
+          billing_state: loc.state || "India",
+          billing_country: "India",
+          billing_email: row.email || "contact@emilyspetheaven.com",
+          billing_phone: phone,
+          shipping_is_billing: true,
+          order_items: [{ name: "Pet ID Card (laminated)", sku: "PETCARD", units: pack, selling_price: Math.round((amount - 49) / pack) }],
+          payment_method: "Prepaid",
+          shipping_charges: 49,
+          sub_total: amount - 49,
+          length: 18,
+          breadth: 12,
+          height: 1,
+          weight: 0.05,
+        }),
+      });
+      const shipmentId = orderRes.body.shipment_id;
+      if (!orderRes.ok || !shipmentId) {
+        return json({ error: "Order create failed", detail: JSON.stringify(orderRes.body).slice(0, 300) }, 502, cors);
+      }
+      const awbRes = await srFetch(env, "/courier/assign/awb", {
+        method: "POST",
+        body: JSON.stringify(body.courierId ? { shipment_id: shipmentId, courier_id: body.courierId } : { shipment_id: shipmentId }),
+      });
+      const awbData = (awbRes.body.response && awbRes.body.response.data) || {};
+      const awb = awbData.awb_code || "";
+      const courier = awbData.courier_name || "";
+      let pickup = null;
+      if (awb) {
+        const pk = await srFetch(env, "/courier/generate/pickup", {
+          method: "POST",
+          body: JSON.stringify({ shipment_id: [shipmentId] }),
+        });
+        pickup = pk.body && (pk.body.response || pk.body.message || null);
+      }
+      await env.DB.prepare(`UPDATE pets SET sr_order_id=?, sr_shipment_id=?, awb=?, courier=?, status='shipped', updated_at=? WHERE id=?`)
+        .bind(String(orderRes.body.order_id || orderId), String(shipmentId), awb, courier, new Date().toISOString(), id)
+        .run();
+      return json(
+        {
+          ok: true,
+          orderId: orderRes.body.order_id || orderId,
+          shipmentId,
+          awb,
+          courier,
+          pickup,
+          awbError: awb ? undefined : JSON.stringify(awbRes.body).slice(0, 300),
+          tracking: awb ? `https://shiprocket.co/tracking/${awb}` : "",
+        },
+        200,
+        cors,
+      );
+    } catch (e) {
+      return json({ error: String(e.message || e).slice(0, 200) }, 502, cors);
+    }
+  }
+
+  // ---- Admin: track a Shiprocket shipment ----
+  if (path === "/petcard/admin/ship/track" && request.method === "GET") {
+    if (!(await requireAdmin(request, env))) return json({ error: "Unauthorized" }, 401, cors);
+    const awb = sanitize(url.searchParams.get("awb") || "", 40);
+    if (!awb) return json({ error: "awb required" }, 400, cors);
+    try {
+      const r = await srFetch(env, `/courier/track/awb/${encodeURIComponent(awb)}`);
+      const td = r.body.tracking_data || {};
+      const latest = (td.shipment_track && td.shipment_track[0]) || {};
+      return json(
+        { ok: true, status: latest.current_status || td.shipment_status || "", destination: latest.destination || "", edd: latest.edd || "", activities: (td.shipment_track_activities || []).slice(0, 6) },
+        200,
+        cors,
+      );
+    } catch (e) {
+      return json({ error: String(e.message || e).slice(0, 200) }, 502, cors);
     }
   }
 
