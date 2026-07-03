@@ -404,6 +404,11 @@ export async function handlePetcard(request, env, url, cors) {
     const ownerParts = String(shipName).trim().split(/\s+/);
     try {
       await ensureShipColumns(env);
+      // Reuse an existing Shiprocket order awaiting AWB (e.g. wallet was low) instead of duplicating it.
+      let shipmentId = !row.awb && row.sr_shipment_id ? row.sr_shipment_id : null;
+      let srOrderId = shipmentId ? row.sr_order_id : null;
+      const reused = !!shipmentId;
+      if (!shipmentId) {
       const orderId = `PET-${String(row.pet_no).replace(/\s/g, "")}-${Date.now().toString().slice(-5)}`;
       const now = new Date();
       const orderRes = await srFetch(env, "/orders/create/adhoc", {
@@ -432,9 +437,11 @@ export async function handlePetcard(request, env, url, cors) {
           weight: 0.05,
         }),
       });
-      const shipmentId = orderRes.body.shipment_id;
+      shipmentId = orderRes.body.shipment_id;
       if (!orderRes.ok || !shipmentId) {
         return json({ error: "Order create failed", detail: JSON.stringify(orderRes.body).slice(0, 300) }, 502, cors);
+      }
+      srOrderId = String(orderRes.body.order_id || orderId);
       }
       const awbRes = await srFetch(env, "/courier/assign/awb", {
         method: "POST",
@@ -452,12 +459,13 @@ export async function handlePetcard(request, env, url, cors) {
         pickup = pk.body && (pk.body.response || pk.body.message || null);
       }
       await env.DB.prepare(`UPDATE pets SET sr_order_id=?, sr_shipment_id=?, awb=?, courier=?, status='shipped', updated_at=? WHERE id=?`)
-        .bind(String(orderRes.body.order_id || orderId), String(shipmentId), awb, courier, new Date().toISOString(), id)
+        .bind(String(srOrderId), String(shipmentId), awb, courier, new Date().toISOString(), id)
         .run();
       return json(
         {
           ok: true,
-          orderId: orderRes.body.order_id || orderId,
+          reused,
+          orderId: srOrderId,
           shipmentId,
           awb,
           courier,
