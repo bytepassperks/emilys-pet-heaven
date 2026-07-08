@@ -319,11 +319,29 @@
         var no = lastCard ? "-" + lastCard.petNo.replace(/\s/g, "") : "";
         return "pet-aadhaar-" + name + no + suffix + ".png";
       }
-      function saveCanvas(cv, filename) {
+      // Queued blob downloads: mobile browsers block several instant .click()
+      // downloads, so capture each canvas immediately and release one by one.
+      var dlQueue = [], dlBusy = false;
+      function processDl() {
+        var job = dlQueue.shift();
+        if (!job) { dlBusy = false; return; }
+        dlBusy = true;
         var link = document.createElement("a");
-        link.download = filename;
-        link.href = cv.toDataURL("image/png");
-        link.click();
+        link.download = job.name; link.href = job.url;
+        document.body.appendChild(link); link.click();
+        setTimeout(function () {
+          document.body.removeChild(link);
+          if (job.revoke) URL.revokeObjectURL(job.url);
+          processDl();
+        }, 1000);
+      }
+      function saveCanvas(cv, filename) {
+        var push = function (url, revoke) {
+          dlQueue.push({ url: url, name: filename, revoke: revoke });
+          if (!dlBusy) processDl();
+        };
+        if (cv.toBlob) cv.toBlob(function (b) { if (b) push(URL.createObjectURL(b), true); else push(cv.toDataURL("image/png"), false); }, "image/png");
+        else push(cv.toDataURL("image/png"), false);
       }
       $("dlPng").addEventListener("click", function () { saveCanvas($("prev"), dlName("")); });
       $("dlPngBack").addEventListener("click", function () { saveCanvas($("prevBack"), dlName("-back")); });
@@ -438,11 +456,21 @@
         }
         function showCopy(title, text) {
           var ov = openModal("<h3>" + esc(title) + "</h3><textarea class='m-copy' readonly></textarea>" +
-            "<div class='m-actions'><button class='btn btn-primary' data-m='ok'>Close</button></div>");
+            "<div class='m-actions'><button class='btn btn-ghost' data-m='ok'>Close</button>" +
+            "<button class='btn btn-ghost' data-m='copy'>\ud83d\udccb Copy</button>" +
+            "<button class='btn btn-primary' data-m='wa'>\ud83d\udcac Open WhatsApp</button></div>");
           var ta = ov.querySelector("textarea"); ta.value = text; ta.focus(); ta.select();
           ov.addEventListener("click", function (e) {
             var m = e.target.getAttribute && e.target.getAttribute("data-m");
             if (e.target === ov || m === "ok") closeModal(ov);
+            else if (m === "copy") {
+              ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
+              var ok = false; try { ok = document.execCommand("copy"); } catch (e2) {}
+              if (!ok && navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(ta.value).then(function () { toast("Copied", "ok"); }); }
+              else toast(ok ? "Copied" : "Long-press the text to copy", ok ? "ok" : "err");
+            } else if (m === "wa") {
+              window.open("https://wa.me/?text=" + encodeURIComponent(ta.value), "_blank");
+            }
           });
         }
         return { toast: toast, askNumber: askNumber, askText: askText, confirm: confirmBox, choose: choose, info: info, showCopy: showCopy, open: openModal, close: closeModal };
@@ -475,6 +503,21 @@
           "\ud83d\ude9a *Delivery:* shipped by *courier (surface delivery)* \u2014 usually reaches you in *3\u20137 working days* depending on your location. We'll share the tracking link once shipped.\n\n" +
           "Please confirm your *full delivery address with PIN code* \ud83d\udccd and send your pet's *photo* here if you haven't already. \u2764\ufe0f";
       }
+      // Clipboard write fails on mobile once the tap gesture is gone (after the
+      // rate fetch), so fall back to execCommand and finally the copy/share modal.
+      function copyTextRobust(msg, done) {
+        var modal = function () { ui.showCopy("WhatsApp order message", msg); };
+        var legacy = function () {
+          var ta = document.createElement("textarea");
+          ta.value = msg; ta.style.position = "fixed"; ta.style.opacity = "0"; ta.style.left = "-9999px";
+          document.body.appendChild(ta); ta.focus(); ta.select();
+          var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+          document.body.removeChild(ta);
+          if (ok) done(); else modal();
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(msg).then(done, legacy);
+        else legacy();
+      }
       function copyWaFor(name, btn) {
         ui.askNumber("WhatsApp order message", "How many cards in this order? Price updates automatically.", 1).then(function (n) {
           if (n === null) return;
@@ -489,9 +532,7 @@
                 var old = btn.textContent; btn.textContent = "\u2705 Copied!";
                 setTimeout(function () { btn.textContent = old; }, 1600);
               };
-              if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(msg).then(done, function () { ui.showCopy("Copy the message", msg); });
-              } else { ui.showCopy("Copy the message", msg); }
+              copyTextRobust(msg, done);
             };
             if (!/^[1-9][0-9]{5}$/.test(pin)) { pin = ""; finish(0); return; }
             ui.toast("Checking shipping for PIN " + pin + "\u2026", "ok");
