@@ -451,36 +451,58 @@
       // ---- WhatsApp order message (copy-paste template) ----
       // 1 card = ₹199, each extra card = +₹150 (2 = ₹349, 3 = ₹499, ...)
       function packPrice(n) { return 199 + (n - 1) * 150; }
-      function waMessage(name, pack) {
+      function waMessage(name, pack, shipping, pin) {
         var n = Math.max(1, pack || 1);
-        var price = packPrice(n), total = price + 49;
+        var price = packPrice(n);
+        var shipLine, totalLine;
+        if (shipping > 0) {
+          shipLine = "\ud83d\ude9a Shipping to PIN " + pin + ": *\u20b9" + shipping + "* (one charge \u2014 covers all " + (n > 1 ? n + " cards" : "cards") + " in one envelope)\n";
+          totalLine = "\ud83d\udcb0 *Total: \u20b9" + (price + shipping) + "*\n\n";
+        } else {
+          shipLine = "\ud83d\ude9a Shipping: *extra as per your PIN code* (one charge for the whole pack \u2014 we'll confirm once you share your PIN)\n";
+          totalLine = "\ud83d\udcb0 *Total: \u20b9" + price + " + shipping*\n\n";
+        }
         return "Hi! \ud83d\udc3e Thank you for ordering the *Pet Aadhaar Card* from *Emily's Pet Heaven*!\n\n" +
           "Here's your order summary:\n" +
           "\ud83d\udc36 Pet: *" + (name || "your pet") + "*\n" +
           "\ud83d\udce6 Pack: *" + n + " card" + (n > 1 ? "s" : "") + " \u2014 \u20b9" + price + "*\n" +
-          "\ud83d\ude9a Delivery charge: *\u20b949* (flat, anywhere in India)\n" +
-          "\ud83d\udcb0 *Total: \u20b9" + total + "*\n\n" +
+          shipLine + totalLine +
           "Please pay the total using the Paytm QR code in my next message (any UPI app works \u2014 Paytm / GPay / PhonePe). \ud83d\udcf2\n\n" +
           "*What happens after payment:*\n" +
           "1\ufe0f\u20e3 We generate your pet's *unique Pet ID + working QR code*\n" +
           "2\ufe0f\u20e3 You get the *soft copy* right here on WhatsApp\n" +
           "3\ufe0f\u20e3 Your *laminated card* is printed & shipped to your address\n\n" +
-          "\ud83d\ude9a *Delivery:* sent by *India Post (normal road/surface delivery)* \u2014 usually reaches you in *5\u20138 working days* depending on your location. We'll share the tracking/receipt once shipped.\n\n" +
+          "\ud83d\ude9a *Delivery:* shipped by *courier (surface delivery)* \u2014 usually reaches you in *3\u20137 working days* depending on your location. We'll share the tracking link once shipped.\n\n" +
           "Please confirm your *full delivery address with PIN code* \ud83d\udccd and send your pet's *photo* here if you haven't already. \u2764\ufe0f";
       }
       function copyWaFor(name, btn) {
         ui.askNumber("WhatsApp order message", "How many cards in this order? Price updates automatically.", 1).then(function (n) {
           if (n === null) return;
-          var msg = waMessage(name, n);
-          var done = function () {
-            ui.toast("Message copied \u2014 " + n + " card" + (n > 1 ? "s" : "") + ", total \u20b9" + (packPrice(n) + 49), "ok");
-            if (!btn) return;
-            var old = btn.textContent; btn.textContent = "\u2705 Copied!";
-            setTimeout(function () { btn.textContent = old; }, 1600);
-          };
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(msg).then(done, function () { ui.showCopy("Copy the message", msg); });
-          } else { ui.showCopy("Copy the message", msg); }
+          ui.askText("Customer PIN code", "Enter the delivery PIN code to include the exact shipping cost (leave empty to skip \u2014 message will say shipping extra).", "e.g. 421204").then(function (pin) {
+            pin = (pin || "").replace(/\D/g, "");
+            var finish = function (shipping) {
+              var msg = waMessage(name, n, shipping, pin);
+              var total = shipping > 0 ? "\u20b9" + (packPrice(n) + shipping) : "\u20b9" + packPrice(n) + " + shipping";
+              var done = function () {
+                ui.toast("Message copied \u2014 " + n + " card" + (n > 1 ? "s" : "") + ", total " + total, "ok");
+                if (!btn) return;
+                var old = btn.textContent; btn.textContent = "\u2705 Copied!";
+                setTimeout(function () { btn.textContent = old; }, 1600);
+              };
+              if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(msg).then(done, function () { ui.showCopy("Copy the message", msg); });
+              } else { ui.showCopy("Copy the message", msg); }
+            };
+            if (!/^[1-9][0-9]{5}$/.test(pin)) { pin = ""; finish(0); return; }
+            ui.toast("Checking shipping for PIN " + pin + "\u2026", "ok");
+            fetch(PetCard.API_BASE + "/petcard/shiprate?pin=" + pin)
+              .then(function (r) { return r.json(); })
+              .then(function (d) {
+                if (d && d.ok && d.shipping > 0) finish(d.shipping);
+                else { ui.toast((d && d.error) || "Couldn't check this PIN \u2014 copied without shipping", "err"); pin = ""; finish(0); }
+              })
+              .catch(function () { ui.toast("Couldn't check shipping \u2014 copied without shipping", "err"); pin = ""; finish(0); });
+          });
         });
       }
       $("copyWa").addEventListener("click", function () { copyWaFor(readForm().name, $("copyWa")); });
