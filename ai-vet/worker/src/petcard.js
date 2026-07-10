@@ -104,9 +104,28 @@ async function requireAdmin(request, env) {
 let srToken = null;
 let srTokenAt = 0;
 
-async function srAuth(env) {
+const SR_TOKEN_TTL = 8 * 24 * 3600 * 1000;
+
+// Token is persisted in D1 so cold worker isolates reuse it instead of
+// re-logging in (Shiprocket 403-blocks accounts that hit /auth/login often).
+async function srAuth(env, force) {
   if (!env.SHIPROCKET_EMAIL || !env.SHIPROCKET_PASSWORD) throw new Error("Shiprocket not configured");
-  if (srToken && Date.now() - srTokenAt < 8 * 24 * 3600 * 1000) return srToken;
+  const now = Date.now();
+  if (!force && srToken && now - srTokenAt < SR_TOKEN_TTL) return srToken;
+  await env.DB.prepare("CREATE TABLE IF NOT EXISTS kv (k TEXT PRIMARY KEY, v TEXT)").run();
+  if (!force) {
+    const row = await env.DB.prepare("SELECT v FROM kv WHERE k = 'sr_token'").first();
+    if (row && row.v) {
+      try {
+        const saved = JSON.parse(row.v);
+        if (saved.token && now - saved.at < SR_TOKEN_TTL) {
+          srToken = saved.token;
+          srTokenAt = saved.at;
+          return srToken;
+        }
+      } catch (e) { /* fall through to login */ }
+    }
+  }
   const res = await fetch("https://apiv2.shiprocket.in/v1/external/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -115,18 +134,24 @@ async function srAuth(env) {
   const data = await res.json().catch(() => ({}));
   if (!res.ok || !data.token) throw new Error(`Shiprocket auth failed (${res.status})`);
   srToken = data.token;
-  srTokenAt = Date.now();
+  srTokenAt = now;
+  await env.DB.prepare("INSERT INTO kv (k, v) VALUES ('sr_token', ?) ON CONFLICT(k) DO UPDATE SET v = excluded.v")
+    .bind(JSON.stringify({ token: srToken, at: now })).run();
   return srToken;
 }
 
 async function srFetch(env, path, opts = {}) {
-  const token = await srAuth(env);
-  const res = await fetch(`https://apiv2.shiprocket.in/v1/external${path}`, {
-    ...opts,
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
-  });
-  const body = await res.json().catch(() => ({}));
-  return { ok: res.ok, status: res.status, body };
+  const call = async (token) => {
+    const res = await fetch(`https://apiv2.shiprocket.in/v1/external${path}`, {
+      ...opts,
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(opts.headers || {}) },
+    });
+    const body = await res.json().catch(() => ({}));
+    return { ok: res.ok, status: res.status, body };
+  };
+  let out = await call(await srAuth(env));
+  if (out.status === 401) out = await call(await srAuth(env, true));
+  return out;
 }
 
 const PICKUP_PIN = "700122";
