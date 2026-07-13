@@ -1,5 +1,6 @@
 import KB from "./kb-embeddings.json";
 import { handlePetcard, runBackup } from "./petcard.js";
+import { handleStickers } from "./stickers.js";
 
 const TOP_K = 5;
 const MIN_SCORE = 0.3;
@@ -95,6 +96,9 @@ export default {
 
     const petcardResponse = await handlePetcard(request, env, url, cors);
     if (petcardResponse) return petcardResponse;
+
+    const stickersResponse = await handleStickers(request, env, url, cors);
+    if (stickersResponse) return stickersResponse;
 
     if (url.pathname === "/chat" && request.method === "POST") {
       if (origin && !cors["Access-Control-Allow-Origin"]) {

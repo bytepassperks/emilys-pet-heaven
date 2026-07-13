@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
+  <title>Viral Stickers — Admin | Emily's Pet Heaven</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../assets/brand/logo-icon-transparent.webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--maroon:#4E0000;--golden:#FFAE01;--saffron:#FF9933;--green:#138808}
+    body{font-family:'Poppins',sans-serif;color:#2b2b2b;background:linear-gradient(135deg,#FFF5E1,#FFE8CC 55%,#FFF0D4);min-height:100vh}
+    .wrap{max-width:1000px;margin:0 auto;padding:0 14px 50px}
+    header{background:var(--maroon);color:#fff;padding:12px 0}
+    header .wrap{display:flex;align-items:center;justify-content:space-between;padding-bottom:0}
+    header .brand{font-family:'Fredoka';color:var(--golden);font-weight:600;display:flex;gap:8px;align-items:center}
+    header img{height:34px}
+    header a,header button{background:transparent;border:1px solid #FFECBC;color:#FFECBC;border-radius:8px;padding:6px 10px;cursor:pointer;font-size:.85rem;text-decoration:none}
+    .card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 6px 24px rgba(0,0,0,.08);margin-top:16px}
+    h2{font-family:'Fredoka';color:var(--maroon);font-size:1.15rem;margin-bottom:12px}
+    label{display:block;font-size:.82rem;font-weight:600;color:#444;margin:8px 0 4px}
+    input,select,textarea{width:100%;padding:11px 12px;border:1.5px solid #e4d4b6;border-radius:10px;font-size:16px;font-family:inherit;background:#fffdf8}
+    input:focus,select:focus,textarea:focus{outline:none;border-color:var(--saffron)}
+    .btn{display:inline-flex;gap:6px;align-items:center;justify-content:center;padding:11px 14px;border-radius:10px;font-weight:700;cursor:pointer;border:none;text-decoration:none;font-size:.92rem}
+    .btn-primary{background:var(--maroon);color:#fff}
+    .btn-green{background:var(--green);color:#fff}
+    .btn-ghost{background:#fff;color:var(--maroon);border:1.5px solid var(--golden)}
+    .btn-red{background:#fff;color:#b3261e;border:1.5px solid #f0a9a3}
+    .btn-sm{padding:7px 10px;font-size:.8rem;border-radius:8px}
+    .btn[disabled]{opacity:.6;cursor:wait}
+    .login{max-width:380px;margin:60px auto}
+    .err{color:#b3261e;font-size:.85rem;margin-top:8px;min-height:18px}
+    .hide{display:none}
+    .toolbar{display:flex;gap:8px;margin-bottom:10px}
+    .toolbar input{flex:1}
+    table{width:100%;border-collapse:collapse;font-size:.86rem}
+    th,td{text-align:left;padding:8px 6px;border-bottom:1px solid #eee;vertical-align:middle}
+    th{color:#8a6d3b;font-weight:600}
+    .thumb{width:42px;height:42px;border-radius:8px;object-fit:cover;background:#eee}
+    .pill{font-size:.72rem;padding:2px 8px;border-radius:999px;font-weight:700}
+    .pill.ordered{background:#fff3e0;color:#b26a00}
+    .pill.generating{background:#e3f0ff;color:#1450a0}
+    .pill.ready{background:#f3e8ff;color:#6b21a8}
+    .pill.shipped{background:#e7f6e7;color:#1b7e1b}
+    .row-actions{display:flex;gap:6px;flex-wrap:wrap}
+    .toasts{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:1100;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none}
+    .toast{background:#2b2b2b;color:#fff;padding:11px 18px;border-radius:12px;font-size:.86rem;box-shadow:0 8px 24px rgba(0,0,0,.25);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;max-width:90vw}
+    .toast.show{opacity:1;transform:none}
+    .toast.ok{background:var(--green)}
+    .toast.err{background:#b3261e}
+    .m-spin{display:inline-block;width:16px;height:16px;border:2.5px solid #eee;border-top-color:var(--maroon);border-radius:50%;animation:mspin .7s linear infinite;vertical-align:-3px;margin-right:6px}
+    @keyframes mspin{to{transform:rotate(360deg)}}
+    .detail{border-top:2px solid var(--golden);margin-top:14px;padding-top:14px}
+    .pet-photos{display:flex;gap:10px;flex-wrap:wrap}
+    .pet-photos img{width:110px;height:110px;object-fit:cover;border-radius:12px;box-shadow:0 3px 10px rgba(0,0,0,.15)}
+    .prompt-block{background:#fffdf5;border:1.5px solid #f0dcb2;border-radius:12px;padding:12px;margin:10px 0;font-size:.82rem;white-space:pre-wrap;word-break:break-word}
+    .prompt-block h4{font-family:'Fredoka';color:var(--maroon);font-size:.9rem;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:10px}
+    .slot{border:2px dashed #e4d4b6;border-radius:12px;min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#fffdf8;position:relative;font-size:.78rem;color:#8a6d3b;text-align:center;padding:6px;overflow:hidden}
+    .slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff}
+    .slot .num{position:absolute;top:4px;left:6px;z-index:2;background:var(--maroon);color:#fff;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:999px}
+    .slot input{display:none}
+    .sheets-out{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    @media(max-width:700px){.sheets-out{grid-template-columns:1fr}}
+    .sheets-out canvas{width:100%;height:auto;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.15);background:#fff}
+    .addr-cell{font-size:.78rem;color:#666;max-width:260px}
+    @media(max-width:860px){table thead{display:none}table,tbody,tr,td{display:block;width:100%}tr{border:1px solid #eee;border-radius:10px;margin-bottom:10px;padding:8px}td{border:none;padding:4px 6px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="brand"><img src="../assets/brand/logo-icon-transparent.webp" alt="" />Viral Stickers Admin</span>
+      <span style="display:flex;gap:8px">
+        <a href="../pet-aadhaar/admin.html">🪪 Aadhaar admin</a>
+        <button id="logoutBtn" class="hide">Log out</button>
+      </span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- LOGIN -->
+    <div id="loginView" class="card login">
+      <h2>Admin login</h2>
+      <label for="email">Email</label>
+      <input id="email" type="email" autocomplete="username" placeholder="admin email" />
+      <label for="password">Password</label>
+      <input id="password" type="password" autocomplete="current-password" placeholder="password" />
+      <button id="loginBtn" class="btn btn-primary" style="width:100%;margin-top:14px">Log in</button>
+      <div class="err" id="loginErr"></div>
+    </div>
+
+    <!-- PANEL -->
+    <div id="panel" class="hide">
+      <div class="card">
+        <h2>🔥 Viral sticker orders</h2>
+        <p style="font-size:.8rem;color:#777;margin-bottom:10px">Flow: open an order → <b>✨ Generate prompts</b> (AI picks 12 fresh viral memes from live India + Bengali feeds) → paste each prompt in ChatGPT with the pet photo attached → upload the 12 images below → <b>🖨️ Generate A4 sheets</b> (2 sheets × 6 big stickers, silhouette cut lines + ✂). Print on A4 sticker paper.</p>
+        <div class="toolbar">
+          <input id="search" placeholder="Search pet, owner, phone, PIN…" />
+          <button id="refreshBtn" class="btn btn-ghost btn-sm">Refresh</button>
+        </div>
+        <table>
+          <thead><tr><th></th><th>Pet / Owner</th><th>Contact / Address</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="rows"><tr><td colspan="5">Loading…</td></tr></tbody>
+        </table>
+      </div>
+
+      <!-- ORDER DETAIL -->
+      <div id="detailCard" class="card hide">
+        <h2 id="dTitle">Order</h2>
+        <div class="pet-photos" id="dPhotos"></div>
+        <p id="dMeta" style="font-size:.85rem;color:#555;margin-top:8px"></p>
+
+        <div class="detail">
+          <h2>1 · AI prompts (12 fresh viral memes)</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button id="genPrompts" class="btn btn-primary">✨ Generate prompts</button>
+            <button id="genPromptsFresh" class="btn btn-ghost">🔄 Regenerate (refetch trends)</button>
+            <button id="copyAllPrompts" class="btn btn-ghost hide">📋 Copy all</button>
+          </div>
+          <div id="promptsOut"></div>
+        </div>
+
+        <div class="detail">
+          <h2>2 · Upload the 12 generated stickers</h2>
+          <p style="font-size:.78rem;color:#777">Generate each prompt in ChatGPT (attach the pet photo), download the image and drop it in its slot. The composer removes the grey background automatically.</p>
+          <div class="slots" id="slots"></div>
+        </div>
+
+        <div class="detail">
+          <h2>3 · Print-ready A4 sheets</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button id="genSheets" class="btn btn-green">🖨️ Generate A4 sheets</button>
+            <button id="dlSheet1" class="btn btn-ghost hide">⬇ Sheet 1 PNG</button>
+            <button id="dlSheet2" class="btn btn-ghost hide">⬇ Sheet 2 PNG</button>
+            <button id="dlSheetsPdf" class="btn btn-primary hide">🖨️ A4 PDF (both sheets)</button>
+          </div>
+          <p style="font-size:.76rem;color:#777;margin-top:6px">6 big stickers per sheet, scattered layout, dashed silhouette cut lines with ✂ markers. Print at <b>100% / Actual size</b> on A4 white sticker paper.</p>
+          <div class="sheets-out">
+            <canvas id="sheet1" width="2480" height="3508" class="hide"></canvas>
+            <canvas id="sheet2" width="2480" height="3508" class="hide"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toasts" id="toasts"></div>
+
+  <script src="../js/jspdf.umd.min.js"></script>
+  <script src="../js/petcard-card.js"></script>
+  <script>
+    (function () {
+      var TOKEN_KEY = "pc_token"; // shared with Pet Aadhaar admin — one login for both
+      var token = sessionStorage.getItem(TOKEN_KEY) || "";
+      var PRICE = 499;
+      var current = null;      // selected order
+      var stickerImgs = {};    // idx -> dataURL (uploaded stickers of the current order)
+      var $ = function (id) { return document.getElementById(id); };
+
+      function esc(s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+      function toast(msg, type) {
+        var el = document.createElement("div");
+        el.className = "toast" + (type ? " " + type : "");
+        el.textContent = msg;
+        $("toasts").appendChild(el);
+        requestAnimationFrame(function () { el.classList.add("show"); });
+        setTimeout(function () { el.classList.remove("show"); setTimeout(function () { el.remove(); }, 250); }, 3200);
+      }
+
+      function show(authed) {
+        $("loginView").classList.toggle("hide", authed);
+        $("panel").classList.toggle("hide", !authed);
+        $("logoutBtn").classList.toggle("hide", !authed);
+      }
+
+      function api(path, opts) {
+        opts = opts || {};
+        opts.headers = Object.assign({ "Content-Type": "application/json" }, opts.headers || {});
+        if (token) opts.headers["Authorization"] = "Bearer " + token;
+        return fetch(PetCard.API_BASE + path, opts).then(function (r) {
+          return r.json().then(function (j) { return { ok: r.ok, status: r.status, body: j }; });
+        });
+      }
+      function handleAuth(res) {
+        if (res.status === 401) { sessionStorage.removeItem(TOKEN_KEY); token = ""; show(false); }
+        else toast((res.body && res.body.error) || "Error", "err");
+      }
+
+      // ---- Login (same worker endpoint as Pet Aadhaar admin) ----
+      $("loginBtn").addEventListener("click", function () {
+        $("loginErr").textContent = "";
+        api("/petcard/admin/login", { method: "POST", body: JSON.stringify({ email: $("email").value.trim(), password: $("password").value }) })
+          .then(function (res) {
+            if (res.ok && res.body.token) {
+              token = res.body.token; sessionStorage.setItem(TOKEN_KEY, token);
+              show(true); loadList();
+            } else { $("loginErr").textContent = res.body.error || "Login failed"; }
+          })
+          .catch(function () { $("loginErr").textContent = "Network error"; });
+      });
+      $("password").addEventListener("keydown", function (e) { if (e.key === "Enter") $("loginBtn").click(); });
+      $("logoutBtn").addEventListener("click", function () { sessionStorage.removeItem(TOKEN_KEY); token = ""; show(false); });
+
+      // ---- Orders list ----
+      function statusPill(s) {
+        var map = { ordered: "Ordered", generating: "Generating", ready: "Ready", shipped: "Shipped" };
+        return "<span class='pill " + esc(s || "ordered") + "'>" + (map[s] || "Ordered") + "</span>";
+      }
+      function loadList() {
+        api("/stickers/admin/list", { method: "GET" }).then(function (res) {
+          if (!res.ok) { handleAuth(res); return; }
+          window.__stOrders = res.body.items || [];
+          renderList();
+        });
+      }
+      function renderList() {
+        var q = $("search").value.trim().toLowerCase();
+        var items = (window.__stOrders || []).filter(function (it) {
+          if (!q) return true;
+          return [it.pet_name, it.owner, it.phone, it.pin, it.address].join(" ").toLowerCase().indexOf(q) !== -1;
+        });
+        if (!items.length) { $("rows").innerHTML = "<tr><td colspan='5'>No sticker orders yet.</td></tr>"; return; }
+        $("rows").innerHTML = items.map(function (it) {
+          var img = it.photo1 ? "<img class='thumb' src='" + it.photo1 + "' alt=''>" : "<div class='thumb'></div>";
+          return "<tr>" +
+            "<td>" + img + "</td>" +
+            "<td><b>" + esc(it.pet_name) + "</b><br><span style='color:#888'>" + esc(it.owner || "") + "</span></td>" +
+            "<td class='addr-cell'>" + (it.phone ? "📞 " + esc(it.phone) + "<br>" : "") + esc(it.address || "") + (it.pin ? "<br>PIN <b>" + esc(it.pin) + "</b>" : "") + "</td>" +
+            "<td>" + statusPill(it.status) + "<br><span style='font-size:.72rem;color:#888'>" + (it.images || 0) + "/12 images</span></td>" +
+            "<td><div class='row-actions'>" +
+              "<button class='btn btn-primary btn-sm' data-act='open' data-id='" + it.id + "'>Open</button>" +
+              "<button class='btn btn-ghost btn-sm' data-act='wa' data-id='" + it.id + "'>WA msg</button>" +
+              "<button class='btn btn-green btn-sm' data-act='status' data-id='" + it.id + "'>" + (it.status === "shipped" ? "Mark ordered" : "Mark shipped") + "</button>" +
+              "<button class='btn btn-red btn-sm' data-act='del' data-id='" + it.id + "'>Delete</button>" +
+            "</div></td></tr>";
+        }).join("");
+      }
+      $("refreshBtn").addEventListener("click", loadList);
+      var st; $("search").addEventListener("input", function () { clearTimeout(st); st = setTimeout(renderList, 200); });
+
+      $("rows").addEventListener("click", function (e) {
+        var btn = e.target.closest("button[data-act]"); if (!btn) return;
+        var id = btn.getAttribute("data-id"), act = btn.getAttribute("data-act");
+        var item = (window.__stOrders || []).filter(function (x) { return x.id === id; })[0];
+        if (!item) return;
+        if (act === "open") openOrder(item);
+        else if (act === "wa") copyWaFor(item, btn);
+        else if (act === "status") {
+          var ns = item.status === "shipped" ? "ordered" : "shipped";
+          api("/stickers/admin/update", { method: "POST", body: JSON.stringify({ id: id, status: ns }) }).then(function (res) { if (res.ok) loadList(); else handleAuth(res); });
+        } else if (act === "del") {
+          if (!confirm("Delete order for " + item.pet_name + "? This is permanent.")) return;
+          api("/stickers/admin/delete", { method: "POST", body: JSON.stringify({ id: id }) }).then(function (res) { if (res.ok) { toast("Order deleted", "ok"); $("detailCard").classList.add("hide"); loadList(); } else handleAuth(res); });
+        }
+      });
+
+      // ---- WhatsApp order message ----
+      function copyWaFor(item, btn) {
+        var pin = (item.pin || "").replace(/\D/g, "");
+        var finish = function (shipping) {
+          var shipLine, totalLine;
+          if (shipping > 0) {
+            shipLine = "\ud83d\ude9a Shipping to PIN " + pin + ": *\u20b9" + shipping + "* (one charge \u2014 covers both A4 sheets in one envelope)\n";
+            totalLine = "\ud83d\udcb0 *Total: \u20b9" + (PRICE + shipping) + "*\n\n";
+          } else {
+            shipLine = "\ud83d\ude9a Shipping: *extra as per your PIN code* (one charge for the whole pack)\n";
+            totalLine = "\ud83d\udcb0 *Total: \u20b9" + PRICE + " + shipping*\n\n";
+          }
+          var msg = "Hi! \ud83d\udc3e Thank you for ordering *Custom Viral Pet Stickers* from *Emily's Pet Heaven*!\n\n" +
+            "Here's your order summary:\n" +
+            "\ud83d\udc36 Pet: *" + (item.pet_name || "your pet") + "*\n" +
+            "\ud83d\udce6 Pack: *12 big stickers \u00b7 2 A4 sheets \u2014 \u20b9" + PRICE + "*\n" +
+            shipLine + totalLine +
+            "Please pay the total using the Paytm QR code in my next message (any UPI app works \u2014 Paytm / GPay / PhonePe). \ud83d\udcf2\n\n" +
+            "*What happens after payment:*\n" +
+            "1\ufe0f\u20e3 We pick *12 memes trending RIGHT NOW* (this month + last month's virals \ud83d\udd25)\n" +
+            "2\ufe0f\u20e3 Your pet is drawn into each one \u2014 face & markings kept recognizable\n" +
+            "3\ufe0f\u20e3 Printed on *2 premium A4 sticker sheets* with easy-cut outlines and shipped with tracking\n\n" +
+            "\ud83c\udf81 The exact meme mix stays a *surprise* until you unbox! \u2764\ufe0f";
+          var done = function () { toast("Message copied \u2014 total " + (shipping > 0 ? "\u20b9" + (PRICE + shipping) : "\u20b9" + PRICE + " + shipping"), "ok"); };
+          copyTextRobust(msg, done);
+        };
+        if (!/^[1-9][0-9]{5}$/.test(pin)) { pin = ""; finish(0); return; }
+        toast("Checking shipping for PIN " + pin + "\u2026", "ok");
+        fetch(PetCard.API_BASE + "/petcard/shiprate?pin=" + pin)
+          .then(function (r) { return r.json(); })
+          .then(function (d) { if (d && d.ok && d.shipping > 0) finish(d.shipping); else { pin = ""; finish(0); } })
+          .catch(function () { pin = ""; finish(0); });
+      }
+      function copyTextRobust(msg, done) {
+        var legacy = function () {
+          var ta = document.createElement("textarea");
+          ta.value = msg; ta.style.position = "fixed"; ta.style.opacity = "0"; ta.style.left = "-9999px";
+          document.body.appendChild(ta); ta.focus(); ta.select();
+          var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+          document.body.removeChild(ta);
+          if (ok) done();
+          else window.open("https://wa.me/?text=" + encodeURIComponent(msg), "_blank");
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(msg).then(done, legacy);
+        else legacy();
+      }
+
+      // ---- Order detail ----
+      function openOrder(item) {
+        current = item;
+        stickerImgs = {};
+        $("detailCard").classList.remove("hide");
+        $("dTitle").textContent = "🐾 " + (item.pet_name || "Order") + " — " + (item.owner || "");
+        $("dPhotos").innerHTML = [item.photo1, item.photo2].filter(Boolean).map(function (p) { return "<img src='" + p + "' alt='pet photo'>"; }).join("");
+        $("dMeta").innerHTML = [
+          item.phone ? "📞 " + esc(item.phone) : "",
+          item.pin ? "📍 PIN " + esc(item.pin) : "",
+          esc(item.address || ""),
+          item.notes ? "📝 " + esc(item.notes) : "",
+          "🗓 " + esc((item.created_at || "").slice(0, 10))
+        ].filter(Boolean).join(" · ");
+        renderPrompts(item.prompts || "");
+        renderSlots();
+        ["dlSheet1", "dlSheet2", "dlSheetsPdf"].forEach(function (id) { $(id).classList.add("hide"); });
+        ["sheet1", "sheet2"].forEach(function (id) { $(id).classList.add("hide"); });
+        loadImages(item.id);
+        $("detailCard").scrollIntoView({ behavior: "smooth" });
+      }
+
+      // ---- Prompts ----
+      function renderPrompts(text) {
+        var out = $("promptsOut");
+        if (!text) { out.innerHTML = "<p style='font-size:.82rem;color:#999;margin-top:8px'>No prompts yet — click ✨ Generate prompts.</p>"; $("copyAllPrompts").classList.add("hide"); return; }
+        var parts = text.split(/(?=STICKER\s+\d+)/i).filter(function (p) { return p.trim(); });
+        out.innerHTML = parts.map(function (p, i) {
+          var title = (p.match(/^STICKER\s+\d+[^\n:]*/i) || ["Prompt " + (i + 1)])[0];
+          return "<div class='prompt-block'><h4>" + esc(title.trim()) + "<button class='btn btn-ghost btn-sm' data-copy='" + i + "'>📋 Copy</button></h4>" + esc(p.replace(/^STICKER\s+\d+[^\n]*\n?/i, "").trim()) + "</div>";
+        }).join("");
+        window.__stPromptParts = parts;
+        $("copyAllPrompts").classList.remove("hide");
+      }
+      $("promptsOut").addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-copy]"); if (!b) return;
+        var p = (window.__stPromptParts || [])[parseInt(b.getAttribute("data-copy"), 10)];
+        if (p) copyTextRobust(p.trim(), function () { toast("Prompt copied — paste in ChatGPT with the pet photo attached", "ok"); });
+      });
+      $("copyAllPrompts").addEventListener("click", function () {
+        copyTextRobust((window.__stPromptParts || []).join("\n\n"), function () { toast("All prompts copied", "ok"); });
+      });
+      function genPrompts(force, btn) {
+        if (!current) return;
+        var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Fetching live trends + generating…"; btn.disabled = true;
+        api("/stickers/admin/prompts", { method: "POST", body: JSON.stringify({ id: current.id, force: force }) }).then(function (res) {
+          btn.textContent = old; btn.disabled = false;
+          if (!res.ok) { handleAuth(res); return; }
+          current.prompts = res.body.prompts || "";
+          renderPrompts(current.prompts);
+          toast("12 prompts generated from live trends " + (res.body.cached ? "(cached feed)" : "(fresh feed)"), "ok");
+          loadList();
+        }).catch(function () { btn.textContent = old; btn.disabled = false; toast("Network error", "err"); });
+      }
+      $("genPrompts").addEventListener("click", function () { genPrompts(false, $("genPrompts")); });
+      $("genPromptsFresh").addEventListener("click", function () { genPrompts(true, $("genPromptsFresh")); });
+
+      // ---- Upload slots ----
+      function renderSlots() {
+        var html = "";
+        for (var i = 0; i < 12; i++) {
+          html += "<label class='slot' id='slotBox" + i + "'><span class='num'>" + (i + 1) + "</span><span>📷 Sticker " + (i + 1) + "</span><input type='file' accept='image/*' data-slot='" + i + "'></label>";
+        }
+        $("slots").innerHTML = html;
+      }
+      function paintSlot(i, url) {
+        var box = $("slotBox" + i); if (!box) return;
+        var img = box.querySelector("img") || document.createElement("img");
+        img.src = url; box.appendChild(img);
+      }
+      $("slots").addEventListener("change", function (e) {
+        var inp = e.target; if (!inp.matches("input[data-slot]")) return;
+        var f = inp.files && inp.files[0]; if (!f || !current) return;
+        var i = parseInt(inp.getAttribute("data-slot"), 10);
+        PetCard.fileToCompressedDataURL(f, 1024, 0.9).then(function (url) {
+          stickerImgs[i] = url;
+          paintSlot(i, url);
+          api("/stickers/admin/upload", { method: "POST", body: JSON.stringify({ id: current.id, idx: i, data: url }) }).then(function (res) {
+            if (res.ok) toast("Sticker " + (i + 1) + " saved (" + Object.keys(stickerImgs).length + "/12)", "ok");
+            else handleAuth(res);
+          });
+        });
+      });
+      function loadImages(id) {
+        api("/stickers/admin/images?id=" + encodeURIComponent(id), { method: "GET" }).then(function (res) {
+          if (!res.ok) { handleAuth(res); return; }
+          (res.body.images || []).forEach(function (r) { stickerImgs[r.idx] = r.data; paintSlot(r.idx, r.data); });
+        });
+      }
+
+      // =====================================================================
+      //  A4 COMPOSER — 6 big stickers per sheet, scattered, silhouette
+      //  dashed cut lines + scissor markers, footer inside safe margin.
+      // =====================================================================
+      var SHEET_W = 2480, SHEET_H = 3508; // A4 @ 300 DPI
+      var MARGIN = 100, FOOTER_H = 130;
+
+      function loadImg(url) {
+        return new Promise(function (res, rej) {
+          var im = new Image();
+          im.onload = function () { res(im); };
+          im.onerror = rej;
+          im.src = url;
+        });
+      }
+
+      // Remove the flat light-grey ChatGPT background: flood-fill from the
+      // borders, clearing pixels close to the sampled corner colour.
+      function extractSticker(im) {
+        var c = document.createElement("canvas");
+        c.width = im.width; c.height = im.height;
+        var ctx = c.getContext("2d");
+        ctx.drawImage(im, 0, 0);
+        var W = c.width, H = c.height;
+        var d = ctx.getImageData(0, 0, W, H);
+        var px = d.data;
+        function col(x, y) { var o = (y * W + x) * 4; return [px[o], px[o + 1], px[o + 2]]; }
+        var corners = [col(2, 2), col(W - 3, 2), col(2, H - 3), col(W - 3, H - 3)];
+        var bg = [0, 1, 2].map(function (k) { return corners.reduce(function (s, cc) { return s + cc[k]; }, 0) / 4; });
+        var TOL = 34;
+        function isBg(o) {
+          return Math.abs(px[o] - bg[0]) < TOL && Math.abs(px[o + 1] - bg[1]) < TOL && Math.abs(px[o + 2] - bg[2]) < TOL;
+        }
+        var visited = new Uint8Array(W * H);
+        var stack = [];
+        for (var x = 0; x < W; x++) { stack.push(x); stack.push((H - 1) * W + x); }
+        for (var y = 0; y < H; y++) { stack.push(y * W); stack.push(y * W + W - 1); }
+        while (stack.length) {
+          var p = stack.pop();
+          if (visited[p]) continue;
+          visited[p] = 1;
+          var o = p * 4;
+          if (!isBg(o)) continue;
+          px[o + 3] = 0;
+          var xx = p % W, yy = (p / W) | 0;
+          if (xx > 0) stack.push(p - 1);
+          if (xx < W - 1) stack.push(p + 1);
+          if (yy > 0) stack.push(p - W);
+          if (yy < H - 1) stack.push(p + W);
+        }
+        ctx.putImageData(d, 0, 0);
+        // trim to bounding box of remaining pixels
+        var minX = W, minY = H, maxX = 0, maxY = 0;
+        for (var yy2 = 0; yy2 < H; yy2++) for (var xx2 = 0; xx2 < W; xx2++) {
+          if (px[(yy2 * W + xx2) * 4 + 3] > 10) {
+            if (xx2 < minX) minX = xx2; if (xx2 > maxX) maxX = xx2;
+            if (yy2 < minY) minY = yy2; if (yy2 > maxY) maxY = yy2;
+          }
+        }
+        if (maxX <= minX || maxY <= minY) return c;
+        var t = document.createElement("canvas");
+        t.width = maxX - minX + 1; t.height = maxY - minY + 1;
+        t.getContext("2d").drawImage(c, minX, minY, t.width, t.height, 0, 0, t.width, t.height);
+        return t;
+      }
+
+      // Trace the outer contour of an alpha mask (Moore-neighbour tracing) on a
+      // downscaled copy, returning ordered [x,y] points in canvas coords.
+      function traceContour(cv, scale) {
+        var w = Math.max(2, Math.round(cv.width * scale)), h = Math.max(2, Math.round(cv.height * scale));
+        var t = document.createElement("canvas");
+        t.width = w; t.height = h;
+        var tc = t.getContext("2d");
+        tc.drawImage(cv, 0, 0, w, h);
+        var a = tc.getImageData(0, 0, w, h).data;
+        function solid(x, y) { return x >= 0 && y >= 0 && x < w && y < h && a[(y * w + x) * 4 + 3] > 40; }
+        var sx = -1, sy = -1;
+        outer: for (var y = 0; y < h; y++) for (var x = 0; x < w; x++) { if (solid(x, y)) { sx = x; sy = y; break outer; } }
+        if (sx < 0) return [];
+        var dirs = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
+        var pts = [[sx, sy]], cx = sx, cy = sy, dir = 6, guard = w * h * 4;
+        do {
+          var found = false;
+          for (var i = 0; i < 8; i++) {
+            var d2 = (dir + 6 + i) % 8;
+            var nx = cx + dirs[d2][0], ny = cy + dirs[d2][1];
+            if (solid(nx, ny)) { cx = nx; cy = ny; dir = d2; pts.push([cx, cy]); found = true; break; }
+          }
+          if (!found) break;
+        } while ((cx !== sx || cy !== sy) && --guard > 0);
+        var inv = 1 / scale;
+        return pts.map(function (p) { return [p[0] * inv, p[1] * inv]; });
+      }
+
+      // Offset a contour outward from its centroid and draw as a dashed line,
+      // plus a real scissor glyph sitting on the path.
+      function drawCutLine(ctx, pts, offX, offY, pad) {
+        if (pts.length < 8) return;
+        var cx = 0, cy = 0;
+        pts.forEach(function (p) { cx += p[0]; cy += p[1]; });
+        cx /= pts.length; cy /= pts.length;
+        var out = pts.map(function (p) {
+          var dx = p[0] - cx, dy = p[1] - cy;
+          var len = Math.sqrt(dx * dx + dy * dy) || 1;
+          return [offX + p[0] + (dx / len) * pad, offY + p[1] + (dy / len) * pad];
+        });
+        // light smoothing
+        var sm = out.map(function (p, i) {
+          var a = out[(i - 1 + out.length) % out.length], b = out[(i + 1) % out.length];
+          return [(a[0] + p[0] + b[0]) / 3, (a[1] + p[1] + b[1]) / 3];
+        });
+        ctx.save();
+        ctx.strokeStyle = "#9a9a9a";
+        ctx.lineWidth = 4;
+        ctx.setLineDash([22, 16]);
+        ctx.beginPath();
+        sm.forEach(function (p, i) { if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]); });
+        ctx.closePath();
+        ctx.stroke();
+        ctx.restore();
+        // scissor glyph at the topmost contour point, angled along the path
+        var topI = 0;
+        sm.forEach(function (p, i) { if (p[1] < sm[topI][1]) topI = i; });
+        var p0 = sm[topI], p1 = sm[(topI + 4) % sm.length];
+        var ang = Math.atan2(p1[1] - p0[1], p1[0] - p0[0]);
+        ctx.save();
+        ctx.translate(p0[0], p0[1]);
+        ctx.rotate(ang);
+        ctx.font = "64px 'Segoe UI Emoji','Noto Color Emoji',sans-serif";
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText("\u2702\ufe0f", 0, 0);
+        ctx.restore();
+      }
+
+      // Deterministic-ish scatter: 2 cols x 3 rows loose grid with random
+      // jitter, rotation and size so no two sheets ever look the same.
+      function composeSheet(canvas, stickers) {
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, SHEET_W, SHEET_H);
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, SHEET_W, SHEET_H);
+
+        var usableW = SHEET_W - MARGIN * 2;
+        var usableH = SHEET_H - MARGIN * 2 - FOOTER_H;
+        var cellW = usableW / 2, cellH = usableH / 3;
+        var order = [0, 1, 2, 3, 4, 5].sort(function () { return Math.random() - 0.5; });
+
+        stickers.forEach(function (stk, i) {
+          var cell = order[i];
+          var col = cell % 2, row = (cell / 2) | 0;
+          var maxW = cellW * 0.92, maxH = cellH * 0.92;
+          var s = Math.min(maxW / stk.width, maxH / stk.height) * (0.86 + Math.random() * 0.14);
+          var w = stk.width * s, h = stk.height * s;
+          var jx = (Math.random() - 0.5) * (cellW - w) * 0.7;
+          var jy = (Math.random() - 0.5) * (cellH - h) * 0.7;
+          var cxp = MARGIN + col * cellW + cellW / 2 + jx;
+          var cyp = MARGIN + row * cellH + cellH / 2 + jy;
+          var rot = (Math.random() - 0.5) * 0.42; // up to ~±12°
+
+          // render rotated sticker into its own canvas so we can trace the
+          // silhouette exactly as printed
+          var diag = Math.ceil(Math.sqrt(w * w + h * h)) + 80;
+          var rc = document.createElement("canvas");
+          rc.width = diag; rc.height = diag;
+          var rctx = rc.getContext("2d");
+          rctx.translate(diag / 2, diag / 2);
+          rctx.rotate(rot);
+          rctx.drawImage(stk, -w / 2, -h / 2, w, h);
+          var ox = Math.round(cxp - diag / 2), oy = Math.round(cyp - diag / 2);
+          ctx.drawImage(rc, ox, oy);
+          var pts = traceContour(rc, 0.25);
+          drawCutLine(ctx, pts, ox, oy, 26);
+        });
+
+        // branding footer inside the safe printable area
+        var fy = SHEET_H - MARGIN - FOOTER_H / 2;
+        ctx.fillStyle = "#4E0000";
+        ctx.font = "600 52px Fredoka, Poppins, sans-serif";
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText("\ud83d\udc3e Emily's Pet Heaven \u00b7 Custom Viral Pet Stickers \u00b7 emilyspetheaven.com", SHEET_W / 2, fy);
+        ctx.fillStyle = "#9a7b4f";
+        ctx.font = "36px Poppins, sans-serif";
+        ctx.fillText("Cut along the dashed lines \u2702 \u00b7 Print at 100% on A4 sticker paper", SHEET_W / 2, fy + 58);
+      }
+
+      $("genSheets").addEventListener("click", function () {
+        var idxs = Object.keys(stickerImgs).map(Number).sort(function (a, b) { return a - b; });
+        if (idxs.length < 12) { toast("Upload all 12 stickers first (" + idxs.length + "/12 uploaded)", "err"); return; }
+        var btn = $("genSheets");
+        var old = btn.textContent; btn.innerHTML = "<span class='m-spin'></span>Composing sheets…"; btn.disabled = true;
+        Promise.all(idxs.slice(0, 12).map(function (i) { return loadImg(stickerImgs[i]); }))
+          .then(function (imgs) {
+            var cut = imgs.map(extractSticker);
+            // shuffle so the 6/6 split is a surprise too
+            var shuffled = cut.slice().sort(function () { return Math.random() - 0.5; });
+            composeSheet($("sheet1"), shuffled.slice(0, 6));
+            composeSheet($("sheet2"), shuffled.slice(6, 12));
+            ["sheet1", "sheet2", "dlSheet1", "dlSheet2", "dlSheetsPdf"].forEach(function (id) { $(id).classList.remove("hide"); });
+            btn.textContent = old; btn.disabled = false;
+            toast("2 A4 sheets ready — download PNGs or the PDF", "ok");
+            api("/stickers/admin/update", { method: "POST", body: JSON.stringify({ id: current.id, status: "ready" }) }).then(loadList);
+          })
+          .catch(function (e) { btn.textContent = old; btn.disabled = false; toast("Sheet composition failed: " + e, "err"); });
+      });
+
+      // queued downloads (mobile browsers block rapid multi-download)
+      var dlQueue = [], dlBusy = false;
+      function processDl() {
+        var job = dlQueue.shift();
+        if (!job) { dlBusy = false; return; }
+        dlBusy = true;
+        var link = document.createElement("a");
+        link.download = job.name; link.href = job.url;
+        document.body.appendChild(link); link.click();
+        setTimeout(function () { document.body.removeChild(link); if (job.revoke) URL.revokeObjectURL(job.url); processDl(); }, 1000);
+      }
+      function saveCanvas(cv, filename) {
+        var push = function (url, revoke) { dlQueue.push({ url: url, name: filename, revoke: revoke }); if (!dlBusy) processDl(); };
+        if (cv.toBlob) cv.toBlob(function (b) { if (b) push(URL.createObjectURL(b), true); else push(cv.toDataURL("image/png"), false); }, "image/png");
+        else push(cv.toDataURL("image/png"), false);
+      }
+      function baseName() { return "viral-stickers-" + ((current && current.pet_name) || "pet").replace(/[^a-z0-9]+/gi, "-").toLowerCase(); }
+      $("dlSheet1").addEventListener("click", function () { saveCanvas($("sheet1"), baseName() + "-sheet1.png"); });
+      $("dlSheet2").addEventListener("click", function () { saveCanvas($("sheet2"), baseName() + "-sheet2.png"); });
+      $("dlSheetsPdf").addEventListener("click", function () {
+        var jsPDF = (window.jspdf && window.jspdf.jsPDF) || window.jsPDF;
+        if (!jsPDF) { toast("PDF library failed to load — refresh and try again", "err"); return; }
+        var pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+        // scale to 96% inside the page so no printer clips the footer
+        var W = 210 * 0.96, H = 297 * 0.96, X = (210 - W) / 2, Y = (297 - H) / 2;
+        pdf.addImage($("sheet1").toDataURL("image/jpeg", 0.92), "JPEG", X, Y, W, H);
+        pdf.addPage();
+        pdf.addImage($("sheet2").toDataURL("image/jpeg", 0.92), "JPEG", X, Y, W, H);
+        pdf.save(baseName() + "-A4.pdf");
+        toast("A4 PDF downloaded (2 sheets)", "ok");
+      });
+
+      // ---- Init ----
+      if (token) { show(true); loadList(); }
+      else show(false);
+    })();
+  </script>
+</body>
+</html>
