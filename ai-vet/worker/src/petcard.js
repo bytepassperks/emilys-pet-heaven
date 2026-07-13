@@ -93,7 +93,7 @@ function publicRecord(row) {
   };
 }
 
-async function requireAdmin(request, env) {
+export async function requireAdmin(request, env) {
   const auth = request.headers.get("Authorization") || "";
   const token = auth.replace(/^Bearer\s+/i, "");
   const data = await verifyToken(token, env.SESSION_SECRET || "");

@@ -22,6 +22,28 @@
     </image:image>
   </url>
   <url>
+    <loc>https://emilyspetheaven.com/stickers/</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://emilyspetheaven.com/assets/stickers/hero-sample.png</image:loc>
+      <image:title>Custom Viral Pet Stickers — Your Pet in This Month's Memes</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/blog-custom-pet-stickers-india.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://emilyspetheaven.com/blog-bengali-meme-stickers-kolkata.html</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://emilyspetheaven.com/about.html</loc>
     <lastmod>2026-04-26</lastmod>
     <changefreq>monthly</changefreq>
