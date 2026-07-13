@@ -365,11 +365,23 @@ ul, ol { list-style: none; }
   white-space: nowrap;
 }
 
-@media (min-width: 993px) and (max-width: 1280px) {
+.logo { flex-shrink: 0; }
+.logo .logo-text { white-space: nowrap; }
+
+@media (min-width: 993px) and (max-width: 1450px) {
   .nav-menu { gap: var(--space-md); }
   .nav { gap: var(--space-md); }
-  .logo .logo-text { white-space: nowrap; font-size: 1.5rem; }
+  .logo .logo-text { font-size: 1.5rem; }
   .header-container { gap: var(--space-sm); }
+}
+
+@media (min-width: 993px) and (max-width: 1160px) {
+  .nav-menu { gap: 8px; }
+  .nav { gap: 8px; }
+  .nav-menu a { font-size: .8rem; }
+  .nav .btn { padding: 9px 12px; font-size: .8rem; white-space: nowrap; }
+  .logo .logo-text { font-size: 1.15rem; }
+  .logo-paw { width: 34px; height: 34px; }
 }
 
 .nav-menu a::after {
@@ -2971,4 +2983,15 @@ ul, ol { list-style: none; }
 /* Testimonial Pink Circle — hide decorative element that looks like broken image */
 .testimonial-pink-circle-large {
   display: none;
+}
+
+.header .nav {
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+@media (min-width: 1451px) {
+  .header .nav { gap: var(--space-lg); }
+  .header .nav-menu { gap: var(--space-lg); }
 }
