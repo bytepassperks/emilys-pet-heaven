@@ -17,31 +17,31 @@
   },
   {
     "id": "boarding-rates",
-    "text": "Pet boarding rates (per day, 24/7 supervision): Dog Boarding Rs 449/day (includes 3 meals, fresh air-break, potty break, 1 walking). Cat Boarding Rs 349/day (separate cat area, 2 meals, litter maintenance). Dog Boarding + Training Rs 799/day (boarding plus daily training session). If the owner provides dry food, Rs 50 less per day. Boarding of 7 days or more gets a 10% discount."
+    "text": "Pet boarding rates (per day, 24/7 supervision): Dog Boarding Rs 549/day (includes 3 meals, fresh air-break, potty break, 1 walking; with AC at no extra charge - without AC Rs 449/day). Cat Boarding Rs 349/day (separate cat area, 2 meals, litter maintenance). Dog Boarding + Training Rs 799/day (boarding plus daily training session). If the owner provides dry food, Rs 50 less per day. Boarding of 7 days or more gets a 10% discount."
   },
   {
     "id": "daycare-rates",
-    "text": "Pet daycare rates: Dog Daycare Rs 249/day (morning, 12 hours, includes a meal). Cat Daycare Rs 199/day (morning, 12 hours, includes meal and litter). Safe, supervised daytime care while you are at work."
+    "text": "Pet daycare rates: Dog Daycare Rs 299/day (morning, 12 hours, includes a meal). Cat Daycare Rs 249/day (morning, 12 hours, includes meal and litter). Safe, supervised daytime care while you are at work."
   },
   {
     "id": "dog-grooming",
-    "text": "Dog grooming packages priced by size (Small / Medium / Large breeds): Basic Bath & Dry Rs 499 / Rs 799 / Rs 999. Full Grooming (Bath + Haircut) Rs 699 / Rs 1199 / Rs 1999. Nail Trimming Rs 199 (all sizes). Ear Cleaning Rs 199 (all sizes). De-shedding Treatment Rs 499 / Rs 799 / Rs 999. Spa Package (Bath + Haircut + Nail Trimming + Ear Cleaning) Rs 999 / Rs 1599 / Rs 2499. Small breeds e.g. Pomeranian, Shih Tzu; large breeds e.g. German Shepherd, Siberian Husky, Saint Bernard."
+    "text": "Dog grooming packages priced by size (Small / Medium / Large breeds): Basic Bath & Dry Rs 549 / Rs 849 / Rs 949. Full Grooming (Bath + Haircut) Rs 699 / Rs 1249 / Rs 1649. Nail Trimming Rs 199 (all sizes). Ear Cleaning Rs 199 (all sizes). De-shedding Treatment Rs 699 / Rs 899 / Rs 999. Spa Package (Bath + Haircut + Nail Trimming + Ear Cleaning) Rs 999 / Rs 1599 / Rs 1799. Small breeds e.g. Pomeranian, Shih Tzu; large breeds e.g. German Shepherd, Siberian Husky, Saint Bernard. Home service charges: Rs 49 within 5 km, Rs 99 for 5-10 km, Rs 199 above 10 km."
   },
   {
     "id": "cat-grooming",
-    "text": "Cat grooming packages (Small / Medium-Large): Cat Bath & Dry Rs 399 / Rs 499. Cat Full Grooming (Bath + Haircut + Trimming) Rs 499 / Rs 599. Cat Nail Trimming Rs 199. Cat Ear Cleaning Rs 199. Cat De-matting Treatment Rs 399 / Rs 599."
+    "text": "Cat grooming packages (Small / Medium-Large): Cat Bath & Dry Rs 499 / Rs 599. Cat Full Grooming (Bath + Haircut + Trimming) Rs 599 / Rs 749. Cat Nail Trimming Rs 199. Cat Ear Cleaning Rs 199. Cat De-matting Treatment Rs 499 / Rs 699. Home service charges: Rs 49 within 5 km, Rs 99 for 5-10 km, Rs 199 above 10 km."
   },
   {
     "id": "pet-sitting",
-    "text": "Pet sitting and home visit rates: Dog Sitting (in home) Rs 499/visit (1 hour 30 minutes, includes feeding and walk). Cat Sitting Rs 399/visit (1 hour 30 minutes). Free within 10 km; beyond 10 km, Rs 20 per extra km."
+    "text": "Pet sitting and home visit rates: Dog Sitting (in home) Rs 349/visit (1 hour 30 minutes, includes feeding and walk). Cat Sitting Rs 249/visit (1 hour 30 minutes). Home service travel charges: Rs 49 within 5 km, Rs 99 for 5-10 km, Rs 199 above 10 km."
   },
   {
     "id": "dog-walking",
-    "text": "Dog walking rates: Single Walk (45 minutes) Rs 149/walk (early morning or evening). Single Walk (1 hour) Rs 329/walk (walk plus potty break, extended). Monthly Package (30 walks, 1 hour each) Rs 5549/month (about Rs 185/walk, daily walk)."
+    "text": "Dog walking rates: Single Walk (45 minutes) Rs 199/walk (early morning or evening). Single Walk (1 hour 30 minutes) Rs 299/walk (walk plus potty break, extended). Monthly Package (30 walks, 1 hour each) Rs 5549/month (about Rs 185/walk, daily walk)."
   },
   {
     "id": "vaccination",
-    "text": "Vaccination and health services: Vaccine Service Rs 599 (includes basic examination; vaccine price excluded). Health Certificate Rs 499 (for travel purposes). Home Visit Vaccination Rs 999 (you can buy the vaccine or we can buy it). Free within 10 km; beyond 10 km, Rs 20 per extra km."
+    "text": "Vaccination and health services: Vaccine Service Rs 299 (includes basic examination; vaccine price excluded). Health Certificate Rs 499 (for travel purposes). Home Visit Vaccination Rs 299 (you can buy the vaccine or we can buy it). Home service travel charges: Rs 49 within 5 km, Rs 99 for 5-10 km, Rs 199 above 10 km."
   },
   {
     "id": "transport",

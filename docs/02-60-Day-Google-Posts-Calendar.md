@@ -251,7 +251,7 @@ Emily's Pet Heaven Barrackpore offers supervised daycare with:
 
 Perfect for working pet parents who want their furry friend to have fun instead of being home alone all day.
 
-Daycare from ₹400/day. Drop-off in the morning, pickup in the evening!
+Daycare from ₹249/day. Drop-off in the morning, pickup in the evening!
 
 📞 +91 6363590332
 📍 18/1 Banerjee Para Road, Barrackpore
@@ -465,9 +465,9 @@ Quality pet boarding at honest prices 💰🐾
 
 Emily's Pet Heaven Barrackpore — transparent pricing, no hidden charges:
 
-🐕 Dog Boarding: from ₹600/night
-🐱 Cat Boarding: from ₹400/night
-☀️ Pet Daycare: from ₹400/day
+🐕 Dog Boarding: from ₹549/night
+🐱 Cat Boarding: from ₹349/night
+☀️ Pet Daycare: from ₹249/day
 ✂️ Full Grooming: from ₹500
 ✂️ Basic Grooming: from ₹300
 🚗 Transport: from ₹200

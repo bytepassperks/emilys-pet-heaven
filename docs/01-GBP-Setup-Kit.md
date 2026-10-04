@@ -70,7 +70,7 @@ Add each service in GBP Dashboard → Services tab. Include the title AND descri
 |---|--------------|------------------------------|-------------|
 | 1 | Pet Boarding (Dogs) | Safe overnight and extended-stay boarding for dogs of all breeds with 24/7 supervision, daily exercise and WhatsApp updates. | ₹600–₹1500/night |
 | 2 | Pet Boarding (Cats) | Dedicated quiet cat boarding in separate enclosures away from dogs, with daily grooming and personalised care. | ₹400–₹800/night |
-| 3 | Pet Daycare | Supervised daytime care with structured play, socialisation, feeding and exercise sessions. Drop-off and pickup available. | ₹400–₹800/day |
+| 3 | Pet Daycare | Supervised daytime care with structured play, socialisation, feeding and exercise sessions. Drop-off and pickup available. | ₹249–₹299/day |
 | 4 | Full Pet Grooming | Complete grooming including bath, shampoo, coat trim, blow dry, nail clipping, ear cleaning and flea treatment. | ₹500–₹1500 |
 | 5 | Basic Pet Grooming | Quick grooming with bath, brush and nail clip. Suitable for regular maintenance between full grooming sessions. | ₹300–₹700 |
 | 6 | Puppy Socialisation | Structured socialisation sessions for puppies aged 8 weeks to 6 months with supervised group interaction. | ₹300–₹600 |
