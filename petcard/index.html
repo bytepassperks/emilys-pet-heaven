@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+  <title>Pet Identity Card Generator | Emily's Pet Heaven - Barrackpore</title>
+  <meta name="description" content="Create official-looking Pet Identity Cards for your furry friends at Emily's Pet Heaven, Barrackpore. Upload photo, fill details, print & laminate — free keepsake for every pet parent!">
+  <meta name="keywords" content="pet identity card, pet ID card generator, pet card barrackpore, emily's pet heaven, pet memorabilia, pet keepsake, dog ID card, cat ID card">
+  <meta name="author" content="Emily's Pet Heaven">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://emilyspetheaven.com/petcard/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Pet Identity Card Generator | Emily's Pet Heaven">
+  <meta property="og:description" content="Create official-looking Pet Identity Cards for your furry friends. Upload photo, fill details, print & laminate!">
+  <meta property="og:url" content="https://emilyspetheaven.com/petcard/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/brand/logo-icon-transparent.webp">
+  <link rel="apple-touch-icon" href="../assets/brand/logo-icon-transparent.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pet Identity Card Generator",
+    "description": "Create official-looking Pet Identity Cards for your furry friends at Emily's Pet Heaven",
+    "url": "https://emilyspetheaven.com/petcard/",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "Emily's Pet Heaven",
+      "address": { "@type": "PostalAddress", "addressLocality": "Barrackpore", "addressRegion": "West Bengal", "addressCountry": "IN" },
+      "telephone": "+91-9007062824",
+      "url": "https://emilyspetheaven.com"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --maroon: #4E0000;
+      --golden: #FFAE01;
+      --cream: #FFECBC;
+      --saffron: #FF9933;
+      --white: #FFFFFF;
+      --green: #138808;
+      --navy: #000080;
+      --card-w: 856;
+      --card-h: 540;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #FFF5E1 0%, #FFE8CC 50%, #FFF0D4 100%);
+      min-height: 100vh;
+      color: #333;
+    }
+    /* Header */
+    .header {
+      background: var(--maroon);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .header-left img { height: 40px; width: auto; }
+    .header-left h1 {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--golden);
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .header a.back-link {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.85rem;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+    .header a.back-link:hover { opacity: 1; }
+    /* Container */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+    .page-title {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .page-title h2 {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--maroon);
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+    }
+    .page-title p {
+      color: #666;
+      font-size: 0.95rem;
+    }
+    /* Form */
+    .form-section {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .form-section h3 {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--maroon);
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--cream);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group { display: flex; flex-direction: column; }
+    .form-group.full-width { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 4px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 10px 12px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--maroon);
+    }
+    .photo-upload-area {
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      padding: 30px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fafafa;
+      position: relative;
+    }
+    .photo-upload-area:hover, .photo-upload-area.dragover {
+      border-color: var(--maroon);
+      background: #FFF5EE;
+    }
+    .photo-upload-area input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+    .photo-upload-area .upload-icon {
+      font-size: 2.5rem;
+      margin-bottom: 8px;
+    }
+    .photo-upload-area p { color: #888; font-size: 0.85rem; }
+    .photo-upload-area img.preview {
+      max-width: 150px;
+      max-height: 150px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .checkbox-row {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .checkbox-row label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .checkbox-row input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--maroon);
+    }
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--maroon);
+      color: var(--golden);
+    }
+    .btn-primary:hover { background: #6B0000; transform: translateY(-1px); }
+    .btn-secondary {
+      background: var(--golden);
+      color: var(--maroon);
+    }
+    .btn-secondary:hover { background: #E69E00; }
+    .btn-outline {
+      background: transparent;
+      color: var(--maroon);
+      border: 2px solid var(--maroon);
+    }
+    .btn-outline:hover { background: var(--maroon); color: white; }
+    .actions-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    /* Card Preview */
+    .preview-section {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .preview-section h3 {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--maroon);
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .card-preview-wrapper {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .card-label {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .canvas-container {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    canvas { display: block; max-width: 100%; height: auto; }
+    /* Print Options */
+    .print-options {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 24px;
+    }
+    .print-options h3 {
+      font-family: 'Fredoka', sans-serif;
+      color: var(--maroon);
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+    .copies-selector {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .copies-selector button {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      background: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .copies-selector button.active {
+      border-color: var(--maroon);
+      background: var(--maroon);
+      color: var(--golden);
+    }
+    .copies-selector button:hover:not(.active) {
+      border-color: var(--maroon);
+    }
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: #888;
+      font-size: 0.8rem;
+    }
+    .footer a { color: var(--maroon); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
+    /* Responsive */
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .page-title h2 { font-size: 1.4rem; }
+      .card-preview-wrapper { flex-direction: column; align-items: center; }
+      .header-left h1 { font-size: 1rem; }
+    }
+    /* Hidden canvases for rendering */
+    .render-canvas { position: absolute; left: -9999px; top: -9999px; }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <img src="../assets/brand/logo-icon-transparent.webp" alt="Emily's Pet Heaven Logo" width="40" height="40">
+      <h1>Emily's Pet Heaven</h1>
+    </div>
+    <a href="https://emilyspetheaven.com" class="back-link">&larr; Back to Main Site</a>
+  </header>
+
+  <main class="container">
+    <div class="page-title">
+      <h2>Pet Identity Card Generator</h2>
+      <p>Create a beautiful keepsake ID card for your furry friend &mdash; print &amp; laminate at home!</p>
+    </div>
+
+    <!-- FORM: Pet Details -->
+    <section class="form-section">
+      <h3>Pet Details</h3>
+      <div class="form-grid">
+        <div class="form-group full-width">
+          <label>Pet Photo *</label>
+          <div class="photo-upload-area" id="photoUploadArea">
+            <input type="file" id="petPhoto" accept="image/*" capture="environment">
+            <div id="photoPlaceholder">
+              <div class="upload-icon">&#128247;</div>
+              <p>Tap to take photo or upload from gallery</p>
+            </div>
+            <img class="preview" id="photoPreview" style="display:none;" alt="Pet photo preview">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="petName">Pet Name *</label>
+          <input type="text" id="petName" placeholder="e.g. Bruno" required>
+        </div>
+        <div class="form-group">
+          <label for="petSpecies">Species *</label>
+          <select id="petSpecies">
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Bird">Bird</option>
+            <option value="Rabbit">Rabbit</option>
+            <option value="Fish">Fish</option>
+            <option value="Hamster">Hamster</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="petBreed">Breed *</label>
+          <input type="text" id="petBreed" placeholder="e.g. Golden Retriever">
+        </div>
+        <div class="form-group">
+          <label for="petGender">Gender</label>
+          <select id="petGender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="petDOB">Date of Birth</label>
+          <input type="date" id="petDOB">
+        </div>
+        <div class="form-group">
+          <label for="petAge">Age</label>
+          <input type="text" id="petAge" placeholder="e.g. 3 Years">
+        </div>
+        <div class="form-group">
+          <label for="petWeight">Weight</label>
+          <input type="text" id="petWeight" placeholder="e.g. 25 kg">
+        </div>
+        <div class="form-group">
+          <label for="petColour">Colour</label>
+          <input type="text" id="petColour" placeholder="e.g. Golden">
+        </div>
+        <div class="form-group full-width">
+          <label>Health Status</label>
+          <div class="checkbox-row">
+            <label><input type="checkbox" id="vaccinated"> Vaccinated</label>
+            <label><input type="checkbox" id="dewormed"> Dewormed</label>
+            <label><input type="checkbox" id="neutered"> Neutered/Spayed</label>
+            <label><input type="checkbox" id="microchipped"> Microchipped</label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM: Owner Details -->
+    <section class="form-section">
+      <h3>Owner Details</h3>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="ownerName">Owner Name *</label>
+          <input type="text" id="ownerName" placeholder="e.g. Rajesh Kumar">
+        </div>
+        <div class="form-group">
+          <label for="ownerRelation">Relation</label>
+          <select id="ownerRelation">
+            <option value="S/O">S/O (Son of)</option>
+            <option value="D/O">D/O (Daughter of)</option>
+            <option value="W/O">W/O (Wife of)</option>
+            <option value="C/O">C/O (Care of)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ownerRelationName">Guardian Name</label>
+          <input type="text" id="ownerRelationName" placeholder="e.g. Suresh Kumar">
+        </div>
+        <div class="form-group">
+          <label for="ownerMobile">Mobile Number</label>
+          <input type="tel" id="ownerMobile" placeholder="e.g. 9007062824">
+        </div>
+        <div class="form-group full-width">
+          <label for="ownerAddress">Address</label>
+          <textarea id="ownerAddress" rows="2" placeholder="e.g. 123, Station Road, Barrackpore, North 24 Parganas, West Bengal - 700120"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- Generate Button -->
+    <div class="actions-row">
+      <button class="btn btn-primary" onclick="generateCard()">&#127912; Generate Pet ID Card</button>
+      <button class="btn btn-outline" onclick="resetForm()">&#128260; Reset</button>
+    </div>
+
+    <!-- Card Preview -->
+    <section class="preview-section" id="previewSection" style="display:none;">
+      <h3>Your Pet Identity Card</h3>
+      <div class="card-preview-wrapper">
+        <div>
+          <div class="card-label">FRONT SIDE</div>
+          <div class="canvas-container">
+            <canvas id="cardFront" width="856" height="540"></canvas>
+          </div>
+        </div>
+        <div>
+          <div class="card-label">BACK SIDE</div>
+          <div class="canvas-container">
+            <canvas id="cardBack" width="856" height="540"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="actions-row" style="margin-top:20px;">
+        <button class="btn btn-primary" onclick="downloadFront()">&#11015; Download Front</button>
+        <button class="btn btn-primary" onclick="downloadBack()">&#11015; Download Back</button>
+        <button class="btn btn-secondary" onclick="downloadBoth()">&#11015; Download Both</button>
+      </div>
+    </section>
+
+    <!-- A4 Print Section -->
+    <section class="print-options" id="printSection" style="display:none;">
+      <h3>Print on A4 Sheet (Double-Sided)</h3>
+      <p style="text-align:center;color:#666;font-size:0.85rem;margin-bottom:14px;">
+        Select how many copies per A4 sheet. Print front page, flip paper, print back page &mdash; cards align perfectly!
+      </p>
+      <div class="copies-selector" id="copiesSelector">
+        <button data-copies="1" class="active">1</button>
+        <button data-copies="2">2</button>
+        <button data-copies="4">4</button>
+        <button data-copies="6">6</button>
+        <button data-copies="8">8</button>
+        <button data-copies="10">10</button>
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-primary" onclick="printA4()">&#128424; Print A4 (Front + Back)</button>
+        <button class="btn btn-secondary" onclick="downloadA4()">&#11015; Download A4 Pages</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2025 <a href="https://emilyspetheaven.com">Emily's Pet Heaven</a> &mdash; Barrackpore, West Bengal | <a href="tel:+919007062824">+91 9007062824</a></p>
+    <p style="margin-top:4px;">Open 24/7 &bull; Trusted Pet Boarding, Grooming &amp; Daycare</p>
+  </footer>
+
+  <!-- Hidden render canvases -->
+  <canvas id="renderFront" class="render-canvas" width="856" height="540"></canvas>
+  <canvas id="renderBack" class="render-canvas" width="856" height="540"></canvas>
+
+  <script>
+  // ============== STATE ==============
+  let petPhotoData = null;
+  let selectedCopies = 1;
+  let logoImg = null;
+  let pawImg = null;
+
+  // ============== PHOTO UPLOAD ==============
+  const photoInput = document.getElementById('petPhoto');
+  const photoPreview = document.getElementById('photoPreview');
+  const photoPlaceholder = document.getElementById('photoPlaceholder');
+  const photoArea = document.getElementById('photoUploadArea');
+
+  photoInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      petPhotoData = ev.target.result;
+      photoPreview.src = petPhotoData;
+      photoPreview.style.display = 'block';
+      photoPlaceholder.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Drag & drop
+  photoArea.addEventListener('dragover', (e) => { e.preventDefault(); photoArea.classList.add('dragover'); });
+  photoArea.addEventListener('dragleave', () => photoArea.classList.remove('dragover'));
+  photoArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    photoArea.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      photoInput.files = e.dataTransfer.files;
+      photoInput.dispatchEvent(new Event('change'));
+    }
+  });
+
+  // ============== COPIES SELECTOR ==============
+  document.querySelectorAll('.copies-selector button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.copies-selector button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedCopies = parseInt(btn.dataset.copies);
+    });
+  });
+
+  // ============== GENERATE PET ID ==============
+  function generatePetId() {
+    const now = Date.now();
+    const rand = Math.floor(Math.random() * 9000) + 1000;
+    const digits = String(now).slice(-8) + String(rand);
+    return digits.slice(0, 4) + ' ' + digits.slice(4, 8) + ' ' + digits.slice(8, 12);
+  }
+
+  // ============== LOAD IMAGE HELPER ==============
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
+  }
+
+  // ============== DRAW FRONT CARD (AADHAAR STYLE) ==============
+  function drawFront(ctx, data, petImg) {
+    const W = 856, H = 540;
+    ctx.clearRect(0, 0, W, H);
+
+    // White background
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, W, H);
+
+    // Border
+    ctx.strokeStyle = '#D4D4D4';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(1, 1, W - 2, H - 2);
+
+    // === TOP TRICOLOR BAR ===
+    const barH = 8;
+    // Saffron
+    ctx.fillStyle = '#FF9933';
+    ctx.fillRect(0, 0, W, barH);
+    // White (already bg)
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, barH, W, barH);
+    // Green
+    ctx.fillStyle = '#138808';
+    ctx.fillRect(0, barH * 2, W, barH);
+
+    // === HEADER SECTION ===
+    const headerY = barH * 3 + 8;
+
+    // Ashoka Chakra (simplified blue wheel)
+    drawAshokChakra(ctx, 60, headerY + 22, 18);
+
+    // "Emily's Pet Heaven" as issuing authority (Hindi + English)
+    ctx.fillStyle = '#000080';
+    ctx.font = 'bold 13px "Noto Sans Devanagari", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('एमिलीज़ पेट हेवन', W / 2, headerY + 12);
+
+    ctx.font = 'bold 15px "Poppins", sans-serif';
+    ctx.fillStyle = '#D44000';
+    ctx.fillText("Emily's Pet Heaven", W / 2, headerY + 30);
+
+    // Subtitle
+    ctx.font = '10px "Noto Sans Devanagari", sans-serif';
+    ctx.fillStyle = '#000080';
+    ctx.fillText('विशिष्ट पालतू पहचान प्राधिकरण', W / 2, headerY + 44);
+
+    ctx.font = '10px "Poppins", sans-serif';
+    ctx.fillStyle = '#333';
+    ctx.fillText('Unique Pet Identification Authority', W / 2, headerY + 57);
+
+    // Paw logo on right (like UIDAI logo)
+    drawPawLogo(ctx, W - 65, headerY + 10, 40);
+
+    // Horizontal line
+    ctx.beginPath();
+    ctx.moveTo(20, headerY + 66);
+    ctx.lineTo(W - 20, headerY + 66);
+    ctx.strokeStyle = '#CCC';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // === PET PHOTO SECTION ===
+    const photoX = 30, photoY = headerY + 78;
+    const photoW = 180, photoH = 210;
+
+    // Photo border
+    ctx.fillStyle = '#F0F0F0';
+    ctx.fillRect(photoX - 2, photoY - 2, photoW + 4, photoH + 4);
+    ctx.strokeStyle = '#999';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(photoX - 2, photoY - 2, photoW + 4, photoH + 4);
+
+    if (petImg) {
+      // Draw cropped/fitted image
+      const imgRatio = petImg.width / petImg.height;
+      const boxRatio = photoW / photoH;
+      let sx = 0, sy = 0, sw = petImg.width, sh = petImg.height;
+      if (imgRatio > boxRatio) {
+        sw = petImg.height * boxRatio;
+        sx = (petImg.width - sw) / 2;
+      } else {
+        sh = petImg.width / boxRatio;
+        sy = (petImg.height - sh) / 2;
+      }
+      ctx.drawImage(petImg, sx, sy, sw, sh, photoX, photoY, photoW, photoH);
+    } else {
+      ctx.fillStyle = '#E0E0E0';
+      ctx.fillRect(photoX, photoY, photoW, photoH);
+      ctx.fillStyle = '#999';
+      ctx.font = '12px Poppins';
+      ctx.textAlign = 'center';
+      ctx.fillText('Pet Photo', photoX + photoW / 2, photoY + photoH / 2);
+    }
+
+    // === DETAILS SECTION (right of photo) ===
+    const detX = photoX + photoW + 24;
+    const detW = W - detX - 30;
+    let detY = photoY + 2;
+    const lineH = 28;
+
+    ctx.textAlign = 'left';
+
+    function drawDetailRow(labelHi, labelEn, value, y) {
+      ctx.font = '9px "Noto Sans Devanagari", sans-serif';
+      ctx.fillStyle = '#555';
+      ctx.fillText(labelHi, detX, y);
+      ctx.font = '9px "Poppins", sans-serif';
+      ctx.fillStyle = '#777';
+      ctx.fillText(' / ' + labelEn, detX + ctx.measureText(labelHi).width + 2, y);
+      ctx.font = 'bold 13px "Poppins", sans-serif';
+      ctx.fillStyle = '#111';
+      ctx.fillText(value || '—', detX, y + 16);
+    }
+
+    drawDetailRow('नाम', 'Name', data.petName, detY);
+    detY += lineH + 4;
+    drawDetailRow('जन्म तिथि', 'DOB', data.petDOB || '—', detY);
+    detY += lineH + 4;
+    drawDetailRow('लिंग', 'Gender', data.petGender + '  |  ' + data.petSpecies + '  |  ' + data.petBreed, detY);
+    detY += lineH + 4;
+
+    // Address / Owner
+    ctx.font = '9px "Noto Sans Devanagari", sans-serif';
+    ctx.fillStyle = '#555';
+    ctx.fillText('पता', detX, detY);
+    ctx.font = '9px "Poppins", sans-serif';
+    ctx.fillStyle = '#777';
+    const addrLabel = ' / Address:';
+    ctx.fillText(addrLabel, detX + ctx.measureText('पता').width + 2, detY);
+    ctx.font = '11px "Poppins", sans-serif';
+    ctx.fillStyle = '#111';
+    // Word-wrap address
+    const addrText = data.ownerAddress || '—';
+    const addrLines = wrapText(ctx, addrText, detW, '11px "Poppins", sans-serif');
+    let addrY = detY + 15;
+    addrLines.forEach((line, i) => {
+      if (i < 3) {
+        ctx.fillText(line, detX, addrY);
+        addrY += 14;
+      }
+    });
+
+    // === QR CODE AREA (bottom right) ===
+    const qrX = W - 150, qrY = H - 160, qrS = 100;
+    drawQRPattern(ctx, qrX, qrY, qrS, data.petId);
+
+    // === HEALTH STATUS ICONS (below photo) ===
+    const statusY = photoY + photoH + 14;
+    ctx.font = '9px "Poppins", sans-serif';
+    ctx.textAlign = 'left';
+    const statuses = [];
+    if (data.vaccinated) statuses.push('Vaccinated');
+    if (data.dewormed) statuses.push('Dewormed');
+    if (data.neutered) statuses.push('Neutered');
+    if (data.microchipped) statuses.push('Microchipped');
+    if (statuses.length > 0) {
+      let stX = photoX;
+      statuses.forEach(s => {
+        ctx.fillStyle = '#138808';
+        ctx.font = 'bold 11px Poppins';
+        ctx.fillText('✓', stX, statusY);
+        ctx.fillStyle = '#333';
+        ctx.font = '9px Poppins';
+        ctx.fillText(s, stX + 13, statusY);
+        stX += ctx.measureText(s).width + 24;
+      });
+    }
+
+    // === PET ID NUMBER (bottom center) ===
+    const idY = H - 58;
+
+    // Aadhaar-style disclaimer text
+    ctx.textAlign = 'center';
+    ctx.font = '8px "Poppins", sans-serif';
+    ctx.fillStyle = '#D44000';
+    ctx.fillText('This is a pet identification card issued by Emily\'s Pet Heaven, Barrackpore.', W / 2, idY - 6);
+    ctx.fillText('Not a government document. For pet identification & keepsake purposes only.', W / 2, idY + 4);
+
+    // Big ID number
+    ctx.font = 'bold 22px "Poppins", monospace';
+    ctx.fillStyle = '#111';
+    ctx.fillText(data.petId, W / 2, idY + 30);
+
+    // === BOTTOM BAR ===
+    const botBarY = H - 24;
+    ctx.fillStyle = '#F5F5F5';
+    ctx.fillRect(0, botBarY, W, 24);
+
+    // Tricolor thin line
+    ctx.fillStyle = '#FF9933';
+    ctx.fillRect(0, botBarY, W / 3, 3);
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(W / 3, botBarY, W / 3, 3);
+    ctx.fillStyle = '#138808';
+    ctx.fillRect((W / 3) * 2, botBarY, W / 3, 3);
+
+    // Bottom text
+    ctx.font = 'bold 11px "Noto Sans Devanagari", sans-serif';
+    ctx.fillStyle = '#D44000';
+    ctx.textAlign = 'left';
+    ctx.fillText('मेरा पालतू, मेरा परिवार', 20, H - 7);
+
+    ctx.font = '9px "Poppins", sans-serif';
+    ctx.fillStyle = '#555';
+    ctx.textAlign = 'right';
+    ctx.fillText('emilyspetheaven.com  |  +91 9007062824', W - 20, H - 7);
+  }
+
+  // ============== DRAW BACK CARD (BRANDED) ==============
+  function drawBack(ctx, data) {
+    const W = 856, H = 540;
+    ctx.clearRect(0, 0, W, H);
+
+    // Maroon background
+    ctx.fillStyle = '#4E0000';
+    ctx.fillRect(0, 0, W, H);
+
+    // Golden border
+    ctx.strokeStyle = '#FFAE01';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(8, 8, W - 16, H - 16);
+
+    // Inner border
+    ctx.strokeStyle = 'rgba(255,174,1,0.3)';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(14, 14, W - 28, H - 28);
+
+    // Decorative paw prints (subtle)
+    ctx.globalAlpha = 0.06;
+    for (let i = 0; i < 12; i++) {
+      const px = 50 + (i % 4) * 220;
+      const py = 60 + Math.floor(i / 4) * 180;
+      drawPawPrint(ctx, px, py, 30 + (i % 3) * 10);
+    }
+    ctx.globalAlpha = 1;
+
+    // === HEADER ===
+    ctx.textAlign = 'center';
+
+    // Paw logo (centered top)
+    drawPawLogoGold(ctx, W / 2 - 25, 35, 50);
+
+    ctx.font = 'bold 28px "Fredoka", sans-serif';
+    ctx.fillStyle = '#FFAE01';
+    ctx.fillText("Emily's Pet Heaven", W / 2, 110);
+
+    ctx.font = '14px "Poppins", sans-serif';
+    ctx.fillStyle = '#FFECBC';
+    ctx.fillText('Trusted Pet Boarding, Grooming & Daycare', W / 2, 135);
+
+    // Divider
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 120, 150);
+    ctx.lineTo(W / 2 + 120, 150);
+    ctx.strokeStyle = '#FFAE01';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // === PET INFO SUMMARY ===
+    ctx.font = 'bold 14px "Poppins", sans-serif';
+    ctx.fillStyle = '#FFAE01';
+    ctx.fillText('Pet ID: ' + data.petId, W / 2, 178);
+
+    ctx.font = '13px "Poppins", sans-serif';
+    ctx.fillStyle = '#FFECBC';
+    ctx.fillText(data.petName + '  |  ' + data.petBreed + '  |  ' + data.petSpecies, W / 2, 200);
+    ctx.fillText('Owner: ' + data.ownerName, W / 2, 220);
+
+    // Divider
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 100, 235);
+    ctx.lineTo(W / 2 + 100, 235);
+    ctx.strokeStyle = 'rgba(255,174,1,0.4)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // === CONTACT INFO ===
+    const infoY = 260;
+    const lineH = 26;
+    ctx.textAlign = 'center';
+    ctx.font = '12px "Poppins", sans-serif';
+    ctx.fillStyle = '#FFF';
+
+    const infoLines = [
+      { icon: '📍', text: 'Mondal Para, Barrackpore, North 24 Parganas, West Bengal - 700120' },
+      { icon: '📞', text: '+91 9007062824  |  +91 9830012345' },
+      { icon: '🌐', text: 'www.emilyspetheaven.com' },
+      { icon: '📧', text: 'contact@emilyspetheaven.com' },
+      { icon: '🕐', text: 'Open 24 Hours  |  7 Days a Week  |  365 Days a Year' },
+    ];
+
+    infoLines.forEach((line, i) => {
+      ctx.fillStyle = '#FFF';
+      ctx.fillText(line.icon + '  ' + line.text, W / 2, infoY + i * lineH);
+    });
+
+    // === SERVICES ===
+    const svcY = infoY + infoLines.length * lineH + 16;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 100, svcY - 8);
+    ctx.lineTo(W / 2 + 100, svcY - 8);
+    ctx.strokeStyle = 'rgba(255,174,1,0.4)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.font = 'bold 12px "Poppins", sans-serif';
+    ctx.fillStyle = '#FFAE01';
+    ctx.fillText('Our Services', W / 2, svcY + 10);
+
+    ctx.font = '11px "Poppins", sans-serif';
+    ctx.fillStyle = '#FFECBC';
+    ctx.fillText('Pet Boarding  •  Grooming  •  Daycare  •  Dog Walking  •  Training', W / 2, svcY + 30);
+    ctx.fillText('Pet Sitting  •  Veterinary Care  •  Pet Transport  •  Pet Shop', W / 2, svcY + 48);
+
+    // === BOTTOM ===
+    // Decorative golden line
+    ctx.beginPath();
+    ctx.moveTo(30, H - 60);
+    ctx.lineTo(W - 30, H - 60);
+    ctx.strokeStyle = '#FFAE01';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.font = '10px "Poppins", sans-serif';
+    ctx.fillStyle = 'rgba(255,236,188,0.7)';
+    ctx.fillText('"Where every pet is treated like family"', W / 2, H - 40);
+
+    ctx.font = '9px "Poppins", sans-serif';
+    ctx.fillStyle = 'rgba(255,255,255,0.5)';
+    ctx.fillText('This card is issued by Emily\'s Pet Heaven for pet identification & keepsake purposes.', W / 2, H - 22);
+  }
+
+  // ============== HELPER: ASHOKA CHAKRA ==============
+  function drawAshokChakra(ctx, cx, cy, r) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = '#000080';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // Spokes
+    for (let i = 0; i < 24; i++) {
+      const angle = (i * Math.PI * 2) / 24;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + Math.cos(angle) * (r - 2), cy + Math.sin(angle) * (r - 2));
+      ctx.strokeStyle = '#000080';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+    // Center dot
+    ctx.beginPath();
+    ctx.arc(cx, cy, 2.5, 0, Math.PI * 2);
+    ctx.fillStyle = '#000080';
+    ctx.fill();
+    ctx.restore();
+  }
+
+  // ============== HELPER: PAW LOGO ==============
+  function drawPawLogo(ctx, x, y, size) {
+    ctx.save();
+    const s = size / 40;
+    ctx.translate(x, y);
+    ctx.scale(s, s);
+    // Main pad
+    ctx.beginPath();
+    ctx.ellipse(20, 28, 12, 10, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#4E0000';
+    ctx.fill();
+    // Toe pads
+    const toes = [[8, 12, 5, 4], [18, 6, 5, 4], [28, 8, 5, 4], [36, 16, 4, 4]];
+    toes.forEach(([tx, ty, rx, ry]) => {
+      ctx.beginPath();
+      ctx.ellipse(tx, ty, rx, ry, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  function drawPawLogoGold(ctx, x, y, size) {
+    ctx.save();
+    const s = size / 40;
+    ctx.translate(x, y);
+    ctx.scale(s, s);
+    ctx.beginPath();
+    ctx.ellipse(20, 28, 12, 10, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#FFAE01';
+    ctx.fill();
+    const toes = [[8, 12, 5, 4], [18, 6, 5, 4], [28, 8, 5, 4], [36, 16, 4, 4]];
+    toes.forEach(([tx, ty, rx, ry]) => {
+      ctx.beginPath();
+      ctx.ellipse(tx, ty, rx, ry, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  function drawPawPrint(ctx, x, y, size) {
+    ctx.save();
+    const s = size / 40;
+    ctx.translate(x, y);
+    ctx.scale(s, s);
+    ctx.beginPath();
+    ctx.ellipse(20, 28, 12, 10, 0, 0, Math.PI * 2);
+    ctx.fillStyle = '#FFAE01';
+    ctx.fill();
+    const toes = [[8, 12, 5, 4], [18, 6, 5, 4], [28, 8, 5, 4], [36, 16, 4, 4]];
+    toes.forEach(([tx, ty, rx, ry]) => {
+      ctx.beginPath();
+      ctx.ellipse(tx, ty, rx, ry, -0.2, 0, Math.PI * 2);
+      ctx.fill();
+    });
+    ctx.restore();
+  }
+
+  // ============== HELPER: QR PATTERN ==============
+  function drawQRPattern(ctx, x, y, size, data) {
+    ctx.save();
+    const cellSize = size / 25;
+    ctx.fillStyle = '#FFF';
+    ctx.fillRect(x - 4, y - 4, size + 8, size + 8);
+    ctx.strokeStyle = '#DDD';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x - 4, y - 4, size + 8, size + 8);
+
+    // Finder patterns (3 corner squares)
+    function drawFinder(fx, fy) {
+      ctx.fillStyle = '#111';
+      ctx.fillRect(fx, fy, cellSize * 7, cellSize * 7);
+      ctx.fillStyle = '#FFF';
+      ctx.fillRect(fx + cellSize, fy + cellSize, cellSize * 5, cellSize * 5);
+      ctx.fillStyle = '#111';
+      ctx.fillRect(fx + cellSize * 2, fy + cellSize * 2, cellSize * 3, cellSize * 3);
+    }
+    drawFinder(x, y);
+    drawFinder(x + cellSize * 18, y);
+    drawFinder(x, y + cellSize * 18);
+
+    // Random data modules (seeded by pet ID)
+    let seed = 0;
+    for (let i = 0; i < data.length; i++) seed += data.charCodeAt(i);
+    for (let row = 0; row < 25; row++) {
+      for (let col = 0; col < 25; col++) {
+        if ((row < 8 && col < 8) || (row < 8 && col > 17) || (row > 17 && col < 8)) continue;
+        seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+        if (seed % 3 === 0) {
+          ctx.fillStyle = '#111';
+          ctx.fillRect(x + col * cellSize, y + row * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+    ctx.restore();
+  }
+
+  // ============== HELPER: WRAP TEXT ==============
+  function wrapText(ctx, text, maxWidth, font) {
+    ctx.font = font;
+    const words = text.split(' ');
+    const lines = [];
+    let currentLine = '';
+    words.forEach(word => {
+      const testLine = currentLine ? currentLine + ' ' + word : word;
+      if (ctx.measureText(testLine).width > maxWidth && currentLine) {
+        lines.push(currentLine);
+        currentLine = word;
+      } else {
+        currentLine = testLine;
+      }
+    });
+    if (currentLine) lines.push(currentLine);
+    return lines;
+  }
+
+  // ============== GATHER FORM DATA ==============
+  function getFormData() {
+    return {
+      petName: document.getElementById('petName').value.trim(),
+      petSpecies: document.getElementById('petSpecies').value,
+      petBreed: document.getElementById('petBreed').value.trim(),
+      petGender: document.getElementById('petGender').value,
+      petDOB: document.getElementById('petDOB').value,
+      petAge: document.getElementById('petAge').value.trim(),
+      petWeight: document.getElementById('petWeight').value.trim(),
+      petColour: document.getElementById('petColour').value.trim(),
+      vaccinated: document.getElementById('vaccinated').checked,
+      dewormed: document.getElementById('dewormed').checked,
+      neutered: document.getElementById('neutered').checked,
+      microchipped: document.getElementById('microchipped').checked,
+      ownerName: document.getElementById('ownerName').value.trim(),
+      ownerRelation: document.getElementById('ownerRelation').value,
+      ownerRelationName: document.getElementById('ownerRelationName').value.trim(),
+      ownerMobile: document.getElementById('ownerMobile').value.trim(),
+      ownerAddress: document.getElementById('ownerAddress').value.trim(),
+      petId: generatePetId(),
+    };
+  }
+
+  // ============== GENERATE CARD ==============
+  async function generateCard() {
+    const data = getFormData();
+    if (!data.petName) { alert('Please enter the pet name.'); return; }
+    if (!data.petBreed) { alert('Please enter the pet breed.'); return; }
+    if (!data.ownerName) { alert('Please enter the owner name.'); return; }
+
+    // Load pet photo
+    let petImg = null;
+    if (petPhotoData) {
+      try { petImg = await loadImage(petPhotoData); } catch (e) { console.warn('Failed to load pet photo'); }
+    }
+
+    // Draw front
+    const frontCanvas = document.getElementById('cardFront');
+    const frontCtx = frontCanvas.getContext('2d');
+    drawFront(frontCtx, data, petImg);
+
+    // Also render to hidden canvas
+    const renderFront = document.getElementById('renderFront');
+    const renderFrontCtx = renderFront.getContext('2d');
+    drawFront(renderFrontCtx, data, petImg);
+
+    // Draw back
+    const backCanvas = document.getElementById('cardBack');
+    const backCtx = backCanvas.getContext('2d');
+    drawBack(backCtx, data);
+
+    const renderBack = document.getElementById('renderBack');
+    const renderBackCtx = renderBack.getContext('2d');
+    drawBack(renderBackCtx, data);
+
+    // Store current data for printing
+    window._cardData = data;
+    window._petImg = petImg;
+
+    // Show previews
+    document.getElementById('previewSection').style.display = 'block';
+    document.getElementById('printSection').style.display = 'block';
+    document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // ============== DOWNLOAD ==============
+  function downloadCanvas(canvas, filename) {
+    const link = document.createElement('a');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  function downloadFront() {
+    downloadCanvas(document.getElementById('renderFront'), 'pet-id-card-front.png');
+  }
+
+  function downloadBack() {
+    downloadCanvas(document.getElementById('renderBack'), 'pet-id-card-back.png');
+  }
+
+  function downloadBoth() {
+    downloadFront();
+    setTimeout(() => downloadBack(), 500);
+  }
+
+  // ============== A4 PRINT / DOWNLOAD ==============
+  function getA4Layout(copies) {
+    // A4 at 300 DPI: 2480 x 3508 px
+    // Card: 856 x 540 px (at 100 DPI ~ 8.56 x 5.4 cm)
+    // Scale card to fit nicely on A4
+    // At 300 DPI, card should be: 8.56cm = 1012px, 5.4cm = 638px
+    const A4W = 2480, A4H = 3508;
+    const cardW = 1012, cardH = 638;
+    const margin = 40;
+    const layouts = {
+      1: { cols: 1, rows: 1 },
+      2: { cols: 1, rows: 2 },
+      4: { cols: 2, rows: 2 },
+      6: { cols: 2, rows: 3 },
+      8: { cols: 2, rows: 4 },
+      10: { cols: 2, rows: 5 },
+    };
+    return { A4W, A4H, cardW, cardH, margin, ...layouts[copies] };
+  }
+
+  function renderA4Page(side) {
+    const copies = selectedCopies;
+    const layout = getA4Layout(copies);
+    const canvas = document.createElement('canvas');
+    canvas.width = layout.A4W;
+    canvas.height = layout.A4H;
+    const ctx = canvas.getContext('2d');
+
+    // White background
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, layout.A4W, layout.A4H);
+
+    // Source canvas
+    const srcCanvas = side === 'front' ? document.getElementById('renderFront') : document.getElementById('renderBack');
+
+    // Calculate start positions to center the grid
+    const totalGridW = layout.cols * layout.cardW + (layout.cols - 1) * layout.margin;
+    const totalGridH = layout.rows * layout.cardH + (layout.rows - 1) * layout.margin;
+    const startX = (layout.A4W - totalGridW) / 2;
+    const startY = (layout.A4H - totalGridH) / 2;
+
+    // Crop marks
+    ctx.strokeStyle = '#CCC';
+    ctx.lineWidth = 1;
+
+    for (let r = 0; r < layout.rows; r++) {
+      for (let c = 0; c < layout.cols; c++) {
+        if (r * layout.cols + c >= copies) continue;
+        const x = startX + c * (layout.cardW + layout.margin);
+        const y = startY + r * (layout.cardH + layout.margin);
+
+        // Draw card
+        ctx.drawImage(srcCanvas, 0, 0, 856, 540, x, y, layout.cardW, layout.cardH);
+
+        // Crop marks (small lines at corners)
+        const markLen = 20;
+        ctx.beginPath();
+        // Top-left
+        ctx.moveTo(x - 10, y); ctx.lineTo(x - 10 - markLen, y);
+        ctx.moveTo(x, y - 10); ctx.lineTo(x, y - 10 - markLen);
+        // Top-right
+        ctx.moveTo(x + layout.cardW + 10, y); ctx.lineTo(x + layout.cardW + 10 + markLen, y);
+        ctx.moveTo(x + layout.cardW, y - 10); ctx.lineTo(x + layout.cardW, y - 10 - markLen);
+        // Bottom-left
+        ctx.moveTo(x - 10, y + layout.cardH); ctx.lineTo(x - 10 - markLen, y + layout.cardH);
+        ctx.moveTo(x, y + layout.cardH + 10); ctx.lineTo(x, y + layout.cardH + 10 + markLen);
+        // Bottom-right
+        ctx.moveTo(x + layout.cardW + 10, y + layout.cardH); ctx.lineTo(x + layout.cardW + 10 + markLen, y + layout.cardH);
+        ctx.moveTo(x + layout.cardW, y + layout.cardH + 10); ctx.lineTo(x + layout.cardW, y + layout.cardH + 10 + markLen);
+        ctx.stroke();
+      }
+    }
+
+    // Page label
+    ctx.font = '24px Poppins';
+    ctx.fillStyle = '#CCC';
+    ctx.textAlign = 'center';
+    ctx.fillText(side === 'front' ? 'FRONT SIDE — Print this page first' : 'BACK SIDE — Print on reverse of front page', layout.A4W / 2, layout.A4H - 30);
+
+    return canvas;
+  }
+
+  function printA4() {
+    const frontCanvas = renderA4Page('front');
+    const backCanvas = renderA4Page('back');
+
+    const printWindow = window.open('', '_blank');
+    printWindow.document.write(`
+      <html><head><title>Pet ID Card - Print</title>
+      <style>
+        @page { size: A4; margin: 0; }
+        body { margin: 0; padding: 0; }
+        img { width: 100%; height: auto; page-break-after: always; }
+        img:last-child { page-break-after: auto; }
+      </style></head><body>
+      <img src="${frontCanvas.toDataURL('image/png')}" />
+      <img src="${backCanvas.toDataURL('image/png')}" />
+      </body></html>
+    `);
+    printWindow.document.close();
+    printWindow.onload = () => { printWindow.print(); };
+  }
+
+  function downloadA4() {
+    const frontCanvas = renderA4Page('front');
+    const backCanvas = renderA4Page('back');
+    downloadCanvas(frontCanvas, 'pet-id-card-A4-front.png');
+    setTimeout(() => downloadCanvas(backCanvas, 'pet-id-card-A4-back.png'), 500);
+  }
+
+  // ============== RESET ==============
+  function resetForm() {
+    document.querySelectorAll('input[type="text"], input[type="tel"], input[type="date"], textarea').forEach(el => el.value = '');
+    document.querySelectorAll('input[type="checkbox"]').forEach(el => el.checked = false);
+    document.getElementById('petSpecies').selectedIndex = 0;
+    document.getElementById('petGender').selectedIndex = 0;
+    document.getElementById('ownerRelation').selectedIndex = 0;
+    petPhotoData = null;
+    photoPreview.style.display = 'none';
+    photoPlaceholder.style.display = 'block';
+    document.getElementById('previewSection').style.display = 'none';
+    document.getElementById('printSection').style.display = 'none';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  </script>
+</body>
+</html>
