@@ -18,6 +18,22 @@ function initMobileMenu() {
 
   if (!menuToggle || !navMenu) return;
 
+  if (!navMenu.id) navMenu.id = 'site-nav';
+  menuToggle.setAttribute('aria-controls', navMenu.id);
+
+  function isMobile() { return window.matchMedia('(max-width: 991px)').matches; }
+
+  function syncA11y(open) {
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if ('inert' in navMenu) {
+      navMenu.inert = isMobile() && !open;
+    } else if (isMobile() && !open) {
+      navMenu.setAttribute('aria-hidden', 'true');
+    } else {
+      navMenu.removeAttribute('aria-hidden');
+    }
+  }
+
   // Create overlay if it doesn't exist
   let overlay = navOverlay;
   if (!overlay) {
@@ -31,13 +47,22 @@ function initMobileMenu() {
     navMenu.classList.toggle('active');
     overlay.classList.toggle('active');
     body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+    const open = navMenu.classList.contains('active');
+    syncA11y(open);
+    if (open) {
+      const first = navMenu.querySelector('a');
+      if (first) first.focus({ preventScroll: true });
+    }
   }
 
   function closeMenu() {
+    const hadFocus = navMenu.contains(document.activeElement);
     menuToggle.classList.remove('active');
     navMenu.classList.remove('active');
     overlay.classList.remove('active');
     body.style.overflow = '';
+    syncA11y(false);
+    if (hadFocus) menuToggle.focus({ preventScroll: true });
   }
 
   menuToggle.addEventListener('click', toggleMenu);
@@ -60,7 +85,10 @@ function initMobileMenu() {
     if (window.innerWidth > 991 && navMenu.classList.contains('active')) {
       closeMenu();
     }
+    syncA11y(navMenu.classList.contains('active'));
   });
+
+  syncA11y(false);
 }
 
 // ===== SMOOTH SCROLL =====
