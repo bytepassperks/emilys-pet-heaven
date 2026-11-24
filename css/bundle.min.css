@@ -3,3 +3,43 @@
 .features-bar-card-dark{justify-content:center}
 @media(min-width:769px){.features-bar-card-dark h2{font-size:1.6rem}}
 .petaadhaar-banner{background:var(--color-cream)}.logo{flex-shrink:0}.logo .logo-text{white-space:nowrap}@media(min-width:993px) and (max-width:1450px){.nav-menu{gap:var(--space-md)}.nav{gap:var(--space-md)}.logo .logo-text{font-size:1.5rem}.header-container{gap:var(--space-sm)}}@media(min-width:993px) and (max-width:1160px){.nav-menu{gap:8px}.nav{gap:8px}.nav-menu a{font-size:.8rem}.nav .btn{padding:9px 12px;font-size:.8rem;white-space:nowrap}.logo .logo-text{font-size:1.15rem}.logo-paw{width:34px;height:34px}}.header .nav{flex:1;justify-content:flex-end;min-width:0}@media(min-width:1451px){.header .nav{gap:var(--space-lg)}.header .nav-menu{gap:var(--space-lg)}}
+/* ===== Reliability + accessibility fixes (2026-11-25) ===== */
+/* Mobile hamburger was #4e0000 on the #4e0000 hero: invisible */
+.header:not(.header-light) .menu-toggle:not(.active) span{background:#fff}
+.header-light .menu-toggle:not(.active) span{background:#4e0000}
+.menu-toggle{position:relative;z-index:1002}
+.menu-toggle.active span{background:#4e0000}
+/* Overlay was painting above the slide-in menu, so its links were not clickable */
+.nav-overlay{z-index:999}
+/* Visible keyboard focus (the reset removed the outline) */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #ffae01;outline-offset:2px;border-radius:4px}
+/* Orange feature cards used 90% white body copy on #ff8c42 (about 2.3:1) */
+.features-bar-card-light p{color:#4e0000}
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+/* Keep footer copy readable */
+.footer p,.footer a,.footer li{font-size:13px;line-height:1.6}
+/* Inline form feedback */
+.form-status{font-size:14px;line-height:1.5;margin:10px 0 0}
+
+/* Mobile slide-in menu sits on a white panel: keep link text readable */
+@media (max-width: 991px){
+  .header .nav-menu a{color:#4e0000}
+  .header .nav-menu a:hover,.header .nav-menu a.active{color:#8b5e00}
+  .header .nav-menu a::after{background:#ffae01}
+}
+
+/* Contrast and touch-target corrections found by the audit */
+.pricing-section .section-label{color:#ffae01}
+.vs-tag{color:#4e0000}
+.why-feature-item-carepaw p,.service-card-content p,.testimonial-author-carepaw p,.top-bar-item a{font-size:13px}
+.top-bar-item a{display:inline-flex;align-items:center;min-height:24px}
+.footer .label,.footer .footer-contact-item span{font-size:13px}
+
+.appointment-content .section-label{color:#ffae01}
+.pab-card .pab-tag.vs-tag{color:#4e0000}
+.read-more,.blog-card-link{min-height:24px}
+
+.newsletter-content .section-label{color:#ffae01}
+.btn-whatsapp{color:#06331a}
+.footer-bottom-links a{display:inline-flex;align-items:center;min-height:24px}

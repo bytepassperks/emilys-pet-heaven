@@ -136,17 +136,17 @@ function initContactForm() {
       submitBtn.innerHTML = '<span class="loading"></span> Redirecting to WhatsApp...';
       submitBtn.disabled = true;
 
-      // Redirect to WhatsApp after brief delay
+      // Open WhatsApp now, inside the click, so popup blockers do not drop it
+      window.open(whatsappURL, '_blank');
+
       setTimeout(() => {
-        window.open(whatsappURL, '_blank');
-        
         // Reset button
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
-        
+
         // Show success alert
         alert('Your booking request has been sent to WhatsApp! We will respond within 24 hours.');
-        
+
         // Reset form
         form.reset();
       }, 500);

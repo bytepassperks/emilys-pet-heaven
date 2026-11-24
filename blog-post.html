@@ -18,16 +18,16 @@
     gtag('config', 'G-QFY41F8GYJ');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="">
+  <meta name="description" content="Pet care guides from Emily's Pet Heaven in Barrackpore: boarding, grooming, breed guides, nutrition and more.">
   <meta name="keywords" content="">
   <meta name="author" content="Emily's Pet Heaven">
   <meta name="robots" content="index, follow">
   
   <meta property="og:type" content="article">
-  <meta property="og:title" content="">
-  <meta property="og:description" content="">
+  <meta property="og:title" content="Blog Post - Emily&#x27;s Pet Heaven">
+  <meta property="og:description" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
   
-  <title>Blog Post - Emily's Pet Heaven</title>
+  <title>Pet Care Blog - Emily's Pet Heaven</title>
   <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/logo-icon-transparent.webp">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/brand/logo-icon-transparent.webp">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/logo-icon-transparent.webp">
@@ -77,23 +77,36 @@
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     .error-message { text-align: center; padding: 60px 20px; color: var(--color-text-muted); }
   </style>
-  <link rel="canonical" href="https://emilyspetheaven.com/blog-post.html">
+  <link rel="canonical" href="https://emilyspetheaven.com/blog.html">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4E0000">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.gtranslate.net https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https: data:; frame-src https://www.google.com https://maps.google.com">
-  <link rel="alternate" hreflang="en" href="https://emilyspetheaven.com/blog-post.html">
-  <link rel="alternate" hreflang="x-default" href="https://emilyspetheaven.com/blog-post.html">
+  <link rel="alternate" hreflang="en" href="https://emilyspetheaven.com/blog.html">
+  <link rel="alternate" hreflang="x-default" href="https://emilyspetheaven.com/blog.html">
 
   <noscript><style>.reveal-on-scroll{opacity:1!important;transform:none!important}</style></noscript>
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
-  "dateModified": "2026-04-26",
-  "datePublished": "2026-04-01"
+  "@type": "Blog",
+  "name": "Emily's Pet Heaven Pet Care Blog",
+  "url": "https://emilyspetheaven.com/blog.html",
+  "description": "Pet care guides from Emily's Pet Heaven in Barrackpore: boarding, grooming, breed guides, nutrition and more.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Emily's Pet Heaven",
+    "url": "https://emilyspetheaven.com"
+  }
 }
 </script>
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="https://emilyspetheaven.com/assets/brand/og-cover.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
+  <meta name="twitter:image" content="https://emilyspetheaven.com/assets/brand/og-cover.jpg">
+  <meta name="twitter:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
 </head>
 <body>
   <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
@@ -222,34 +235,63 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const slug = urlParams.get('slug');
-    
+
+    const ARTICLES = [
+      { href: 'blog-custom-pet-stickers-india.html', img: 'assets/stickers/hero-sample.webp', alt: 'Custom viral pet meme stickers on A4 sheet', cat: 'New Product', title: 'Custom Viral Pet Stickers: Your Pet in This Month\'s Memes', excerpt: '12 big die-cut stickers of your own pet starring in this month\'s viral trends, Bengali memes included.' },
+      { href: 'blog-bengali-meme-stickers-kolkata.html', img: 'assets/stickers/promo-love.webp', alt: 'Bengali meme pet stickers', cat: 'Stickers', title: 'Bengali Meme Stickers: Kolkata\'s Virals, Starring Your Pet', excerpt: 'Bengal\'s meme culture as custom die-cut stickers featuring your own dog or cat.' },
+      { href: 'blog-labrador-boarding-barrackpore.html', img: 'assets/images/pets/golden-retriever-peeking.webp', alt: 'Labrador retriever at Emily\'s Pet Heaven', cat: 'Dog Boarding', title: 'Labrador Boarding in Barrackpore: The Complete Guide', excerpt: 'Diet, exercise, temperament and how to choose the right dog hostel for your Lab.' },
+      { href: 'blog-german-shepherd-boarding-barrackpore.html', img: 'assets/images/pets/border-collie-peeking.webp', alt: 'German Shepherd boarding care', cat: 'Dog Boarding', title: 'German Shepherd Boarding in Barrackpore: What Owners Must Know', excerpt: 'Space, stimulation and handling for strong, active shepherds.' },
+      { href: 'blog-shih-tzu-boarding-barrackpore.html', img: 'assets/images/pets/beagle-puppy-peeking.webp', alt: 'Shih Tzu boarding care', cat: 'Dog Boarding', title: 'Shih Tzu Boarding in Barrackpore: Care That Suits the Breed', excerpt: 'Grooming, eye care and gentle routines for small companion dogs.' },
+      { href: 'blog-persian-cat-boarding-barrackpore.html', img: 'assets/images/pets/white-cat-peeking.webp', alt: 'Persian cat boarding care', cat: 'Cat Boarding', title: 'Persian Cat Boarding in Barrackpore: Keeping Cats Calm', excerpt: 'Quiet spaces, coat care and stress-free handling for Persians.' },
+      { href: 'pet-resources-barrackpore.html', img: 'assets/images/veterinarian-with-dog.webp', alt: 'Veterinarian with a dog', cat: 'Resources', title: 'Pet Resources in Barrackpore: Vets, Supplies and Services', excerpt: 'A practical local directory for pet parents in Barrackpore and nearby.' }
+    ];
+
+    function articleCards(list) {
+      return '<div class="blog-page-grid">' + list.map(function (a) {
+        return '<article class="blog-card">' +
+          '<div class="blog-card-image"><img src="' + a.img + '" alt="' + a.alt + '" loading="lazy" decoding="async" width="600" height="400" style="object-fit:cover"><span class="blog-card-category">' + a.cat + '</span></div>' +
+          '<div class="blog-card-content"><h3>' + a.title + '</h3><p>' + a.excerpt + '</p>' +
+          '<a href="' + a.href + '" class="blog-card-link">Read Article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>' +
+          '</div></article>';
+      }).join('') + '</div>';
+    }
+
     async function loadBlogPost() {
       const container = document.getElementById('blog-post');
       const breadcrumbTitle = document.getElementById('breadcrumb-title');
-      
+      if (!container) return;
+
       if (!slug) {
-        container.innerHTML = '<div class="error-message"><h2>Post Not Found</h2><p>Please select a blog post from our <a href="blog.html">blog page</a>.</p></div>';
+        breadcrumbTitle.textContent = 'Blog';
+        container.innerHTML =
+          '<header class="blog-post-header"><h1 class="blog-post-title">Pet Care Blog</h1>' +
+          '<p style="color:var(--color-text-muted);max-width:70ch">Practical guides for dog and cat parents in Barrackpore, Barasat, Madhyamgram and North 24 Parganas.</p></header>' +
+          articleCards(ARTICLES);
         return;
       }
-      
+
       try {
         const post = await SanityClient.fetchBlogPostBySlug(slug);
-        
         if (!post) {
-          container.innerHTML = '<div class="error-message"><h2>Post Not Found</h2><p>The requested blog post could not be found. <a href="blog.html">Browse all posts</a>.</p></div>';
+          breadcrumbTitle.textContent = 'Blog';
+          container.innerHTML = '<div class="error-message"><h1>Article not found</h1><p>That article is no longer available. Browse the guides below.</p></div>' + articleCards(ARTICLES);
           return;
         }
-        
+
         document.title = (post.metaTitle || post.title) + " - Emily's Pet Heaven";
-        document.querySelector('meta[name="description"]').content = post.metaDescription || post.excerpt || '';
-        document.querySelector('meta[name="keywords"]').content = (post.keywords || []).join(', ');
+        const md = document.querySelector('meta[name="description"]');
+        if (md) md.content = post.metaDescription || post.excerpt || '';
+        const kw = document.querySelector('meta[name="keywords"]');
+        if (kw) kw.content = (post.keywords || []).join(', ');
+        const can = document.querySelector('link[rel="canonical"]');
+        if (can) can.href = window.location.href;
         breadcrumbTitle.textContent = post.title;
-        
+
         const featuredImageUrl = SanityClient.buildImageUrl(post.featuredImage, { width: 1200, quality: 85 });
-        const authorImageUrl = post.author?.image ? SanityClient.buildImageUrl(post.author.image, { width: 96, height: 96 }) : '/images/default-author.jpg';
+        const authorImageUrl = post.author && post.author.image ? SanityClient.buildImageUrl(post.author.image, { width: 96, height: 96 }) : 'assets/brand/logo-icon-transparent.webp';
         const bodyHtml = SanityClient.portableTextToHtml(post.body);
         const publishedDate = SanityClient.formatDate(post.publishedAt);
-        
+
         container.innerHTML = `
           <header class="blog-post-header">
             ${post.category ? `<span class="blog-post-category">${post.category.title}</span>` : ''}
@@ -272,31 +314,31 @@
           ${post.keywords && post.keywords.length > 0 ? `<div class="blog-post-tags">${post.keywords.map(tag => `<span class="blog-post-tag">${tag}</span>`).join('')}</div>` : ''}
           <div class="blog-post-share">
             <span class="blog-post-share-title">Share:</span>
-            <a href="https://wa.me/?text=${encodeURIComponent(post.title + ' - ' + window.location.href)}" target="_blank" aria-label="Share on WhatsApp">
+            <a href="https://wa.me/?text=${encodeURIComponent(post.title + ' - ' + window.location.href)}" target="_blank" rel="noopener" aria-label="Share on WhatsApp">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
             </a>
-            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" aria-label="Share on Facebook">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener" aria-label="Share on Facebook">
               <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
             </a>
           </div>
         `;
-        
-        if (post.category) loadRelatedPosts(post.category.slug.current, post._id);
+
+        if (post.category && post.category.slug) loadRelatedPosts(post.category.slug.current, post._id);
       } catch (error) {
         console.error('Error loading blog post:', error);
-        container.innerHTML = '<div class="error-message"><h2>Error Loading Post</h2><p>There was an error loading this blog post. Please try again later.</p></div>';
+        breadcrumbTitle.textContent = 'Blog';
+        container.innerHTML = '<div class="error-message"><h1>Browse the blog</h1><p>This article could not be loaded. Try one of the guides below.</p></div>' + articleCards(ARTICLES);
       }
     }
-    
+
     async function loadRelatedPosts(categorySlug, currentPostId) {
       try {
         const posts = await SanityClient.fetchBlogPostsByCategory(categorySlug, 4);
         const relatedPosts = posts.filter(p => p._id !== currentPostId).slice(0, 3);
-        
         if (relatedPosts.length > 0) {
           const container = document.getElementById('related-posts-grid');
           const section = document.getElementById('related-posts');
-          
+          if (!container || !section) return;
           container.innerHTML = relatedPosts.map(post => {
             const imageUrl = SanityClient.buildImageUrl(post.featuredImage, { width: 400, height: 250 });
             const date = SanityClient.formatDate(post.publishedAt);
@@ -304,7 +346,7 @@
               <article class="blog-card">
                 <div class="blog-card-image">
                   <img src="${imageUrl}" alt="${post.title}" loading="lazy" decoding="async">
-                  <span class="blog-card-category">${post.category || ''}</span>
+                  <span class="blog-card-category">${post.category ? (post.category.title || '') : ''}</span>
                 </div>
                 <div class="blog-card-content">
                   <div class="blog-card-meta"><span>${date}</span></div>
@@ -315,15 +357,18 @@
               </article>
             `;
           }).join('');
-          
           section.style.display = 'block';
         }
       } catch (error) {
         console.error('Error loading related posts:', error);
       }
     }
-    
-    loadBlogPost();
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadBlogPost);
+    } else {
+      loadBlogPost();
+    }
   </script>
   
   <script>window.gtranslateSettings = {"default_language":"en","detect_browser_language":true,"languages":["en","hi","bn"],"wrapper_selector":".gtranslate_wrapper","flag_style":"3d","flag_size":24}</script>

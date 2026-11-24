@@ -1,39 +1,70 @@
 // Emily's Pet Heaven Service Worker
-const CACHE_NAME = 'eph-v4';
+const CACHE_NAME = 'eph-v5';
 const OFFLINE_URL = '/404.html';
 const PRECACHE_URLS = [
   '/',
   '/index.html',
   '/css/bundle.min.css',
   '/js/bundle.min.js',
+  '/js/forms-fix.js',
   '/assets/brand/logo-icon-transparent.webp',
+  '/assets/brand/og-cover.jpg',
   '/manifest.json'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_URLS))
+    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_URLS)).catch(() => {})
   );
   self.skipWaiting();
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => 
+    caches.keys().then(keys =>
       Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener('fetch', event => {
-  if (event.request.mode === 'navigate') {
+  const request = event.request;
+
+  // Only manage same-origin GET requests. Analytics, fonts, maps and the
+  // AI vet worker go straight to the network untouched.
+  if (request.method !== 'GET') return;
+
+  let url;
+  try { url = new URL(request.url); } catch (e) { return; }
+  if (url.origin !== self.location.origin) return;
+
+  // Pages: network first so a deploy is visible immediately, cache as fallback.
+  if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match(OFFLINE_URL))
+      fetch(request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(request, copy)).catch(() => {});
+          return response;
+        })
+        .catch(() => caches.match(request).then(cached => cached || caches.match(OFFLINE_URL)))
     );
     return;
   }
+
+  // Static assets: serve the cached copy and refresh it in the background.
   event.respondWith(
-    caches.match(event.request).then(cached => cached || fetch(event.request))
+    caches.match(request).then(cached => {
+      const network = fetch(request)
+        .then(response => {
+          if (response && response.status === 200) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(request, copy)).catch(() => {});
+          }
+          return response;
+        })
+        .catch(() => cached);
+      return cached || network;
+    })
   );
 });
