@@ -1,5 +1,5 @@
 // Emily's Pet Heaven Service Worker
-const CACHE_NAME = 'eph-v7';
+const CACHE_NAME = 'eph-v8';
 const OFFLINE_URL = '/404.html';
 const PRECACHE_URLS = [
   '/',
@@ -14,7 +14,13 @@ const PRECACHE_URLS = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE_URLS)).catch(() => {})
+    caches.open(CACHE_NAME).then(cache =>
+      Promise.all(PRECACHE_URLS.map(url =>
+        fetch(url, { cache: 'reload' })
+          .then(res => (res && res.ok) ? cache.put(url, res) : null)
+          .catch(() => null)
+      ))
+    )
   );
   self.skipWaiting();
 });
@@ -55,7 +61,7 @@ self.addEventListener('fetch', event => {
   // Static assets: serve the cached copy and refresh it in the background.
   event.respondWith(
     caches.match(request).then(cached => {
-      const network = fetch(request)
+      const network = fetch(request, { cache: 'no-cache' })
         .then(response => {
           if (response && response.status === 200) {
             const copy = response.clone();
