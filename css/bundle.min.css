@@ -46,3 +46,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 
 /* Page titles were white on the cream .page-header (invisible on every subpage) */
 body .page-header h1{color:var(--color-primary)}
+
+/* Hero CTA clearance above the decorative peeking strip (mobile) */
+@media (max-width: 991px){.hero{padding-bottom:170px}}
+
