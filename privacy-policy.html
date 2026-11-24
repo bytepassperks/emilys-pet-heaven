@@ -454,11 +454,11 @@ img{max-width:100%;height:auto}
     </script>
 
   <!-- Cookie Consent Banner -->
-  <div id="cookie-consent" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
+  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
     <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:#FFAE01;text-decoration:underline">Privacy Policy</a>.</span>
     <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:#FFAE01;color:#4E0000;border:none;padding:6px 16px;border-radius:20px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
   </div>
-  <script>if(!localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='flex'</script>
+  <script>if(localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='none'</script>
 
 
   <!-- Back to Top Button -->
