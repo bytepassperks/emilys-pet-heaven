@@ -1,0 +1,157 @@
+{
+  "target": "Emily's Pet Heaven live",
+  "views": [
+    {
+      "label": "desktop",
+      "stats": {
+        "width": 1265,
+        "height": 10632,
+        "brightnessMean": 149.2,
+        "brightnessStdDev": 102.7,
+        "edgeDensity": 7.7
+      },
+      "paths": {
+        "original": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\desktop.png",
+        "squint": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-desktop.png",
+        "silhouette": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-desktop.png"
+      }
+    },
+    {
+      "label": "mobile",
+      "stats": {
+        "width": 375,
+        "height": 14345,
+        "brightnessMean": 157.3,
+        "brightnessStdDev": 95.8,
+        "edgeDensity": 14.9
+      },
+      "paths": {
+        "original": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\mobile.png",
+        "squint": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-mobile.png",
+        "silhouette": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-mobile.png"
+      }
+    },
+    {
+      "label": "dark",
+      "stats": {
+        "width": 1265,
+        "height": 10632,
+        "brightnessMean": 149.3,
+        "brightnessStdDev": 102.7,
+        "edgeDensity": 7.7
+      },
+      "paths": {
+        "original": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\dark.png",
+        "squint": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-dark.png",
+        "silhouette": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-dark.png"
+      }
+    }
+  ],
+  "subagentTasks": [
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\desktop.png",
+      "view": "desktop",
+      "role": "original",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\desktop-original.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\desktop.png\nView: desktop. Role: original.\nReview the full composition. Does it have a point of view, or is it the category default?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-desktop.png",
+      "view": "desktop",
+      "role": "squint",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\desktop-squint.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-desktop.png\nView: desktop. Role: squint.\nThe image is blurred on purpose. What are the first three things you see, in order? Does one thing lead?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-desktop.png",
+      "view": "desktop",
+      "role": "silhouette",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\desktop-silhouette.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-desktop.png\nView: desktop. Role: silhouette.\nThe image is reduced to blocks. Could this structure belong to any product in the category? What is structurally distinctive?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\mobile.png",
+      "view": "mobile",
+      "role": "original",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\mobile-original.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\mobile.png\nView: mobile. Role: original.\nReview the full composition. Does it have a point of view, or is it the category default?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-mobile.png",
+      "view": "mobile",
+      "role": "squint",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\mobile-squint.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-mobile.png\nView: mobile. Role: squint.\nThe image is blurred on purpose. What are the first three things you see, in order? Does one thing lead?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-mobile.png",
+      "view": "mobile",
+      "role": "silhouette",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\mobile-silhouette.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-mobile.png\nView: mobile. Role: silhouette.\nThe image is reduced to blocks. Could this structure belong to any product in the category? What is structurally distinctive?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\dark.png",
+      "view": "dark",
+      "role": "original",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\dark-original.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\dark.png\nView: dark. Role: original.\nReview the full composition. Does it have a point of view, or is it the category default?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-dark.png",
+      "view": "dark",
+      "role": "squint",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\dark-squint.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\squint-dark.png\nView: dark. Role: squint.\nThe image is blurred on purpose. What are the first three things you see, in order? Does one thing lead?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    },
+    {
+      "image": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-dark.png",
+      "view": "dark",
+      "role": "silhouette",
+      "report": "C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\reports\\dark-silhouette.md",
+      "prompt": "Review exactly this image: C:\\Users\\joxor\\emilys-pet-heaven\\.design-forensics\\critique\\silhouette-dark.png\nView: dark. Role: silhouette.\nThe image is reduced to blocks. Could this structure belong to any product in the category? What is structurally distinctive?\nFollow the visual-critic output format. Do not ask for other images. Do not give a numeric score."
+    }
+  ],
+  "rubric": [
+    {
+      "dimension": "Hierarchy",
+      "question": "Does one thing lead? Squint: if everything has the same weight, it has failed."
+    },
+    {
+      "dimension": "Typography",
+      "question": "Is there a display face with character and a restrained text face? Is the scale decisive?"
+    },
+    {
+      "dimension": "Composition",
+      "question": "Is the section sequence the default hero, three cards, pricing? What is structurally different here?"
+    },
+    {
+      "dimension": "Color",
+      "question": "Is there one committed palette with roles, or a rainbow of accents? Does the ground have a point of view?"
+    },
+    {
+      "dimension": "Imagery",
+      "question": "Are there real product visuals, or grey placeholders and stock? Does every frame wrap a real screen?"
+    },
+    {
+      "dimension": "Motion",
+      "question": "Are two or three moments tuned, or is the same fade-up on everything?"
+    },
+    {
+      "dimension": "States",
+      "question": "Do hover, focus and active communicate something? Is reduced motion handled?"
+    },
+    {
+      "dimension": "Responsiveness",
+      "question": "Does the phone layout have its own composition, or is it the desktop squeezed?"
+    },
+    {
+      "dimension": "Accessibility",
+      "question": "Contrast, labels, focus, target size, headings. The audit covers the measurable part."
+    },
+    {
+      "dimension": "Brand consistency",
+      "question": "If this is page two, does it belong to page one? Same tokens, same voice, same footer logic."
+    }
+  ]
+}

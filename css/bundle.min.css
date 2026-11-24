@@ -50,3 +50,10 @@ body .page-header h1{color:var(--color-primary)}
 /* Hero CTA clearance above the decorative peeking strip (mobile) */
 @media (max-width: 991px){.hero{padding-bottom:170px}}
 
+
+/* WhatsApp surfaces: white on the darker brand green clears 3:1 (icons) and 4.5:1 (text) */
+.floating-btn-whatsapp{background:#075e54}
+.floating-btn-whatsapp:hover{background:#0a4a43}
+.floating-btn:hover{color:#fff}
+.btn-whatsapp:hover{background:#075e54;color:#fff}
+
