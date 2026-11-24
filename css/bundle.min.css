@@ -64,3 +64,6 @@ body .page-header h1{color:var(--color-primary)}
 /* State contrast */
 .floating-btn-booking:hover{color:#4e0000}
 .top-bar-item a:hover{color:#ffd9a8}
+
+/* Keep the floating stack clear of the consent banner */
+body:has(#cookie-consent[style*="display: flex"]) .floating-contact,body:has(#cookie-consent[style*="display:flex"]) .floating-contact{display:none}

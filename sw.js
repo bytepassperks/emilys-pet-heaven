@@ -1,5 +1,5 @@
 // Emily's Pet Heaven Service Worker
-const CACHE_NAME = 'eph-v13';
+const CACHE_NAME = 'eph-v14';
 const OFFLINE_URL = '/404.html';
 const PRECACHE_URLS = [
   '/',
