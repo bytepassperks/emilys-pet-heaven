@@ -45,11 +45,11 @@
     });
   }
 
-  function sayFallback(form, email) {
+  function sayFallback(form, email, prefix) {
     var el = statusEl(form);
     el.textContent = '';
-    el.style.color = '#b91c1c';
-    el.appendChild(document.createTextNode('Could not reach the mail service. '));
+    el.style.color = '#4e0000';
+    el.appendChild(document.createTextNode(prefix || 'Could not reach the mail service. '));
     var a = document.createElement('a');
     a.href = 'mailto:contact@emilyspetheaven.com?subject=' +
       encodeURIComponent('Newsletter signup') +
@@ -79,29 +79,14 @@
         return;
       }
 
-      var label = button ? button.innerHTML : '';
-      if (button) { button.disabled = true; button.innerHTML = 'Subscribing...'; }
-      say(form, 'Sending...', 'info');
+      var msg = 'Hi Emily\'s Pet Heaven, please add me to your updates. My email: ' + email;
+      var wa = 'https://wa.me/919830802898?text=' + encodeURIComponent(msg);
+      var win = window.open(wa, '_blank', 'noopener');
+      if (!win) window.location.href = wa;
 
-      var fd = new FormData();
-      fd.append('email', email);
-      fd.append('_subject', 'New newsletter subscriber - Emily\'s Pet Heaven');
-      fd.append('_template', 'table');
-      fd.append('_honey', '');
-
-      post(fd)
-        .then(function (res) { return res.json().catch(function () { return {}; }); })
-        .then(function (body) {
-          if (body && body.success === 'false') throw new Error(body.message || 'failed');
-          say(form, 'Thank you. You are on the list.', 'success');
-          form.reset();
-        })
-        .catch(function () {
-          sayFallback(form, email);
-        })
-        .finally(function () {
-          if (button) { button.disabled = false; button.innerHTML = label; }
-        });
+      sayFallback(form, email, 'Opening WhatsApp to confirm. If it does not open, ');
+      if (button) { button.blur(); }
+      form.reset();
     });
   });
 
