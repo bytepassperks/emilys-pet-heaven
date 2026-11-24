@@ -43,3 +43,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 .newsletter-content .section-label{color:#ffae01}
 .btn-whatsapp{color:#06331a}
 .footer-bottom-links a{display:inline-flex;align-items:center;min-height:24px}
+
+/* Page titles were white on the cream .page-header (invisible on every subpage) */
+body .page-header h1{color:var(--color-primary)}
