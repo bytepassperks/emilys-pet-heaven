@@ -57,3 +57,10 @@ body .page-header h1{color:var(--color-primary)}
 .floating-btn:hover{color:#fff}
 .btn-whatsapp:hover{background:#075e54;color:#fff}
 
+
+/* Solid fallbacks behind gradients (also fixes contrast measurement) */
+.pab-card{background-color:#4e0000}
+.cta-section{background-color:#4e0000}
+/* State contrast */
+.floating-btn-booking:hover{color:#4e0000}
+.top-bar-item a:hover{color:#ffd9a8}

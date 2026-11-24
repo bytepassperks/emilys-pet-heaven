@@ -178,7 +178,7 @@
 
     launcher = el("button", null, null);
     launcher.id = "aivet-launcher";
-    launcher.setAttribute("aria-label", "Open AI Vet chat");
+    launcher.setAttribute("aria-label", "Ask AI Vet");
     var lic = el("span", "aivet-ic", "🐾");
     launcher.appendChild(lic);
     launcher.appendChild(el("span", null, "Ask AI Vet"));
