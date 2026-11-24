@@ -81,8 +81,13 @@
 
       var msg = 'Hi Emily\'s Pet Heaven, please add me to your updates. My email: ' + email;
       var wa = 'https://wa.me/919830802898?text=' + encodeURIComponent(msg);
-      var win = window.open(wa, '_blank', 'noopener');
-      if (!win) window.location.href = wa;
+      var a = document.createElement('a');
+      a.href = wa;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
 
       sayFallback(form, email, 'Opening WhatsApp to confirm. If it does not open, ');
       if (button) { button.blur(); }
