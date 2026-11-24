@@ -28,12 +28,37 @@
     el.style.color = kind === 'error' ? '#ef4444' : (kind === 'success' ? '#0f7b4f' : '#4e0000');
   }
 
-  function post(data) {
+  function post(data, ms) {
+    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, ms || 12000) : null;
     return fetch(ENDPOINT, {
       method: 'POST',
       headers: { 'Accept': 'application/json' },
-      body: data
+      body: data,
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (res) {
+      if (timer) clearTimeout(timer);
+      return res;
+    }, function (err) {
+      if (timer) clearTimeout(timer);
+      throw err;
     });
+  }
+
+  function sayFallback(form, email) {
+    var el = statusEl(form);
+    el.textContent = '';
+    el.style.color = '#b91c1c';
+    el.appendChild(document.createTextNode('Could not reach the mail service. '));
+    var a = document.createElement('a');
+    a.href = 'mailto:contact@emilyspetheaven.com?subject=' +
+      encodeURIComponent('Newsletter signup') +
+      '&body=' + encodeURIComponent('Please add me to your updates: ' + email);
+    a.textContent = 'Send it by email instead';
+    a.style.color = 'inherit';
+    a.style.textDecoration = 'underline';
+    el.appendChild(a);
+    el.appendChild(document.createTextNode('.'));
   }
 
   // ---- Newsletter ----
@@ -72,7 +97,7 @@
           form.reset();
         })
         .catch(function () {
-          say(form, 'Could not subscribe right now. Please email contact@emilyspetheaven.com.', 'error');
+          sayFallback(form, email);
         })
         .finally(function () {
           if (button) { button.disabled = false; button.innerHTML = label; }
@@ -102,7 +127,7 @@
         fd.append(field.name, field.value);
       });
 
-      post(fd).catch(function () {});
+      post(fd, 8000).catch(function () {});
     });
   });
 })();
