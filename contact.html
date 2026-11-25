@@ -24,10 +24,10 @@
   <meta name="robots" content="index, follow">
   
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Contact Emily's Pet Heaven — Pet Boarding in Barrackpore | Book Now">
+  <meta property="og:title" content="Contact Emily's Pet Heaven: Pet Boarding in Barrackpore | Book Now">
   <meta property="og:description" content="Contact Emily's Pet Heaven at 18/1 Banerjee Para Road, Nona Chandanpukur, Barrackpore for pet boarding, grooming and daycare. Call +91 6363590332 or book online.">
   
-  <title>Contact Emily's Pet Heaven — Pet Boarding in Barrackpore | Book Now</title>
+  <title>Contact Emily's Pet Heaven: Pet Boarding in Barrackpore | Book Now</title>
   <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/logo-icon-transparent.webp">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/brand/logo-icon-transparent.webp">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/brand/logo-icon-transparent.webp">
@@ -103,7 +103,7 @@ img{max-width:100%;height:auto}
   <meta property="og:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
   <meta name="twitter:image" content="https://emilyspetheaven.com/assets/brand/og-cover.jpg">
   <meta name="twitter:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
-</head>
+<style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style></head>
 <body>
   <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
   <!-- Top Bar -->
@@ -231,28 +231,42 @@ img{max-width:100%;height:auto}
                   <input aria-label="john@example.com" type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
                 </div>
                 <div class="form-group">
-                  <label for="service">Service Required</label>
-                  <select id="service" aria-label="Select service" name="service" class="form-select">
-                    <option value="">Select a service</option>
-                    <option value="boarding">Pet Boarding</option>
-                    <option value="grooming">Pet Grooming</option>
-                    <option value="veterinary">Veterinary Care</option>
-                    <option value="daycare">Pet Daycare</option>
-                    <option value="training">Pet Training</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <label for="service-btn" id="service-label">Service Required</label>
+                  <div class="cselect" data-cselect>
+                    <button type="button" id="service-btn" class="cselect-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="service-label service-value">
+                      <span class="cselect-value is-placeholder" id="service-value">Select a service</span>
+                      <svg class="cselect-chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5 7.5 10 12.5 15 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <ul class="cselect-list" role="listbox" aria-labelledby="service-label" tabindex="-1" hidden>
+                      <li role="option" tabindex="-1" data-value="" aria-selected="true">Select a service</li>
+                      <li role="option" tabindex="-1" data-value="boarding">Pet Boarding</li>
+                      <li role="option" tabindex="-1" data-value="grooming">Pet Grooming</li>
+                      <li role="option" tabindex="-1" data-value="veterinary">Veterinary Care</li>
+                      <li role="option" tabindex="-1" data-value="daycare">Pet Daycare</li>
+                      <li role="option" tabindex="-1" data-value="training">Pet Training</li>
+                      <li role="option" tabindex="-1" data-value="other">Other</li>
+                    </ul>
+                    <input type="hidden" name="service" value="">
+                  </div>
                 </div>
               </div>
               
               <div class="form-row">
                 <div class="form-group">
-                  <label for="pet-type">Pet Type</label>
-                  <select id="pet-type" aria-label="Select pet type" name="pet-type" class="form-select">
-                    <option value="">Select pet type</option>
-                    <option value="dog">Dog</option>
-                    <option value="cat">Cat</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <label for="pet-type-btn" id="pet-type-label">Pet Type</label>
+                  <div class="cselect" data-cselect>
+                    <button type="button" id="pet-type-btn" class="cselect-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="pet-type-label pet-type-value">
+                      <span class="cselect-value is-placeholder" id="pet-type-value">Select pet type</span>
+                      <svg class="cselect-chev" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5 7.5 10 12.5 15 7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <ul class="cselect-list" role="listbox" aria-labelledby="pet-type-label" tabindex="-1" hidden>
+                      <li role="option" tabindex="-1" data-value="" aria-selected="true">Select pet type</li>
+                      <li role="option" tabindex="-1" data-value="dog">Dog</li>
+                      <li role="option" tabindex="-1" data-value="cat">Cat</li>
+                      <li role="option" tabindex="-1" data-value="other">Other</li>
+                    </ul>
+                    <input type="hidden" name="pet-type" value="">
+                  </div>
                 </div>
                 <div class="form-group">
                   <label for="date">Preferred Date</label>
@@ -489,7 +503,7 @@ img{max-width:100%;height:auto}
       </div>
       
       <div class="footer-bottom">
-        <p>&copy; 2026 Emily's Pet Heaven. All rights reserved.</p>
+        <p>Copyright 2026 Emily's Pet Heaven. All rights reserved.</p>
         <div class="footer-bottom-links">
           <a href="terms.html">Terms & Conditions</a>
           <a href="terms.html#privacy">Privacy Policy</a>
@@ -554,5 +568,43 @@ img{max-width:100%;height:auto}
 
   <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js')</script>
   <script src="js/forms-fix.js" defer></script>
+
+  <script>
+  (function(){
+    function init(root){
+      var btn=root.querySelector('.cselect-btn'),list=root.querySelector('.cselect-list'),
+          val=root.querySelector('.cselect-value'),input=root.querySelector('input[type=hidden]'),
+          opts=[].slice.call(list.querySelectorAll('[role=option]')),idx=0;
+      function focusOpt(i){idx=(i+opts.length)%opts.length;opts[idx].focus();}
+      function setOpen(open){
+        btn.setAttribute('aria-expanded',open?'true':'false');list.hidden=!open;
+        if(open){var s=opts.findIndex(function(o){return o.getAttribute('aria-selected')==='true';});focusOpt(s<0?0:s);}
+      }
+      function choose(o){
+        input.value=o.getAttribute('data-value')||'';
+        opts.forEach(function(x){x.setAttribute('aria-selected',x===o?'true':'false');});
+        val.textContent=o.textContent.trim();
+        val.classList.toggle('is-placeholder',!input.value);
+        setOpen(false);btn.focus();
+      }
+      btn.addEventListener('click',function(){setOpen(list.hidden);});
+      btn.addEventListener('keydown',function(e){
+        if(e.key==='ArrowDown'||e.key==='ArrowUp'||e.key==='Enter'||e.key===' '){e.preventDefault();setOpen(true);}
+      });
+      list.addEventListener('keydown',function(e){
+        if(e.key==='ArrowDown'){e.preventDefault();focusOpt(idx+1);}
+        else if(e.key==='ArrowUp'){e.preventDefault();focusOpt(idx-1);}
+        else if(e.key==='Home'){e.preventDefault();focusOpt(0);}
+        else if(e.key==='End'){e.preventDefault();focusOpt(opts.length-1);}
+        else if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(opts[idx]);}
+        else if(e.key==='Escape'){e.preventDefault();setOpen(false);btn.focus();}
+        else if(e.key==='Tab'){setOpen(false);}
+      });
+      opts.forEach(function(o,i){o.addEventListener('click',function(){choose(o);});o.addEventListener('mousemove',function(){idx=i;});});
+      document.addEventListener('click',function(e){if(!root.contains(e.target))setOpen(false);});
+    }
+    document.querySelectorAll('[data-cselect]').forEach(init);
+  })();
+  </script>
 </body>
 </html>

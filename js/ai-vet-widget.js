@@ -10,10 +10,13 @@
 
   var ENDPOINT = "https://emilys-ai-vet.emilys-pet-heaven.workers.dev/chat";
 
+  var PAW_SVG = "<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false"><ellipse cx="6" cy="10" rx="2" ry="2.6"/><ellipse cx="10.5" cy="6.5" rx="2" ry="2.6"/><ellipse cx="15" cy="6.5" rx="2" ry="2.6"/><ellipse cx="19" cy="10" rx="2" ry="2.6"/><path d="M12.5 11c-3 0-5.5 2.2-5.5 4.6 0 1.6 1.2 2.4 2.7 2.4 1 0 1.8-.4 2.8-.4s1.8.4 2.8.4c1.5 0 2.7-.8 2.7-2.4C18 13.2 15.5 11 12.5 11z"/></svg>";
+  var WARN_SVG = "<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false"><path d="M12 3 2.5 20h19L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 9v5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17.2" r="1.1"/></svg>";
+  var ARROW_SVG = "<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path d="M4 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>";
   var DISCLAIMER =
-    "AI assistant — not a real vet. General advice only; for anything serious, please see a vet.";
+    "AI assistant, not a real vet. General advice only; for anything serious, please see a vet.";
   var GREETING =
-    "Hi! I'm the AI Vet for Emily's Pet Heaven 🐾\nAsk me anything about your dog or cat — or our services, prices and timings. You can write in English, हिंदी or বাংলা.\n\n(I'm an AI, not a real vet — this is general advice only.)";
+    "Hi! I'm the AI Vet for Emily's Pet Heaven\nAsk me anything about your dog or cat — or our services, prices and timings. You can write in English, हिंदी or বাংলা.\n\n(I'm an AI, not a real vet — this is general advice only.)";
   var SUGGESTIONS = [
     "Dog boarding price?",
     "My dog is vomiting",
@@ -179,7 +182,7 @@
     launcher = el("button", null, null);
     launcher.id = "aivet-launcher";
     launcher.setAttribute("aria-label", "Ask AI Vet");
-    var lic = el("span", "aivet-ic", "🐾");
+    var lic = el("span", "aivet-ic"); lic.innerHTML = PAW_SVG;
     launcher.appendChild(lic);
     launcher.appendChild(el("span", null, "Ask AI Vet"));
     launcher.appendChild(el("span", "aivet-dot"));
@@ -192,7 +195,7 @@
 
     var head = el("div");
     head.id = "aivet-head";
-    head.appendChild(el("div", "aivet-av", "🐾"));
+    var av = el("div", "aivet-av"); av.innerHTML = PAW_SVG; head.appendChild(av);
     var ht = el("div");
     ht.appendChild(el("h4", null, "AI Vet"));
     ht.appendChild(el("p", null, "Emily's Pet Heaven · free pet-care help"));
@@ -205,7 +208,7 @@
 
     var disc = el("div");
     disc.id = "aivet-disc";
-    disc.appendChild(el("span", null, "⚠️"));
+    var wi = el("span"); wi.innerHTML = WARN_SVG; disc.appendChild(wi);
     disc.appendChild(el("span", null, DISCLAIMER));
 
     msgs = el("div");
@@ -232,7 +235,7 @@
         send();
       }
     });
-    sendBtn = el("button", null, "➤");
+    sendBtn = el("button", null, null); sendBtn.innerHTML = ARROW_SVG;
     sendBtn.id = "aivet-send";
     sendBtn.setAttribute("aria-label", "Send");
     sendBtn.addEventListener("click", function () {
