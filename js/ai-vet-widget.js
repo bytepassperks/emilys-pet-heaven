@@ -61,7 +61,7 @@
     ".aivet-chip{background:#fff;border:1px solid #ffae01;color:#4e0000;border-radius:500px;padding:6px 12px;font-size:12.5px;cursor:pointer;font-family:inherit}" +
     ".aivet-chip:hover{background:#ffae01}" +
     ".aivet-typing{display:flex;gap:4px;padding:12px 14px}" +
-    ".aivet-typing span{width:7px;height:7px;border-radius:50%;background:#c9a86a;animation:aivetBounce 1s infinite}" +
+    ".aivet-typing span{width:7px;height:7px;border-radius:50%;background:#c9a86a;animation:none}" +
     ".aivet-typing span:nth-child(2){animation-delay:.15s}.aivet-typing span:nth-child(3){animation-delay:.3s}" +
     "@keyframes aivetBounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}" +
     "#aivet-foot{display:flex;gap:8px;padding:10px;border-top:1px solid #eee;background:#fff}" +

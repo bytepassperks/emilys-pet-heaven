@@ -47,11 +47,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-:root{--color-primary:#4E0000;--color-secondary:#FFAE01;--color-cream:#FFECBC;--color-light:#FDF8F3;--color-text:#666;--color-bg:#FFF;--font-family-heading:'Fredoka',sans-serif;--font-family-body:'Poppins',sans-serif}
+:root{--color-primary:var(--color-primary);--color-secondary:var(--color-secondary);--color-cream:var(--color-bg-cream);--color-light:#FDF8F3;--color-text:var(--color-text-muted);--color-bg:var(--color-text-white);--font-family-heading:'Fredoka',sans-serif;--font-family-body:'Poppins',sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-family-body);color:var(--color-text);background:var(--color-bg);line-height:1.5;overflow-x:hidden}
-.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:all .3s ease}
-.container{width:100%;max-width:1400px;margin:0 auto;padding:0 30px}
+.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:var(--color-text-white);box-shadow:0 2px 10px rgba(78,0,0,0.18);transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,opacity .3s ease}
+.container{width:100%;max-width:1400px;margin:0 auto;padding:0 32px}
 h1,h2,h3{font-family:var(--font-family-heading);color:var(--color-primary)}
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
 img{max-width:100%;height:auto}
@@ -102,7 +102,7 @@ img{max-width:100%;height:auto}
   <meta name="twitter:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
 <style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style></head>
 <body>
-  <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
+  <a href="#main-content" class="skip-nav skip-link" id="skip-link" style="position:absolute;top:-40px;left:0;background:var(--color-primary);color:var(--color-text-white);padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="container">
@@ -181,10 +181,10 @@ img{max-width:100%;height:auto}
 
   <main id="main-content">
     <!-- Page Hero -->
-    <section class="page-hero" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 5rem 0 3rem; text-align: center; color: white;">
+    <section class="page-hero" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding:5rem 0 3rem; text-align: center; color: white;">
       <div class="container">
-        <nav aria-label="Breadcrumb" style="margin-bottom: 1rem;">
-          <ol style="display: flex; gap: 0.5rem; justify-content: center; list-style: none; padding: 0; opacity: 0.8; font-size: 0.9rem;">
+        <nav aria-label="Breadcrumb" style="margin-bottom:1rem;">
+          <ol style="display: flex; gap:0.5rem; justify-content: center; list-style: none; padding:0; opacity: 0.8; font-size:0.9rem;">
             <li><a href="index.html" style="color: white; text-decoration: none;">Home</a></li>
             <li>/</li>
             <li><a href="services.html" style="color: white; text-decoration: none;">Services</a></li>
@@ -192,9 +192,9 @@ img{max-width:100%;height:auto}
             <li>Pet Boarding Sodepur</li>
           </ol>
         </nav>
-        <h1 style="font-family: 'Fredoka', sans-serif; font-size: 2.5rem; margin-bottom: 1rem;">Reliable Pet Boarding Near Sodepur with 24/7 Care</h1>
-        <p style="font-size: 1.15rem; max-width: 700px; margin: 0 auto; opacity: 0.9;">Emily's Pet Heaven offers reliable pet boarding near Sodepur with safe dog hostel, cat boarding, grooming, daycare and pickup service across North 24 Parganas.</p>
-        <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <h1 style="font-family: 'Fredoka', sans-serif; font-size:2.5rem; margin-bottom:1rem;">Reliable Pet Boarding Near Sodepur with 24/7 Care</h1>
+        <p style="font-size:1.15rem; max-width: 700px; margin:0 auto; opacity: 0.9;">Emily's Pet Heaven offers reliable pet boarding near Sodepur with safe dog hostel, cat boarding, grooming, daycare and pickup service across North 24 Parganas.</p>
+        <div style="margin-top:2rem; display: flex; gap:1rem; justify-content: center; flex-wrap: wrap;">
           <a href="contact.html" class="btn btn-primary" style="background: white; color: var(--primary); font-weight: 600;">Book Now</a>
           <a aria-label="Call us" href="tel:+916363590332" class="btn" style="border: 2px solid white; color: white;">Call +91 6363590332</a>
         </div>
@@ -202,11 +202,11 @@ img{max-width:100%;height:auto}
     </section>
 
     <!-- Main Content -->
-    <section style="padding: 4rem 0;">
+    <section style="padding:4rem 0;">
       <div class="container" style="max-width: 900px;">
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Reliable Pet Boarding Near Sodepur</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Reliable Pet Boarding Near Sodepur</h2>
           <p>Emily's Pet Heaven offers reliable and safe pet boarding services for residents of Sodepur and surrounding areas. Our modern boarding facility in Barrackpore is just minutes away from Sodepur, and we provide doorstep pickup and drop to make boarding convenient for busy pet parents.</p>
             <p>Our facility combines comfortable accommodation, structured daily routines and trained supervision to give your pet the best possible experience while you're away.</p>
             <ul class="service-features">
@@ -219,38 +219,38 @@ img{max-width:100%;height:auto}
             </ul>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Dog Boarding Near Sodepur</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Dog Boarding Near Sodepur</h2>
           <p>Our dog boarding near Sodepur accommodates all breeds with personalised care. Labradors, Golden Retrievers, German Shepherds, Pugs, Beagles and Indian Spitz all receive breed-appropriate handling, exercise and nutrition during their stay.</p>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Cat Boarding Near Sodepur</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Cat Boarding Near Sodepur</h2>
           <p>Dedicated cat boarding is available for Sodepur residents with quiet, individual enclosures, monitored feeding and gentle handling for all feline breeds including Persian, Siamese and domestic cats.</p>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Festival Boarding for Sodepur</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Festival Boarding for Sodepur</h2>
           <p>During Durga Puja, Diwali, summer vacations and holiday travel season, advance booking is recommended. We fill up quickly during peak periods. Contact us early to secure your pet's spot.</p>
         </div>
 
         <!-- Areas We Cover -->
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Areas We Cover Near Sodepur</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Areas We Cover Near Sodepur</h2>
           <p>Emily's Pet Heaven serves pet owners across Sodepur and the following nearby areas with safe boarding, daycare, grooming and transport support:</p>
-          <ul class="service-features" style="columns: 2; column-gap: 2rem;">
+          <ul class="service-features" style="columns: 2; column-gap:2rem;">
             <li><a href="pet-boarding-barrackpore.html" style="color: var(--primary);">Barrackpore</a></li>
             <li><a href="pet-boarding-barrackpore.html" style="color: var(--primary);">Panihati</a></li>
             <li><a href="pet-boarding-sodepur.html" style="color: var(--primary);">Agarpara</a></li>
             <li><a href="pet-boarding-madhyamgram.html" style="color: var(--primary);">Madhyamgram</a></li>
             <li><a href="pet-boarding-dum-dum.html" style="color: var(--primary);">Dum Dum</a></li>
           </ul>
-          <p style="margin-top: 1rem;">Emily's Pet Heaven serves pet owners across Barrackpore, Barasat, Madhyamgram and nearby areas of North 24 Parganas with safe boarding, daycare and grooming support.</p>
+          <p style="margin-top:1rem;">Emily's Pet Heaven serves pet owners across Barrackpore, Barasat, Madhyamgram and nearby areas of North 24 Parganas with safe boarding, daycare and grooming support.</p>
         </div>
 
         <!-- Google Map Embed -->
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Find Us, Emily's Pet Heaven Location</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Find Us, Emily's Pet Heaven Location</h2>
           
       <div class="map-container" style="width:100%;margin:2rem 0;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
         <iframe 
@@ -265,23 +265,23 @@ img{max-width:100%;height:auto}
         </iframe>
       </div>
 
-          <p style="text-align: center; margin-top: 1rem;"><strong>Address:</strong> 18/1 Banerjee Para Road, Nona Chandanpukur, Barrackpore, Kolkata - 700122</p>
+          <p style="text-align: center; margin-top:1rem;"><strong>Address:</strong> 18/1 Banerjee Para Road, Nona Chandanpukur, Barrackpore, Kolkata - 700122</p>
         </div>
 
         <!-- CTA -->
-        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 16px; padding: 3rem; text-align: center; color: white;">
-          <h2 style="font-family: 'Fredoka', sans-serif; font-size: 2rem; margin-bottom: 1rem;">Book Safe Pet Boarding Near Sodepur Today</h2>
-          <p style="margin-bottom: 1.5rem; opacity: 0.9;">Give your pet the love and care they deserve at Emily's Pet Heaven. Contact us now to reserve a spot.</p>
-          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius:16px; padding:3rem; text-align: center; color: white;">
+          <h2 style="font-family: 'Fredoka', sans-serif; font-size:2.0rem; margin-bottom:1rem;">Book Safe Pet Boarding Near Sodepur Today</h2>
+          <p style="margin-bottom:1.5rem; opacity: 0.9;">Give your pet the love and care they deserve at Emily's Pet Heaven. Contact us now to reserve a spot.</p>
+          <div style="display: flex; gap:1rem; justify-content: center; flex-wrap: wrap;">
             <a href="contact.html" class="btn btn-primary" style="background: white; color: var(--primary); font-weight: 600;">Book Appointment</a>
             <a aria-label="Chat on WhatsApp" href="https://wa.me/919830802898?text=Hi%20Emily's%20Pet%20Heaven!%20I'd%20like%20to%20book%20pet%20boarding%20near%20Sodepur." class="btn" style="border: 2px solid white; color: white;" target="_blank" rel="noopener">WhatsApp Us</a>
           </div>
         </div>
 
         <!-- Internal Links -->
-        <div style="margin-top: 3rem; padding: 2rem; background: var(--bg-secondary, #f8f9fa); border-radius: 12px;">
-          <h3 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); margin-bottom: 1rem;">Explore More Services</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+        <div style="margin-top:3rem; padding:2rem; background: var(--color-surface-page); border-radius:12px;">
+          <h3 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); margin-bottom:1rem;">Explore More Services</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem;">
             <a href="services.html" style="color: var(--primary); text-decoration: none;">All Services</a>
             <a href="pricing.html" style="color: var(--primary); text-decoration: none;">Pricing Plans</a>
             <a href="pet-boarding-barrackpore.html" style="color: var(--primary); text-decoration: none;">Pet Boarding Barrackpore</a>
@@ -419,15 +419,15 @@ img{max-width:100%;height:auto}
   
 
   <!-- Cookie Consent Banner -->
-  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
-    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:#FFAE01;text-decoration:underline">Privacy Policy</a>.</span>
-    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:#FFAE01;color:#4E0000;border:none;padding:6px 16px;border-radius:20px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
+  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--color-primary);color:var(--color-text-white);padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
+    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:var(--color-secondary);text-decoration:underline">Privacy Policy</a>.</span>
+    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:var(--color-secondary);color:var(--color-primary);border:none;padding:8px 16px;border-radius:16px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
   </div>
   <script>if(localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='none'</script>
 
 
   <!-- Back to Top Button -->
-  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:#4E0000;color:#FFAE01;border:2px solid #FFAE01;cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:all 0.3s" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:var(--color-primary);color:var(--color-secondary);border:2px solid var(--color-secondary);cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,opacity .3s ease" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
   <script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.display=window.scrollY>300?'flex':'none'})</script>
 
 

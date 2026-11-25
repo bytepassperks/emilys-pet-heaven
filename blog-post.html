@@ -44,38 +44,38 @@
     <link rel="preload" href="css/bundle.min.css" as="style">
     <link rel="stylesheet" href="css/bundle.min.css">
   <style>
-    .blog-post-content { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
-    .blog-post-header { margin-bottom: 40px; }
-    .blog-post-category { display: inline-block; background: var(--color-primary); color: white; padding: 6px 16px; border-radius: 20px; font-size: 0.875rem; font-weight: 500; margin-bottom: 16px; }
-    .blog-post-title { font-size: 2.5rem; font-weight: 700; color: var(--color-text-dark); margin-bottom: 20px; line-height: 1.2; }
-    .blog-post-meta { display: flex; align-items: center; gap: 24px; color: var(--color-text-muted); font-size: 0.9rem; flex-wrap: wrap; }
-    .blog-post-meta-item { display: flex; align-items: center; gap: 8px; }
+    .blog-post-content { max-width: 800px; margin:0 auto; padding:60px 20px; }
+    .blog-post-header { margin-bottom:40px; }
+    .blog-post-category { display: inline-block; background: var(--color-primary); color: white; padding:8px 16px; border-radius:16px; font-size:0.875rem; font-weight: 500; margin-bottom:16px; }
+    .blog-post-title { font-size:2.5rem; font-weight: 700; color: var(--color-text-dark); margin-bottom:20px; line-height: 1.2; }
+    .blog-post-meta { display: flex; align-items: center; gap:24px; color: var(--color-text-muted); font-size:0.9rem; flex-wrap: wrap; }
+    .blog-post-meta-item { display: flex; align-items: center; gap:8px; }
     .blog-post-meta svg { width: 18px; height: 18px; }
-    .blog-post-author { display: flex; align-items: center; gap: 12px; }
-    .blog-post-author-image { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; }
-    .blog-post-featured-image { width: 100%; max-height: 500px; object-fit: cover; border-radius: 16px; margin-bottom: 40px; }
-    .blog-post-body { font-size: 1.1rem; line-height: 1.8; color: var(--color-text-dark); }
-    .blog-post-body h2 { font-size: 1.75rem; font-weight: 600; margin: 40px 0 20px; color: var(--color-primary); }
-    .blog-post-body h3 { font-size: 1.4rem; font-weight: 600; margin: 32px 0 16px; }
-    .blog-post-body p { margin-bottom: 20px; }
-    .blog-post-body blockquote { border-left: 4px solid var(--color-primary); padding-left: 24px; margin: 32px 0; font-style: italic; color: var(--color-text-muted); }
-    .blog-post-body figure { margin: 32px 0; }
-    .blog-post-body figure img { width: 100%; border-radius: 12px; }
-    .blog-post-body figcaption { text-align: center; font-size: 0.9rem; color: var(--color-text-muted); margin-top: 12px; }
-    .blog-post-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; padding-top: 40px; border-top: 1px solid #eee; }
-    .blog-post-tag { background: #f5f5f5; color: var(--color-text-dark); padding: 8px 16px; border-radius: 20px; font-size: 0.875rem; }
-    .blog-post-share { display: flex; align-items: center; gap: 16px; margin-top: 32px; }
+    .blog-post-author { display: flex; align-items: center; gap:12px; }
+    .blog-post-author-image { width: 48px; height: 48px; border-radius:50%; object-fit: cover; }
+    .blog-post-featured-image { width: 100%; max-height: 500px; object-fit: cover; border-radius:16px; margin-bottom:40px; }
+    .blog-post-body { font-size:1.1rem; line-height: 1.8; color: var(--color-text-dark); }
+    .blog-post-body h2 { font-size:1.75rem; font-weight: 600; margin:40px 0 20px; color: var(--color-primary); }
+    .blog-post-body h3 { font-size:1.4rem; font-weight: 600; margin:32px 0 16px; }
+    .blog-post-body p { margin-bottom:20px; }
+    .blog-post-body blockquote { border-left: 4px solid var(--color-primary); padding-left:24px; margin:32px 0; font-style: italic; color: var(--color-text-muted); }
+    .blog-post-body figure { margin:32px 0; }
+    .blog-post-body figure img { width: 100%; border-radius:12px; }
+    .blog-post-body figcaption { text-align: center; font-size:0.9rem; color: var(--color-text-muted); margin-top:12px; }
+    .blog-post-tags { display: flex; flex-wrap: wrap; gap:12px; margin-top:40px; padding-top:40px; border-top: 1px solid #eee; }
+    .blog-post-tag { background: var(--color-surface-muted); color: var(--color-text-dark); padding:8px 16px; border-radius:16px; font-size:0.875rem; }
+    .blog-post-share { display: flex; align-items: center; gap:16px; margin-top:32px; }
     .blog-post-share-title { font-weight: 600; }
-    .blog-post-share a { width: 40px; height: 40px; border-radius: 50%; background: var(--color-primary); color: white; display: flex; align-items: center; justify-content: center; transition: transform 0.3s; }
+    .blog-post-share a { width: 40px; height: 40px; border-radius:50%; background: var(--color-primary); color: white; display: flex; align-items: center; justify-content: center; transition: transform 0.3s; }
     .blog-post-share a:hover { transform: scale(1.1); }
     .blog-post-share svg { width: 20px; height: 20px; }
-    .related-posts { background: #f9f9f9; padding: 60px 0; }
-    .related-posts-title { text-align: center; font-size: 2rem; margin-bottom: 40px; }
-    .related-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+    .related-posts { background: #f9f9f9; padding:60px 0; }
+    .related-posts-title { text-align: center; font-size:2.0rem; margin-bottom:40px; }
+    .related-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:32px; max-width: 1200px; margin:0 auto; padding:0 20px; }
     .loading-spinner { display: flex; justify-content: center; align-items: center; min-height: 400px; }
-    .loading-spinner::after { content: ''; width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid var(--color-primary); border-radius: 50%; animation: spin 1s linear infinite; }
+    .loading-spinner::after { content: ''; width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid var(--color-primary); border-radius:50%; animation:none; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .error-message { text-align: center; padding: 60px 20px; color: var(--color-text-muted); }
+    .error-message { text-align: center; padding:60px 20px; color: var(--color-text-muted); }
   </style>
   <link rel="canonical" href="https://emilyspetheaven.com/blog.html">
   <link rel="manifest" href="manifest.json">
@@ -109,7 +109,7 @@
   <meta name="twitter:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
 <style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style></head>
 <body>
-  <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
+  <a href="#main-content" class="skip-nav skip-link" id="skip-link" style="position:absolute;top:-40px;left:0;background:var(--color-primary);color:var(--color-text-white);padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
   <div class="top-bar">
     <div class="container">
       <div class="top-bar-left">
@@ -378,15 +378,15 @@
     </script>
 
   <!-- Cookie Consent Banner -->
-  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
-    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:#FFAE01;text-decoration:underline">Privacy Policy</a>.</span>
-    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:#FFAE01;color:#4E0000;border:none;padding:6px 16px;border-radius:20px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
+  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--color-primary);color:var(--color-text-white);padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
+    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:var(--color-secondary);text-decoration:underline">Privacy Policy</a>.</span>
+    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:var(--color-secondary);color:var(--color-primary);border:none;padding:8px 16px;border-radius:16px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
   </div>
   <script>if(localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='none'</script>
 
 
   <!-- Back to Top Button -->
-  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:#4E0000;color:#FFAE01;border:2px solid #FFAE01;cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:all 0.3s" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:var(--color-primary);color:var(--color-secondary);border:2px solid var(--color-secondary);cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,opacity .3s ease" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
   <script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.display=window.scrollY>300?'flex':'none'})</script>
 
 

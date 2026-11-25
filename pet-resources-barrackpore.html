@@ -40,11 +40,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <style>
-:root{--color-primary:#4E0000;--color-secondary:#FFAE01;--color-cream:#FFECBC;--color-light:#FDF8F3;--color-text:#666;--color-bg:#FFF;--font-family-heading:'Fredoka',sans-serif;--font-family-body:'Poppins',sans-serif}
+:root{--color-primary:var(--color-primary);--color-secondary:var(--color-secondary);--color-cream:var(--color-bg-cream);--color-light:#FDF8F3;--color-text:var(--color-text-muted);--color-bg:var(--color-text-white);--font-family-heading:'Fredoka',sans-serif;--font-family-body:'Poppins',sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-family-body);color:var(--color-text);background:var(--color-bg);line-height:1.5;overflow-x:hidden}
-.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:all .3s ease}
-.container{width:100%;max-width:1400px;margin:0 auto;padding:0 30px}
+.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:var(--color-text-white);box-shadow:0 2px 10px rgba(78,0,0,0.18);transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,opacity .3s ease}
+.container{width:100%;max-width:1400px;margin:0 auto;padding:0 32px}
 h1,h2,h3{font-family:var(--font-family-heading);color:var(--color-primary)}
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
 img{max-width:100%;height:auto}
@@ -67,7 +67,7 @@ img{max-width:100%;height:auto}
   <meta name="twitter:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
 <style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style></head>
 <body>
-  <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
+  <a href="#main-content" class="skip-nav skip-link" id="skip-link" style="position:absolute;top:-40px;left:0;background:var(--color-primary);color:var(--color-text-white);padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
 
   <!-- Top Bar -->
   <div class="top-bar">
@@ -125,134 +125,134 @@ img{max-width:100%;height:auto}
 
   <main id="main-content">
     <!-- Page Hero -->
-    <section class="page-hero" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding: 5rem 0 3rem; text-align: center; color: white;">
+    <section class="page-hero" style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); padding:5rem 0 3rem; text-align: center; color: white;">
       <div class="container">
-        <nav aria-label="Breadcrumb" style="margin-bottom: 1rem;">
-          <ol style="display: flex; gap: 0.5rem; justify-content: center; list-style: none; padding: 0; opacity: 0.8; font-size: 0.9rem;">
+        <nav aria-label="Breadcrumb" style="margin-bottom:1rem;">
+          <ol style="display: flex; gap:0.5rem; justify-content: center; list-style: none; padding:0; opacity: 0.8; font-size:0.9rem;">
             <li><a href="index.html" style="color: white; text-decoration: none;">Home</a></li>
             <li>/</li>
             <li>Pet Resources Barrackpore</li>
           </ol>
         </nav>
-        <h1 style="font-family: 'Fredoka', sans-serif; font-size: 2.5rem; margin-bottom: 1rem;">Pet Resources in Barrackpore, Your Complete Local Guide</h1>
-        <p style="font-size: 1.15rem; max-width: 700px; margin: 0 auto; opacity: 0.9;">Essential pet services directory for Barrackpore and North 24 Parganas, find trusted vets, pet shops, animal welfare organisations, trainers and more.</p>
+        <h1 style="font-family: 'Fredoka', sans-serif; font-size:2.5rem; margin-bottom:1rem;">Pet Resources in Barrackpore, Your Complete Local Guide</h1>
+        <p style="font-size:1.15rem; max-width: 700px; margin:0 auto; opacity: 0.9;">Essential pet services directory for Barrackpore and North 24 Parganas, find trusted vets, pet shops, animal welfare organisations, trainers and more.</p>
       </div>
     </section>
 
     <!-- Main Content -->
-    <section style="padding: 4rem 0;">
+    <section style="padding:4rem 0;">
       <div class="container" style="max-width: 900px;">
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Why We Created This Pet Resources Guide</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Why We Created This Pet Resources Guide</h2>
           <p>As pet parents ourselves, the team at <a href="index.html" style="color: var(--primary);">Emily's Pet Heaven</a> knows how important it is to have quick access to trusted local pet services. Whether you need a veterinarian for an emergency, a reliable pet shop for supplies, or an animal welfare organisation for adoption support, this comprehensive guide covers every essential pet resource in Barrackpore and the surrounding North 24 Parganas area.</p>
           <p>We have compiled this list based on our experience serving pet owners across Barrackpore, Titagarh, Sodepur, Madhyamgram and the wider Kolkata region. If you know of any pet service that should be added to this directory, please <a href="contact.html" style="color: var(--primary);">contact us</a> and we will include it.</p>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Veterinary Clinics Near Barrackpore</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Veterinary Clinics Near Barrackpore</h2>
           <p>Access to quality veterinary care is essential for every pet owner. Below are veterinary clinics and hospitals serving the Barrackpore and North 24 Parganas area:</p>
-          <ul style="list-style: none; padding: 0;">
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+          <ul style="list-style: none; padding:0;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Government Veterinary Hospital, Barrackpore</strong><br>
-              <span style="color: #666;">Government veterinary hospital providing vaccination, treatment and emergency services for pets and livestock in the Barrackpore region.</span><br>
+              <span style="color: var(--color-text-muted);">Government veterinary hospital providing vaccination, treatment and emergency services for pets and livestock in the Barrackpore region.</span><br>
               <small>Location: Barrackpore, North 24 Parganas</small>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>North 24 Parganas District Veterinary Office</strong><br>
-              <span style="color: #666;">District-level veterinary office providing animal health services, vaccination drives and referrals across North 24 Parganas.</span><br>
+              <span style="color: var(--color-text-muted);">District-level veterinary office providing animal health services, vaccination drives and referrals across North 24 Parganas.</span><br>
               <small>Location: Barasat, North 24 Parganas</small>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Private Veterinary Clinics on BT Road Corridor</strong><br>
-              <span style="color: #666;">Multiple private veterinary clinics operate along the Barrackpore Trunk Road corridor between Sodepur and Barrackpore, offering consultation, surgery and diagnostic services.</span><br>
+              <span style="color: var(--color-text-muted);">Multiple private veterinary clinics operate along the Barrackpore Trunk Road corridor between Sodepur and Barrackpore, offering consultation, surgery and diagnostic services.</span><br>
               <small>Location: BT Road, Sodepur to Barrackpore</small>
             </li>
           </ul>
           <p><strong>Emergency Tip:</strong> Emily's Pet Heaven offers <a href="services.html" style="color: var(--primary);">24/7 emergency veterinary coordination</a> for boarding guests and local pet parents. Call us at <a aria-label="Call us" href="tel:+916363590332" style="color: var(--primary);">+91 6363590332</a> for immediate assistance.</p>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Pet Shops & Supply Stores Near Barrackpore</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Pet Shops & Supply Stores Near Barrackpore</h2>
           <p>Quality pet food, accessories and supplies are essential for responsible pet ownership. Here are pet supply sources in the Barrackpore area:</p>
-          <ul style="list-style: none; padding: 0;">
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+          <ul style="list-style: none; padding:0;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Local Pet Shops in Barrackpore Market</strong><br>
-              <span style="color: #666;">Several pet shops in Barrackpore's main market area stock dog food, cat food, leashes, grooming supplies and accessories from brands like Royal Canin, Pedigree and Drools.</span><br>
+              <span style="color: var(--color-text-muted);">Several pet shops in Barrackpore's main market area stock dog food, cat food, leashes, grooming supplies and accessories from brands like Royal Canin, Pedigree and Drools.</span><br>
               <small>Location: Barrackpore Market Area</small>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Online Pet Stores with Delivery to Barrackpore</strong><br>
-              <span style="color: #666;">Major online pet retailers like Supertails, Heads Up For Tails and Amazon deliver pet supplies to Barrackpore and surrounding PIN codes (700120-700123).</span>
+              <span style="color: var(--color-text-muted);">Major online pet retailers like Supertails, Heads Up For Tails and Amazon deliver pet supplies to Barrackpore and surrounding PIN codes (700120-700123).</span>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Pet Food & Accessories at Sodepur Market</strong><br>
-              <span style="color: #666;">Sodepur market has several shops offering pet food, medicines, carriers and grooming tools at competitive prices.</span><br>
+              <span style="color: var(--color-text-muted);">Sodepur market has several shops offering pet food, medicines, carriers and grooming tools at competitive prices.</span><br>
               <small>Location: Sodepur, North 24 Parganas</small>
             </li>
           </ul>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Animal Welfare Organisations & NGOs</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Animal Welfare Organisations & NGOs</h2>
           <p>Supporting animal welfare is important to the pet community. These organisations operate in the Kolkata and North 24 Parganas region:</p>
-          <ul style="list-style: none; padding: 0;">
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+          <ul style="list-style: none; padding:0;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>People For Animals (PFA), Kolkata Chapter</strong><br>
-              <span style="color: #666;">Founded by Maneka Gandhi, PFA Kolkata works on animal rescue, rehabilitation and adoption across the city and surrounding districts including North 24 Parganas.</span>
+              <span style="color: var(--color-text-muted);">Founded by Maneka Gandhi, PFA Kolkata works on animal rescue, rehabilitation and adoption across the city and surrounding districts including North 24 Parganas.</span>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>CUPA (Compassion Unlimited Plus Action)</strong><br>
-              <span style="color: #666;">A leading Indian animal welfare NGO providing rescue, rehabilitation and adoption services for stray and abandoned animals.</span>
+              <span style="color: var(--color-text-muted);">A leading Indian animal welfare NGO providing rescue, rehabilitation and adoption services for stray and abandoned animals.</span>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Kolkata Society for Prevention of Cruelty to Animals (KSPCA)</strong><br>
-              <span style="color: #666;">Historic animal welfare society providing shelter, veterinary aid and adoption facilitation in Kolkata and surrounding areas.</span>
+              <span style="color: var(--color-text-muted);">Historic animal welfare society providing shelter, veterinary aid and adoption facilitation in Kolkata and surrounding areas.</span>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Local Barrackpore Animal Rescue Groups</strong><br>
-              <span style="color: #666;">Community-driven animal rescue groups active on social media platforms helping with stray dog and cat rescues, fostering and adoptions in the Barrackpore area.</span>
+              <span style="color: var(--color-text-muted);">Community-driven animal rescue groups active on social media platforms helping with stray dog and cat rescues, fostering and adoptions in the Barrackpore area.</span>
             </li>
           </ul>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Dog Trainers & Behaviourists Near Barrackpore</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Dog Trainers & Behaviourists Near Barrackpore</h2>
           <p>Professional dog training is invaluable for puppy socialisation, obedience training and behaviour correction. Training resources available near Barrackpore include:</p>
-          <ul style="list-style: none; padding: 0;">
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+          <ul style="list-style: none; padding:0;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Home-Visit Dog Trainers in North 24 Parganas</strong><br>
-              <span style="color: #666;">Several certified dog trainers offer home-visit training sessions across Barrackpore, Sodepur, Titagarh and surrounding areas, covering basic obedience, leash training and socialisation.</span>
+              <span style="color: var(--color-text-muted);">Several certified dog trainers offer home-visit training sessions across Barrackpore, Sodepur, Titagarh and surrounding areas, covering basic obedience, leash training and socialisation.</span>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Kolkata-Based Dog Training Academies</strong><br>
-              <span style="color: #666;">Professional dog training academies in Kolkata accept dogs from Barrackpore and North 24 Parganas for residential and day training programmes.</span>
+              <span style="color: var(--color-text-muted);">Professional dog training academies in Kolkata accept dogs from Barrackpore and North 24 Parganas for residential and day training programmes.</span>
             </li>
           </ul>
           <p><strong>Training at Emily's Pet Heaven:</strong> We offer basic <a href="services.html" style="color: var(--primary);">pet training services</a> as part of our daycare and boarding programmes. Dogs in our care receive socialisation training and basic obedience reinforcement.</p>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Pet-Friendly Parks & Walking Areas in Barrackpore</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Pet-Friendly Parks & Walking Areas in Barrackpore</h2>
           <p>Regular exercise and outdoor time is essential for your dog's physical and mental health. Here are some popular spots near Barrackpore:</p>
-          <ul style="list-style: none; padding: 0;">
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+          <ul style="list-style: none; padding:0;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Barrackpore Cantonment Area</strong><br>
-              <span style="color: #666;">The historic cantonment area offers tree-lined paths and open green spaces popular with dog walkers, especially during early mornings and evenings.</span>
+              <span style="color: var(--color-text-muted);">The historic cantonment area offers tree-lined paths and open green spaces popular with dog walkers, especially during early mornings and evenings.</span>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Gandhi Ghat & Riverside Walk, Barrackpore</strong><br>
-              <span style="color: #666;">The scenic riverside area near Gandhi Ghat provides a peaceful environment for leisurely walks with your dog along the Hooghly river bank.</span>
+              <span style="color: var(--color-text-muted);">The scenic riverside area near Gandhi Ghat provides a peaceful environment for leisurely walks with your dog along the Hooghly river bank.</span>
             </li>
-            <li style="padding: 1rem; margin-bottom: 1rem; background: var(--bg-secondary, #f8f9fa); border-radius: 8px;">
+            <li style="padding:1rem; margin-bottom:1rem; background: var(--color-surface-page); border-radius:8px;">
               <strong>Barrackpore Trunk Road Green Patches</strong><br>
-              <span style="color: #666;">Several parks and green areas along BT Road between Titagarh and Barrackpore are used by local pet owners for morning and evening dog walks.</span>
+              <span style="color: var(--color-text-muted);">Several parks and green areas along BT Road between Titagarh and Barrackpore are used by local pet owners for morning and evening dog walks.</span>
             </li>
           </ul>
         </div>
 
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Essential Pet Care Tips for Barrackpore Pet Owners</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Essential Pet Care Tips for Barrackpore Pet Owners</h2>
           <p>Living in the Barrackpore and North 24 Parganas area comes with specific considerations for pet care:</p>
           <ul class="service-features">
             <li><strong>Monsoon precautions:</strong> During the Bengal monsoon season (June-September), keep your pet's paws dry, watch for waterborne infections and ensure your home is tick and flea treated.</li>
@@ -264,8 +264,8 @@ img{max-width:100%;height:auto}
         </div>
 
         <!-- Google Map Embed -->
-        <div style="margin-bottom: 3rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.75rem; margin-bottom: 1rem;">Find Emily's Pet Heaven in Barrackpore</h2>
+        <div style="margin-bottom:3rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.75rem; margin-bottom:1rem;">Find Emily's Pet Heaven in Barrackpore</h2>
           <div class="map-container" style="width:100%;margin:1rem 0;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.1);">
             <iframe 
               src="https://maps.google.com/maps?q=22.769599,88.376253&z=17&output=embed"
@@ -278,19 +278,19 @@ img{max-width:100%;height:auto}
         </div>
 
         <!-- CTA -->
-        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 16px; padding: 3rem; text-align: center; color: white;">
-          <h2 style="font-family: 'Fredoka', sans-serif; font-size: 2rem; margin-bottom: 1rem;">Need Pet Boarding in Barrackpore?</h2>
-          <p style="margin-bottom: 1.5rem; opacity: 0.9;">Emily's Pet Heaven offers safe, supervised pet boarding with doorstep pickup across Barrackpore and North 24 Parganas.</p>
-          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius:16px; padding:3rem; text-align: center; color: white;">
+          <h2 style="font-family: 'Fredoka', sans-serif; font-size:2.0rem; margin-bottom:1rem;">Need Pet Boarding in Barrackpore?</h2>
+          <p style="margin-bottom:1.5rem; opacity: 0.9;">Emily's Pet Heaven offers safe, supervised pet boarding with doorstep pickup across Barrackpore and North 24 Parganas.</p>
+          <div style="display: flex; gap:1rem; justify-content: center; flex-wrap: wrap;">
             <a href="pet-boarding-barrackpore.html" class="btn btn-primary" style="background: white; color: var(--primary); font-weight: 600;">Pet Boarding Details</a>
             <a href="contact.html" class="btn" style="border: 2px solid white; color: white;">Contact Us</a>
           </div>
         </div>
 
         <!-- Internal Links -->
-        <div style="margin-top: 3rem; padding: 2rem; background: var(--bg-secondary, #f8f9fa); border-radius: 12px;">
-          <h3 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); margin-bottom: 1rem;">Explore Our Services</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+        <div style="margin-top:3rem; padding:2rem; background: var(--color-surface-page); border-radius:12px;">
+          <h3 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); margin-bottom:1rem;">Explore Our Services</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem;">
             <a href="pet-boarding-barrackpore.html" style="color: var(--primary); text-decoration: none;">Pet Boarding Barrackpore</a>
             <a href="pet-boarding-barasat.html" style="color: var(--primary); text-decoration: none;">Pet Boarding Barasat</a>
             <a href="pet-boarding-madhyamgram.html" style="color: var(--primary); text-decoration: none;">Pet Boarding Madhyamgram</a>
@@ -406,15 +406,15 @@ img{max-width:100%;height:auto}
   
 
   <!-- Cookie Consent Banner -->
-  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
-    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:#FFAE01;text-decoration:underline">Privacy Policy</a>.</span>
-    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:#FFAE01;color:#4E0000;border:none;padding:6px 16px;border-radius:20px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
+  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--color-primary);color:var(--color-text-white);padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
+    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:var(--color-secondary);text-decoration:underline">Privacy Policy</a>.</span>
+    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:var(--color-secondary);color:var(--color-primary);border:none;padding:8px 16px;border-radius:16px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
   </div>
   <script>if(localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='none'</script>
 
 
   <!-- Back to Top Button -->
-  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:#4E0000;color:#FFAE01;border:2px solid #FFAE01;cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:all 0.3s" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:var(--color-primary);color:var(--color-secondary);border:2px solid var(--color-secondary);cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,opacity .3s ease" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
   <script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.display=window.scrollY>300?'flex':'none'})</script>
 
 

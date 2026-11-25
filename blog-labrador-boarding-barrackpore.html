@@ -34,11 +34,11 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-:root{--color-primary:#4E0000;--color-secondary:#FFAE01;--color-cream:#FFECBC;--color-light:#FDF8F3;--color-text:#666;--color-bg:#FFF;--font-family-heading:'Fredoka',sans-serif;--font-family-body:'Poppins',sans-serif}
+:root{--color-primary:var(--color-primary);--color-secondary:var(--color-secondary);--color-cream:var(--color-bg-cream);--color-light:#FDF8F3;--color-text:var(--color-text-muted);--color-bg:var(--color-text-white);--font-family-heading:'Fredoka',sans-serif;--font-family-body:'Poppins',sans-serif}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font-family-body);color:var(--color-text);background:var(--color-bg);line-height:1.5;overflow-x:hidden}
-.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08);transition:all .3s ease}
-.container{width:100%;max-width:1400px;margin:0 auto;padding:0 30px}
+.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;background:var(--color-text-white);box-shadow:0 2px 10px rgba(78,0,0,0.18);transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,opacity .3s ease}
+.container{width:100%;max-width:1400px;margin:0 auto;padding:0 32px}
 h1,h2,h3{font-family:var(--font-family-heading);color:var(--color-primary)}
 .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
 img{max-width:100%;height:auto}
@@ -86,7 +86,7 @@ img{max-width:100%;height:auto}
   <meta name="twitter:image:alt" content="Emily's Pet Heaven - pet boarding and grooming in Barrackpore, Kolkata">
 <style>@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}</style></head>
 <body>
-  <a href="#main-content" class="skip-nav" style="position:absolute;top:-40px;left:0;background:#4E0000;color:#fff;padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
+  <a href="#main-content" class="skip-nav skip-link" id="skip-link" style="position:absolute;top:-40px;left:0;background:var(--color-primary);color:var(--color-text-white);padding:8px 16px;z-index:10000;transition:top .3s;font-size:14px" onfocus="this.style.top='0'" onblur="this.style.top='-40px'">Skip to main content</a>
   <!-- Top Bar -->
   <div class="top-bar">
     <div class="container">
@@ -130,11 +130,11 @@ img{max-width:100%;height:auto}
   </header>
 
   <main id="main-content">
-    <article style="padding: 4rem 0;">
+    <article style="padding:4rem 0;">
       <div class="container" style="max-width: 850px;">
         <!-- Breadcrumb -->
-        <nav aria-label="Breadcrumb" style="margin-bottom: 1.5rem;">
-          <ol style="display: flex; gap: 0.5rem; list-style: none; padding: 0; font-size: 0.9rem; color: #888;">
+        <nav aria-label="Breadcrumb" style="margin-bottom:1.5rem;">
+          <ol style="display: flex; gap:0.5rem; list-style: none; padding:0; font-size:0.9rem; color: #888;">
             <li><a href="index.html" style="color: var(--primary); text-decoration: none;">Home</a></li>
             <li>/</li>
             <li><a href="blog.html" style="color: var(--primary); text-decoration: none;">Blog</a></li>
@@ -143,19 +143,19 @@ img{max-width:100%;height:auto}
           </ol>
         </nav>
 
-        <h1 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 2.25rem; margin-bottom: 1rem; line-height: 1.3;">Labrador Boarding in Barrackpore: The Complete Guide for Lab Owners</h1>
-        <p style="color: #888; font-size: 0.9rem; margin-bottom: 2rem;">Published: April 2026 | By Emily's Pet Heaven Team | <a href="pet-boarding-barrackpore.html" style="color: var(--primary);">Pet Boarding Barrackpore</a></p>
+        <h1 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:2.25rem; margin-bottom:1rem; line-height: 1.3;">Labrador Boarding in Barrackpore: The Complete Guide for Lab Owners</h1>
+        <p style="color: #888; font-size:0.9rem; margin-bottom:2rem;">Published: April 2026 | By Emily's Pet Heaven Team | <a href="pet-boarding-barrackpore.html" style="color: var(--primary);">Pet Boarding Barrackpore</a></p>
 
         <!-- Featured Image -->
-        <div style="margin-bottom: 2rem; border-radius: 12px; overflow: hidden;">
+        <div style="margin-bottom:2rem; border-radius:12px; overflow: hidden;">
           <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=900&h=500&fit=crop" alt="Labrador boarding at Emily's Pet Heaven Barrackpore - dog hostel North 24 Parganas" style="width: 100%; height: auto; display: block;" loading="lazy" decoding="async" width="900" height="500">
         </div>
 
-        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">Labradors are one of the most popular dog breeds in Barrackpore and across India, known for their friendly temperament, boundless energy and loyal nature. If you are a Labrador owner planning a trip or looking for reliable daycare, finding the right boarding facility is essential to keep your Lab happy and healthy. At <a href='pet-boarding-barrackpore.html' style='color: var(--primary);'>Emily's Pet Heaven in Barrackpore</a>, we have extensive experience caring for Labradors and understand their unique needs.</p>
+        <p style="font-size:1.1rem; line-height: 1.8; margin-bottom:2rem;">Labradors are one of the most popular dog breeds in Barrackpore and across India, known for their friendly temperament, boundless energy and loyal nature. If you are a Labrador owner planning a trip or looking for reliable daycare, finding the right boarding facility is essential to keep your Lab happy and healthy. At <a href='pet-boarding-barrackpore.html' style='color: var(--primary);'>Emily's Pet Heaven in Barrackpore</a>, we have extensive experience caring for Labradors and understand their unique needs.</p>
 
 
-        <div style="margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;">Why Labradors Need Specialised Boarding Care</h2>
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.5rem; margin-bottom:1rem;">Why Labradors Need Specialised Boarding Care</h2>
           
           <p>Labradors are high-energy dogs that require structured daily activity, proper nutrition and social interaction. A boarding facility that simply offers a kennel and two meals a day is not sufficient for a Labrador. Labs thrive on exercise, mental stimulation and human interaction, without these, they can become anxious, destructive or depressed during boarding.</p>
           <p>At Emily's Pet Heaven, we design customised boarding plans for each Labrador that include:</p>
@@ -169,8 +169,8 @@ img{max-width:100%;height:auto}
             
         </div>
 
-        <div style="margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;">Labrador Diet During Boarding</h2>
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.5rem; margin-bottom:1rem;">Labrador Diet During Boarding</h2>
           
           <p>Labradors are notorious for their big appetites, and improper feeding can quickly lead to weight gain. During boarding at Emily's Pet Heaven, we follow precise feeding schedules based on your Lab's age, weight and activity level.</p>
           <p>For adult Labradors, we typically serve two measured meals per day with premium dog food. We accommodate specific dietary requirements including grain-free diets, raw feeding plans or veterinary-prescribed meals. If your Lab is on medication, our team administers it precisely on schedule.</p>
@@ -178,8 +178,8 @@ img{max-width:100%;height:auto}
             
         </div>
 
-        <div style="margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;">Exercise Requirements for Labradors in Boarding</h2>
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.5rem; margin-bottom:1rem;">Exercise Requirements for Labradors in Boarding</h2>
           
           <p>A Labrador that does not get enough exercise becomes a Labrador that chews furniture, digs holes and barks excessively. Our facility in <a href="pet-boarding-barrackpore.html" style="color: var(--primary);">Barrackpore</a> includes outdoor play areas where Labs can run, fetch and play freely under supervision.</p>
           <p>Our daily exercise programme for Labradors includes:</p>
@@ -192,16 +192,16 @@ img{max-width:100%;height:auto}
             
         </div>
 
-        <div style="margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;">Common Labrador Health Concerns During Boarding</h2>
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.5rem; margin-bottom:1rem;">Common Labrador Health Concerns During Boarding</h2>
           
           <p>Responsible boarding means watching for breed-specific health issues. Labradors are prone to hip dysplasia, ear infections (especially in the humid Kolkata climate), obesity and skin allergies. Our trained staff monitors for signs of discomfort including limping, ear scratching, excessive panting or changes in eating behaviour.</p>
           <p>We check ears daily during the monsoon season when humidity increases infection risk. If any health concern arises, our <a href="services.html" style="color: var(--primary);">24/7 veterinary coordination</a> ensures your Lab receives prompt medical attention.</p>
             
         </div>
 
-        <div style="margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;">Preparing Your Labrador for Boarding</h2>
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.5rem; margin-bottom:1rem;">Preparing Your Labrador for Boarding</h2>
           
           <p>To ensure a smooth boarding experience for your Labrador at Emily's Pet Heaven, we recommend:</p>
           <ul class="service-features">
@@ -215,8 +215,8 @@ img{max-width:100%;height:auto}
             
         </div>
 
-        <div style="margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;">Why Choose Emily's Pet Heaven for Labrador Boarding</h2>
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.5rem; margin-bottom:1rem;">Why Choose Emily's Pet Heaven for Labrador Boarding</h2>
           
           <p>Emily's Pet Heaven has cared for hundreds of Labradors across Barrackpore and North 24 Parganas. Our facility features spacious play areas, climate-controlled indoor boarding rooms and trained handlers experienced with high-energy breeds. We send daily photo and video updates via WhatsApp so you can see your Lab enjoying their stay.</p>
           <p>Whether you need <a href="services.html" style="color: var(--primary);">overnight boarding</a>, extended-stay accommodation or daily <a href="pricing.html" style="color: var(--primary);">daycare</a>, we provide the active, engaging environment that Labradors need to stay happy. Contact us at <a aria-label="Call us" href="tel:+916363590332" style="color: var(--primary);">+91 6363590332</a> to book your Lab's stay today.</p>
@@ -225,28 +225,28 @@ img{max-width:100%;height:auto}
 
 
         <!-- Video Section -->
-        <div style="margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size: 1.6rem; margin-bottom: 1rem;">Watch: Labrador Care Tips</h2>
-          <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        <div style="margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); font-size:1.5rem; margin-bottom:1rem;">Watch: Labrador Care Tips</h2>
+          <div style="position: relative; padding-bottom:56.25%; height: 0; overflow: hidden; border-radius:12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
             <iframe src="https://www.youtube.com/embed/gvJLmVYVvzo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allowfullscreen loading="lazy" title="Labrador care and boarding tips video"></iframe>
           </div>
-          <p style="font-size: 0.9rem; color: #888; margin-top: 0.5rem; text-align: center;">Video: Labrador care guidance for pet owners</p>
+          <p style="font-size:0.9rem; color: #888; margin-top:0.5rem; text-align: center;">Video: Labrador care guidance for pet owners</p>
         </div>
 
         <!-- CTA -->
-        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius: 16px; padding: 2.5rem; text-align: center; color: white; margin-bottom: 2.5rem;">
-          <h2 style="font-family: 'Fredoka', sans-serif; font-size: 1.75rem; margin-bottom: 1rem;">Book Labrador Boarding in Barrackpore</h2>
-          <p style="margin-bottom: 1.5rem; opacity: 0.9;">Give your Labrador the safe, supervised stay they deserve at Emily's Pet Heaven.</p>
-          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); border-radius:16px; padding:2.5rem; text-align: center; color: white; margin-bottom:2.5rem;">
+          <h2 style="font-family: 'Fredoka', sans-serif; font-size:1.75rem; margin-bottom:1rem;">Book Labrador Boarding in Barrackpore</h2>
+          <p style="margin-bottom:1.5rem; opacity: 0.9;">Give your Labrador the safe, supervised stay they deserve at Emily's Pet Heaven.</p>
+          <div style="display: flex; gap:1rem; justify-content: center; flex-wrap: wrap;">
             <a href="contact.html" class="btn btn-primary" style="background: white; color: var(--primary); font-weight: 600;">Book Now</a>
             <a aria-label="Call us" href="tel:+916363590332" class="btn" style="border: 2px solid white; color: white;">Call +91 6363590332</a>
           </div>
         </div>
 
         <!-- Internal Links -->
-        <div style="padding: 2rem; background: var(--bg-secondary, #f8f9fa); border-radius: 12px;">
-          <h3 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); margin-bottom: 1rem;">Explore More</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+        <div style="padding:2rem; background: var(--color-surface-page); border-radius:12px;">
+          <h3 style="font-family: 'Fredoka', sans-serif; color: var(--primary-dark); margin-bottom:1rem;">Explore More</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:0.75rem;">
 
             <a href="pet-boarding-barrackpore.html" style="color: var(--primary); text-decoration: none;">Pet Boarding Barrackpore</a>
             <a href="pet-boarding-barasat.html" style="color: var(--primary); text-decoration: none;">Pet Boarding Barasat</a>
@@ -318,15 +318,15 @@ img{max-width:100%;height:auto}
   
 
   <!-- Cookie Consent Banner -->
-  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:#4E0000;color:#fff;padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
-    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:#FFAE01;text-decoration:underline">Privacy Policy</a>.</span>
-    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:#FFAE01;color:#4E0000;border:none;padding:6px 16px;border-radius:20px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
+  <div id="cookie-consent" style="display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--color-primary);color:var(--color-text-white);padding:12px 20px;z-index:10001;font-size:14px;text-align:center;box-shadow:0 -2px 10px rgba(0,0,0,0.2)">
+    <span>We use cookies to improve your experience. By using our site, you agree to our <a href="privacy-policy.html" style="color:var(--color-secondary);text-decoration:underline">Privacy Policy</a>.</span>
+    <button onclick="document.getElementById('cookie-consent').style.display='none';localStorage.setItem('cookieConsent','accepted')" style="background:var(--color-secondary);color:var(--color-primary);border:none;padding:8px 16px;border-radius:16px;margin-left:12px;cursor:pointer;font-weight:600">Accept</button>
   </div>
   <script>if(localStorage.getItem('cookieConsent'))document.getElementById('cookie-consent').style.display='none'</script>
 
 
   <!-- Back to Top Button -->
-  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:#4E0000;color:#FFAE01;border:2px solid #FFAE01;cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:all 0.3s" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+  <button id="back-to-top" aria-label="Back to top" style="display:none;position:fixed;bottom:80px;right:20px;width:44px;height:44px;border-radius:50%;background:var(--color-primary);color:var(--color-secondary);border:2px solid var(--color-secondary);cursor:pointer;z-index:999;font-size:20px;align-items:center;justify-content:center;box-shadow:0 2px 10px rgba(0,0,0,0.2);transition:background-color .3s ease,color .3s ease,border-color .3s ease,box-shadow .3s ease,transform .3s ease,opacity .3s ease" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
   <script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.display=window.scrollY>300?'flex':'none'})</script>
 
 
